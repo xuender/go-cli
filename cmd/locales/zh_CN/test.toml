@@ -1,0 +1,6 @@
+"test %s not exist" = "测试源程序 %s 不存在\n"
+"test exist" = "测试文件已经存在"
+"test long" = "根据源程序文件创建测试文件"
+"test missing file" = "缺少要生成测试文件的源程序\n"
+"test not gofile" = "文件不是Golang源程序"
+"test short" = "创建测试"

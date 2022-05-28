@@ -1,0 +1,30 @@
+package utils_test
+
+import (
+	"testing"
+
+	"github.com/xuender/go-scaffold/utils"
+	"github.com/xuender/oils/assert"
+)
+
+func TestParse(t *testing.T) {
+	t.Parallel()
+
+	file, err := utils.Parse("parse.go")
+
+	assert.Nil(t, err)
+	assert.NotNil(t, file)
+	assert.Equal(t, 4, len(file.Imports))
+
+	_, err = utils.Parse("unknown")
+	assert.NotNil(t, err)
+}
+
+func TestPackageAndFuncs(t *testing.T) {
+	t.Parallel()
+
+	pack, funcs := utils.PackageAndFuncs("parse.go")
+
+	assert.Equals(t, []string{"Parse", "PackageAndFuncs"}, funcs)
+	assert.Equal(t, "utils", pack)
+}
