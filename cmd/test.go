@@ -9,7 +9,6 @@ import (
 	"github.com/spf13/cobra"
 	"github.com/xuender/go-scaffold/utils"
 	"github.com/xuender/oils/base"
-	"github.com/xuender/oils/logs"
 	"github.com/xuender/oils/oss"
 )
 
@@ -27,50 +26,68 @@ func init() {
 				return
 			}
 
-			var force bool
-
-			if _, err := cmd.Flags().GetBool("force"); err == nil {
-				force = true
-			}
-
 			for _, arg := range args {
-				abs := base.Must1(filepath.Abs(arg))
-				if !oss.Exist(abs) {
-					panic(Printer.Sprintf("test %s not exist", arg))
-				}
-
-				name := filepath.Base(abs)
-				if strings.HasSuffix(name, "_test.go") {
-					panic(Printer.Sprintf("test not gofile"))
-				}
-
-				ext := filepath.Ext(name)
-				if ext != ".go" {
-					panic(Printer.Sprintf("test not gofile"))
-				}
-
-				dir := filepath.Dir(abs)
-				out := filepath.Join(dir, name[:len(name)-3]+"_test.go")
-
-				if !force && oss.Exist(out) {
-					panic(Printer.Sprintf("test exist"))
-				}
-
-				pack, funcs := utils.PackageAndFuncs(abs)
-				logs.Debugw("test", "funcs", funcs, "package", pack)
-
-				var buffer bytes.Buffer
-
-				buffer.WriteString("package " + pack + "_test\n\nimport \"testing\"\n")
-				for _, fun := range funcs {
-					buffer.WriteString("\nfunc Test" + fun + "(t *testing.T) {\n\tt.Parallel()\n\t// TODO\n}\n")
-				}
-
-				base.Must(os.WriteFile(out, buffer.Bytes(), oss.DefaultFileMode))
+				createTest(arg)
 			}
 		},
 	}
 
-	testCmd.Flags().BoolP("force", "f", false, Printer.Sprintf("test force"))
 	root.AddCommand(testCmd)
+}
+
+func createTest(arg string) {
+	abs := base.Must1(filepath.Abs(arg))
+	if !oss.Exist(abs) {
+		panic(Printer.Sprintf("test %s not exist", arg))
+	}
+
+	name := filepath.Base(abs)
+	if strings.HasSuffix(name, "_test.go") {
+		panic(Printer.Sprintf("test not gofile"))
+	}
+
+	if ext := filepath.Ext(name); ext != ".go" {
+		panic(Printer.Sprintf("test not gofile"))
+	}
+
+	dir := filepath.Dir(abs)
+	out := filepath.Join(dir, name[:len(name)-3]+"_test.go")
+	pack, funcs := utils.PackageAndFuncs(abs)
+	tests := []string{}
+
+	var (
+		exist  bool
+		buffer bytes.Buffer
+	)
+
+	exist = oss.Exist(out)
+
+	if exist {
+		_, tests = utils.PackageAndFuncs(out)
+	} else {
+		buffer.WriteString("package " + pack + "_test\n\nimport \"testing\"\n")
+	}
+
+	for _, fun := range funcs {
+		name := "Test" + fun
+		if !base.Has(tests, name) {
+			buffer.WriteString("\nfunc " + name + "(t *testing.T) {\n\tt.Parallel()\n\t// TODO\n}\n")
+			Printer.Printf("test add %s", name)
+		}
+	}
+
+	if buffer.Len() == 0 {
+		Printer.Printf("test no add")
+
+		return
+	}
+
+	if exist {
+		file := base.Must1(os.OpenFile(out, os.O_CREATE|os.O_APPEND|os.O_RDWR, os.ModeAppend|os.ModePerm))
+		defer file.Close()
+
+		base.Must1(file.Write(buffer.Bytes()))
+	} else {
+		base.Must(os.WriteFile(out, buffer.Bytes(), oss.DefaultFileMode))
+	}
 }

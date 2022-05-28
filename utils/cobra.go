@@ -14,5 +14,3 @@ func UseCobra(root *ast.File) bool {
 
 	return false
 }
-
-func A() {}
