@@ -2,11 +2,11 @@ module github.com/xuender/go-scaffold
 
 go 1.18
 
-replace github.com/xuender/oils => ../oils
+// replace github.com/xuender/oils => ../oils
 
 require (
 	github.com/spf13/cobra v1.4.0
-	github.com/xuender/oils v0.2.10
+	github.com/xuender/oils v0.2.11
 	golang.org/x/text v0.3.7
 )
 
