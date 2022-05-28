@@ -7,6 +7,7 @@ package cmd
 import (
 	"bytes"
 	_ "embed"
+	"errors"
 	"os"
 	"path/filepath"
 
@@ -24,16 +25,19 @@ var defaultCmd []byte
 func init() {
 	root := getRoot()
 	cmdCmd := &cobra.Command{
-		Use:   "cmd",
-		Short: Printer.Sprintf("cmd short"),
-		Long:  Printer.Sprintf("cmd long"),
-		Run: func(cmd *cobra.Command, args []string) {
+		Use:     "cmd",
+		Short:   Printer.Sprintf("cmd short"),
+		Long:    Printer.Sprintf("cmd long"),
+		Example: "  go-scaffold cmd test",
+		Aliases: []string{"c"},
+		Args: func(cmd *cobra.Command, args []string) error {
 			if len(args) == 0 {
-				Printer.Printf("cmd missing command")
-
-				return
+				return errors.New(Printer.Sprintf("cmd missing command"))
 			}
 
+			return nil
+		},
+		Run: func(cmd *cobra.Command, args []string) {
 			file, err := utils.Parse("cmd", "root.go")
 			useCobra := err == nil && utils.UseCobra(file)
 

@@ -1,6 +1,6 @@
 "cmd %s exist" = "命令 %s 已经存在\n"
 "cmd cobra" = "强制使用 cobra"
 "cmd flag" = "强制使用 flag"
-"cmd long" = "根据使用的cmd方式创建子命令，支持github.com/spf13/cobra"
-"cmd missing command" = "缺少命令\n"
+"cmd long" = "根据使用的 cmd 方式创建子命令，支持 github.com/spf13/cobra"
+"cmd missing command" = "缺少要创建的命令\n"
 "cmd short" = "创建命令"

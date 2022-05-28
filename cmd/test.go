@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"bytes"
+	"errors"
 	"os"
 	"path/filepath"
 	"strings"
@@ -16,16 +17,25 @@ import (
 func init() {
 	root := getRoot()
 	testCmd := &cobra.Command{
-		Use:   "test",
-		Short: Printer.Sprintf("test short"),
-		Long:  Printer.Sprintf("test long"),
-		Run: func(cmd *cobra.Command, args []string) {
-			if len(args) == 0 {
-				Printer.Printf("test missing file")
-
-				return
+		Use:     "test",
+		Aliases: []string{"t"},
+		Short:   Printer.Sprintf("test short"),
+		Long:    Printer.Sprintf("test long"),
+		Example: "  go-scaffold test utils.go",
+		Args: func(cmd *cobra.Command, args []string) error {
+			if len(args) < 1 {
+				return errors.New(Printer.Sprintf("test missing file"))
 			}
 
+			for _, arg := range args {
+				if !oss.Exist(arg) {
+					return errors.New(Printer.Sprintf("test %s not exist", arg))
+				}
+			}
+
+			return nil
+		},
+		Run: func(cmd *cobra.Command, args []string) {
 			for _, arg := range args {
 				createTest(arg)
 			}
@@ -37,9 +47,6 @@ func init() {
 
 func createTest(arg string) {
 	abs := base.Must1(filepath.Abs(arg))
-	if !oss.Exist(abs) {
-		panic(Printer.Sprintf("test %s not exist", arg))
-	}
 
 	name := filepath.Base(abs)
 	if strings.HasSuffix(name, "_test.go") {
@@ -68,16 +75,20 @@ func createTest(arg string) {
 		buffer.WriteString("package " + pack + "_test\n\nimport \"testing\"\n")
 	}
 
+	count := 0
+
 	for _, fun := range funcs {
 		name := "Test" + fun
 		if !base.Has(tests, name) {
 			buffer.WriteString("\nfunc " + name + "(t *testing.T) {\n\tt.Parallel()\n\t// TODO\n}\n")
 			Printer.Printf("test add %s", name)
+
+			count++
 		}
 	}
 
-	if buffer.Len() == 0 {
-		Printer.Printf("test no add")
+	if count == 0 {
+		Printer.Printf("test no add %s", arg)
 
 		return
 	}
