@@ -34,6 +34,6 @@ func TestPackageAndFuncs_Struct(t *testing.T) {
 
 	pack, funcs := utils.PackageAndFuncs("data_test.go")
 
-	assert.Equals(t, []string{"Obj_Test"}, funcs)
+	assert.Equals(t, []string{"PublicStruct_PublicFunc"}, funcs)
 	assert.Equal(t, "utils_test", pack)
 }

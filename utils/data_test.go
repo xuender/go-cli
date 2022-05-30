@@ -1,5 +1,17 @@
 package utils_test
 
-type Obj struct{}
+type PublicStruct struct {
+	obj privateStruct
+}
 
-func (p *Obj) Test() {}
+func (p *PublicStruct) PublicFunc() {
+	p.privateFunc()
+}
+
+func (p *PublicStruct) privateFunc() {
+	p.obj.Test()
+}
+
+type privateStruct struct{}
+
+func (p *privateStruct) Test() {}
