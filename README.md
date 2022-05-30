@@ -1,9 +1,9 @@
-# go-scaffold
+# go-cli
 
-Golang 脚手架
+CLI tool for Golang.
 
-## 安装
+## install
 
 ```shell
-go install github.com/xuender/go-scaffold@latest
+go install github.com/xuender/go-cli@latest
 ```
