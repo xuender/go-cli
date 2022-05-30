@@ -1,0 +1,6 @@
+"cmd %s exist" = "cmd %s exist\n"
+"cmd cobra" = "use cobra"
+"cmd flag" = "use flag"
+"cmd long" = "create subcommand, support github.com/spf13/cobra"
+"cmd missing command" = "missing command to create\n"
+"cmd short" = "create subcommand"

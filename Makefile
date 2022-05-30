@@ -7,4 +7,4 @@ clean:
 	rm -rf dist
 
 build:
-	go build -o dist/gos cmd/gos/main.go
+	go build -o dist/go-cli main.go

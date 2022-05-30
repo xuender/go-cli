@@ -12,14 +12,13 @@ import (
 	"github.com/spf13/cobra"
 	"github.com/xuender/oils/base"
 	"github.com/xuender/oils/i18n"
-	"golang.org/x/text/language"
 )
 
 //go:embed locales
 var locales embed.FS
 
 // nolint
-var Printer = i18n.GetPrinter(language.SimplifiedChinese, language.English)
+var Printer = i18n.GetPrinter()
 
 // nolint
 var rootCmd *cobra.Command
@@ -29,7 +28,7 @@ func getRoot() *cobra.Command {
 		base.Must(i18n.Load(locales))
 
 		rootCmd = &cobra.Command{
-			Use:   "gos",
+			Use:   "go-cli",
 			Short: Printer.Sprintf("root short"),
 			Long:  Printer.Sprintf("root long"),
 			// Run: func(cmd *cobra.Command, args []string) { },
@@ -51,11 +50,18 @@ func Execute() {
 
 // nolint
 func init() {
-	getRoot().PersistentFlags().BoolP("debug", "d", false, Printer.Sprintf("root debug"))
+	root := getRoot()
+	root.PersistentFlags().BoolP("debug", "d", false, Printer.Sprintf("root debug"))
+	root.PersistentFlags().StringP("language", "l", "", Printer.Sprintf("root language"))
 }
 
 func setLogsLevel(cmd *cobra.Command) {
 	if debug, err := cmd.Flags().GetBool("debug"); err != nil || !debug {
 		logs.SetInfoLevel()
+	}
+
+	if language, err := cmd.Flags().GetString("language"); err == nil && language != "" {
+		logs.Info(language)
+		Printer = i18n.GetPrinter(i18n.GetTag([]string{language}))
 	}
 }
