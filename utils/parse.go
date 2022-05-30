@@ -5,9 +5,10 @@ import (
 	"go/parser"
 	"go/token"
 	"path/filepath"
-	"strings"
+	"unicode"
 )
 
+// Parse Go源程序解析.
 func Parse(files ...string) (*ast.File, error) {
 	filename, err := filepath.Abs(filepath.Join(files...))
 	if err != nil {
@@ -19,6 +20,7 @@ func Parse(files ...string) (*ast.File, error) {
 	return parser.ParseFile(fset, filename, nil, parser.ParseComments)
 }
 
+// PackageAndFuncs 解析Go源程序包和方法.
 func PackageAndFuncs(files ...string) (string, []string) {
 	funcs := []string{}
 
@@ -32,7 +34,7 @@ func PackageAndFuncs(files ...string) (string, []string) {
 	ast.Inspect(file, func(n ast.Node) bool {
 		switch node := n.(type) {
 		case *ast.FuncDecl:
-			if strings.Title(node.Name.Name) == node.Name.Name {
+			if node.Name.Name != "" && unicode.IsUpper([]rune(node.Name.Name)[0]) {
 				funcs = append(funcs, node.Name.Name)
 			}
 		case *ast.File:
