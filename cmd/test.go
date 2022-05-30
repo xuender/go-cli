@@ -104,14 +104,14 @@ func addTests(abs string, name string) {
 		name := "Test" + fun
 		if !base.Has(tests, name) {
 			buffer.WriteString("\nfunc " + name + "(t *testing.T) {\n\tt.Parallel()\n\t// TODO\n}\n")
-			Printer.Printf("test add %s %s", abs, name)
+			Printer.Printf("test %s add %s", out, name)
 
 			count++
 		}
 	}
 
 	if count == 0 {
-		Printer.Printf("test no add %s", abs)
+		Printer.Printf("test no add %s", out)
 
 		return
 	}

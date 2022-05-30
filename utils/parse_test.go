@@ -28,3 +28,12 @@ func TestPackageAndFuncs(t *testing.T) {
 	assert.Equals(t, []string{"Parse", "PackageAndFuncs"}, funcs)
 	assert.Equal(t, "utils", pack)
 }
+
+func TestPackageAndFuncs_Struct(t *testing.T) {
+	t.Parallel()
+
+	pack, funcs := utils.PackageAndFuncs("data_test.go")
+
+	assert.Equals(t, []string{"Obj_Test"}, funcs)
+	assert.Equal(t, "utils_test", pack)
+}

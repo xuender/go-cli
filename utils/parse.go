@@ -35,7 +35,9 @@ func PackageAndFuncs(files ...string) (string, []string) {
 		switch node := n.(type) {
 		case *ast.FuncDecl:
 			if node.Name.Name != "" && unicode.IsUpper([]rune(node.Name.Name)[0]) {
-				funcs = append(funcs, node.Name.Name)
+				if name := getName(node); name != "" {
+					funcs = append(funcs, name)
+				}
 			}
 		case *ast.File:
 			pack = node.Name.Name
@@ -45,4 +47,20 @@ func PackageAndFuncs(files ...string) (string, []string) {
 	})
 
 	return pack, funcs
+}
+
+func getName(node *ast.FuncDecl) string {
+	if node.Recv == nil {
+		return node.Name.Name
+	}
+
+	for _, field := range node.Recv.List {
+		if star, ok := field.Type.(*ast.StarExpr); ok {
+			if ident, ok := star.X.(*ast.Ident); ok {
+				return ident.Name + "_" + node.Name.Name
+			}
+		}
+	}
+
+	return ""
 }
