@@ -8,6 +8,7 @@ import (
 	"embed"
 	"os"
 
+	"gitee.com/xuender/oils/logs"
 	"github.com/spf13/cobra"
 	"github.com/xuender/oils/base"
 	"github.com/xuender/oils/i18n"
@@ -49,6 +50,12 @@ func Execute() {
 }
 
 // nolint
-// func init() {
-// 	getRoot().Flags().BoolP("toggle", "t", false, "Help message for toggle")
-// }
+func init() {
+	getRoot().PersistentFlags().BoolP("debug", "d", false, Printer.Sprintf("root debug"))
+}
+
+func setLogsLevel(cmd *cobra.Command) {
+	if debug, err := cmd.Flags().GetBool("debug"); err != nil || !debug {
+		logs.SetInfoLevel()
+	}
+}

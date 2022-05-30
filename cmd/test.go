@@ -7,6 +7,7 @@ import (
 	"path/filepath"
 	"strings"
 
+	"gitee.com/xuender/oils/logs"
 	"github.com/spf13/cobra"
 	"github.com/xuender/go-cli/utils"
 	"github.com/xuender/oils/base"
@@ -36,6 +37,8 @@ func init() {
 			return nil
 		},
 		Run: func(cmd *cobra.Command, args []string) {
+			setLogsLevel(cmd)
+
 			for _, arg := range args {
 				createTest(arg)
 			}
@@ -46,17 +49,36 @@ func init() {
 }
 
 func createTest(arg string) {
+	logs.Debug(arg)
+
 	abs := base.Must1(filepath.Abs(arg))
+	file := base.Must1(os.Stat(abs))
+
+	if file.IsDir() {
+		for _, dir := range base.Must1(os.ReadDir(abs)) {
+			createTest(filepath.Join(arg, dir.Name()))
+		}
+
+		return
+	}
 
 	name := filepath.Base(abs)
 	if strings.HasSuffix(name, "_test.go") {
-		panic(Printer.Sprintf("test not gofile"))
+		Printer.Printf("test not gofile %s", name)
+
+		return
 	}
 
 	if ext := filepath.Ext(name); ext != ".go" {
-		panic(Printer.Sprintf("test not gofile"))
+		Printer.Printf("test not gofile %s", name)
+
+		return
 	}
 
+	addTests(abs, name)
+}
+
+func addTests(abs string, name string) {
 	dir := filepath.Dir(abs)
 	out := filepath.Join(dir, name[:len(name)-3]+"_test.go")
 	pack, funcs := utils.PackageAndFuncs(abs)
@@ -88,7 +110,7 @@ func createTest(arg string) {
 	}
 
 	if count == 0 {
-		Printer.Printf("test no add %s", arg)
+		Printer.Printf("test no add %s", name)
 
 		return
 	}

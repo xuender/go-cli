@@ -4,5 +4,5 @@
 "test long" = "根据源程序文件创建测试文件"
 "test missing file" = "缺少要生成测试文件的源程序\n"
 "test no add %s" = "Golang 源程序 %s 无测试方法可以增加\n"
-"test not gofile" = "文件不是 Golang 源程序"
+"test not gofile %s" = "文件 %s 不是 Golang 源程序\n"
 "test short" = "创建测试"
