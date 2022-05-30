@@ -1,6 +1,5 @@
 [linters]
 disable = [
-  "ireturn",
   "wastedassign",
   "unused",
   "stylecheck",
@@ -19,7 +18,6 @@ disable = [
   "contextcheck",
   "maligned",
   "scopelint",
-  "nolintlint",
   "wrapcheck",
   "exhaustivestruct",
 ]
