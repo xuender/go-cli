@@ -3,7 +3,7 @@ package utils_test
 import (
 	"testing"
 
-	"github.com/xuender/go-scaffold/utils"
+	"github.com/xuender/go-cli/utils"
 	"github.com/xuender/oils/assert"
 )
 

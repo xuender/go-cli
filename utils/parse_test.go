@@ -3,7 +3,7 @@ package utils_test
 import (
 	"testing"
 
-	"github.com/xuender/go-scaffold/utils"
+	"github.com/xuender/go-cli/utils"
 	"github.com/xuender/oils/assert"
 )
 
@@ -14,7 +14,7 @@ func TestParse(t *testing.T) {
 
 	assert.Nil(t, err)
 	assert.NotNil(t, file)
-	assert.Equal(t, 4, len(file.Imports))
+	assert.Equal(t, 5, len(file.Imports))
 
 	_, err = utils.Parse("unknown")
 	assert.NotNil(t, err)

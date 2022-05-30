@@ -12,7 +12,7 @@ import (
 	"path/filepath"
 
 	"github.com/spf13/cobra"
-	"github.com/xuender/go-scaffold/utils"
+	"github.com/xuender/go-cli/utils"
 	"github.com/xuender/oils/base"
 	"github.com/xuender/oils/logs"
 	"github.com/xuender/oils/oss"
