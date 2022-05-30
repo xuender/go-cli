@@ -22,16 +22,10 @@ func init() {
 		Aliases: []string{"t"},
 		Short:   Printer.Sprintf("test short"),
 		Long:    Printer.Sprintf("test long"),
-		Example: "  go-scaffold test utils.go",
+		Example: "  go-cli test utils\n  go-cli test utils/parse.go",
 		Args: func(cmd *cobra.Command, args []string) error {
 			if len(args) < 1 {
 				return errors.New(Printer.Sprintf("test missing file"))
-			}
-
-			for _, arg := range args {
-				if !oss.Exist(arg) {
-					return errors.New(Printer.Sprintf("test %s not exist", arg))
-				}
 			}
 
 			return nil
@@ -52,6 +46,13 @@ func createTest(arg string) {
 	logs.Debug(arg)
 
 	abs := base.Must1(filepath.Abs(arg))
+
+	if !oss.Exist(abs) {
+		Printer.Printf("test %s not exist", arg)
+
+		return
+	}
+
 	file := base.Must1(os.Stat(abs))
 
 	if file.IsDir() {
@@ -64,13 +65,13 @@ func createTest(arg string) {
 
 	name := filepath.Base(abs)
 	if strings.HasSuffix(name, "_test.go") {
-		Printer.Printf("test not gofile %s", name)
+		Printer.Printf("test not gofile %s", abs)
 
 		return
 	}
 
 	if ext := filepath.Ext(name); ext != ".go" {
-		Printer.Printf("test not gofile %s", name)
+		Printer.Printf("test not gofile %s", abs)
 
 		return
 	}
@@ -103,14 +104,14 @@ func addTests(abs string, name string) {
 		name := "Test" + fun
 		if !base.Has(tests, name) {
 			buffer.WriteString("\nfunc " + name + "(t *testing.T) {\n\tt.Parallel()\n\t// TODO\n}\n")
-			Printer.Printf("test add %s", name)
+			Printer.Printf("test add %s %s", abs, name)
 
 			count++
 		}
 	}
 
 	if count == 0 {
-		Printer.Printf("test no add %s", name)
+		Printer.Printf("test no add %s", abs)
 
 		return
 	}

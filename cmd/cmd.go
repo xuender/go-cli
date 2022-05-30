@@ -28,7 +28,7 @@ func init() {
 		Use:     "cmd",
 		Short:   Printer.Sprintf("cmd short"),
 		Long:    Printer.Sprintf("cmd long"),
-		Example: "  go-scaffold cmd test",
+		Example: "  go-cli cmd test",
 		Aliases: []string{"c"},
 		Args: func(cmd *cobra.Command, args []string) error {
 			if len(args) == 0 {
