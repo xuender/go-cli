@@ -1,19 +1,21 @@
 name: Go
-
 on:
   push:
     branches: [main]
   pull_request:
     branches: [main]
-
 jobs:
-  golangci-lint:
+  linux:
     runs-on: ubuntu-latest
     strategy:
       matrix:
         golangci_lint: [v1.45]
     steps:
-      - uses: actions/checkout@v2.3.4
+      - uses: actions/checkout@v3
+      - name: Set up Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: 1.18
       - name: golangci-lint
         uses: golangci/golangci-lint-action@v3.1.0
         with:
@@ -21,26 +23,10 @@ jobs:
           args: --timeout=2m
           only-new-issues: false
           working-directory: .
-  build:
-    needs: golangci-lint
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-
-      - name: Set up Go
-        uses: actions/setup-go@v3
-        with:
-          go-version: 1.18
-
-      - name: Build
-        run: go build -v main.go
-
       - name: Test
-        run: go test -v
-
+        run: go test -v ./... -gcflags=all=-l
       - name: Coverage
-        run: go test -race -coverprofile=coverage.txt -covermode=atomic
-
+        run: go test ./... -gcflags=all=-l -race -coverprofile=coverage.txt -covermode=atomic
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v2.0.2
         with:
