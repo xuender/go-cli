@@ -1,4 +1,4 @@
-module github.com/xuender/go-scaffold
+module github.com/xuender/go-cli
 
 go 1.18
 
