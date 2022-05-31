@@ -1,0 +1,3 @@
+"init file %s" = "init file: %s\n"
+"init long" = "init Golang project\n\nfiles:\n  .editorconfig\n  .gitignore\n  .golangci.toml\n  go.mod\n  README.md"
+"init short" = "init Golang project"

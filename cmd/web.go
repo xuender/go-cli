@@ -25,7 +25,7 @@ func init() {
 		Use:     "web",
 		Short:   Printer.Sprintf("web short"),
 		Long:    Printer.Sprintf("web long"),
-		Example: "  go-cli web",
+		Example: "  go-cli web [path...]",
 		Aliases: []string{"w"},
 		Run: func(cmd *cobra.Command, args []string) {
 			if debug, err := cmd.Flags().GetBool("debug"); err != nil || !debug {

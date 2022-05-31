@@ -16,6 +16,20 @@ go install github.com/xuender/go-cli@latest
 
 create subcommand
 
+## init
+
+init golang project
+
+```shell
+git clone url
+cd dir
+go-cli init
+```
+
 ## test
 
 create test files and test methods
+
+## web
+
+simple web service

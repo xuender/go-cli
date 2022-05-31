@@ -5,6 +5,8 @@ import (
 	"go/parser"
 	"go/token"
 	"path/filepath"
+	"regexp"
+	"strings"
 	"unicode"
 )
 
@@ -68,4 +70,14 @@ func getName(node *ast.FuncDecl) string {
 	}
 
 	return ""
+}
+
+func GitURL(data []byte) string {
+	reg := regexp.MustCompile(`[A-Za-z0-9_\-./:]+\.git`)
+	ret := string(reg.Find(data))
+	ret = strings.TrimSuffix(ret, ".git")
+	ret = strings.TrimPrefix(ret, "https://")
+	ret = strings.TrimPrefix(ret, "http://")
+
+	return strings.Replace(ret, ":", "/", 1)
 }
