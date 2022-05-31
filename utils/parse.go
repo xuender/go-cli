@@ -60,9 +60,10 @@ func getName(node *ast.FuncDecl) string {
 			if ident, ok := elem.X.(*ast.Ident); ok && unicode.IsUpper([]rune(ident.Name)[0]) {
 				return ident.Name + "_" + node.Name.Name
 			}
-
 		case *ast.Ident:
-			return elem.Name + "_" + node.Name.Name
+			if unicode.IsUpper([]rune(elem.Name)[0]) {
+				return elem.Name + "_" + node.Name.Name
+			}
 		}
 	}
 

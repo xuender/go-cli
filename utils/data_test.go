@@ -19,3 +19,4 @@ func (p *PublicStruct) privateFunc() {
 type privateStruct struct{}
 
 func (p *privateStruct) Test() {}
+func (p privateStruct) Test2() {}
