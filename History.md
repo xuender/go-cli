@@ -1,4 +1,15 @@
 
+0.1.6 / 2022-05-31
+==================
+
+* feat: add web
+* doc: badge
+* chore: LICENSE
+* doc: badge
+* chore: workflows
+* chore: workflows
+* chore: golangci
+
 0.1.5 / 2022-05-30
 ==================
 
