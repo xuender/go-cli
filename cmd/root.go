@@ -55,7 +55,7 @@ func init() {
 	root.PersistentFlags().StringP("language", "l", "", Printer.Sprintf("root language"))
 }
 
-func setLogsLevel(cmd *cobra.Command) {
+func cmdInit(cmd *cobra.Command) {
 	if debug, err := cmd.Flags().GetBool("debug"); err != nil || !debug {
 		logs.SetInfoLevel()
 	}

@@ -31,7 +31,7 @@ func init() {
 			return nil
 		},
 		Run: func(cmd *cobra.Command, args []string) {
-			setLogsLevel(cmd)
+			cmdInit(cmd)
 
 			for _, arg := range args {
 				createTest(arg)

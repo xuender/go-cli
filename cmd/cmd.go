@@ -38,7 +38,7 @@ func init() {
 			return nil
 		},
 		Run: func(cmd *cobra.Command, args []string) {
-			setLogsLevel(cmd)
+			cmdInit(cmd)
 
 			file, err := utils.Parse("cmd", "root.go")
 			useCobra := err == nil && utils.UseCobra(file)
