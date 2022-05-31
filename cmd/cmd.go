@@ -14,6 +14,7 @@ import (
 	"github.com/spf13/cobra"
 	"github.com/xuender/go-cli/utils"
 	"github.com/xuender/oils/base"
+	"github.com/xuender/oils/i18n"
 	"github.com/xuender/oils/logs"
 	"github.com/xuender/oils/oss"
 )
@@ -38,7 +39,13 @@ func init() {
 			return nil
 		},
 		Run: func(cmd *cobra.Command, args []string) {
-			cmdInit(cmd)
+			if debug, err := cmd.Flags().GetBool("debug"); err != nil || !debug {
+				logs.SetInfoLevel()
+			}
+
+			if language, err := cmd.Flags().GetString("language"); err == nil && language != "" {
+				Printer = i18n.GetPrinter(i18n.GetTag([]string{language}))
+			}
 
 			file, err := utils.Parse("cmd", "root.go")
 			useCobra := err == nil && utils.UseCobra(file)

@@ -11,6 +11,7 @@ import (
 	"github.com/spf13/cobra"
 	"github.com/xuender/go-cli/utils"
 	"github.com/xuender/oils/base"
+	"github.com/xuender/oils/i18n"
 	"github.com/xuender/oils/oss"
 )
 
@@ -31,7 +32,13 @@ func init() {
 			return nil
 		},
 		Run: func(cmd *cobra.Command, args []string) {
-			cmdInit(cmd)
+			if debug, err := cmd.Flags().GetBool("debug"); err != nil || !debug {
+				logs.SetInfoLevel()
+			}
+
+			if language, err := cmd.Flags().GetString("language"); err == nil && language != "" {
+				Printer = i18n.GetPrinter(i18n.GetTag([]string{language}))
+			}
 
 			for _, arg := range args {
 				createTest(arg)
@@ -103,7 +110,7 @@ func addTests(abs string, name string) {
 	for _, fun := range funcs {
 		name := "Test" + fun
 		if !base.Has(tests, name) {
-			buffer.WriteString("\nfunc " + name + "(t *testing.T) {\n\tt.Parallel()\n\t// TODO\n}\n")
+			buffer.WriteString("\nfunc " + name + "(t *testing.T) {\n\tt.Parallel()\n\n\t// TODO\n}\n")
 			Printer.Printf("test %s add %s", out, name)
 
 			count++

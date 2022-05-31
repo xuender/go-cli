@@ -8,7 +8,6 @@ import (
 	"embed"
 	"os"
 
-	"gitee.com/xuender/oils/logs"
 	"github.com/spf13/cobra"
 	"github.com/xuender/oils/base"
 	"github.com/xuender/oils/i18n"
@@ -53,15 +52,4 @@ func init() {
 	root := getRoot()
 	root.PersistentFlags().BoolP("debug", "d", false, Printer.Sprintf("root debug"))
 	root.PersistentFlags().StringP("language", "l", "", Printer.Sprintf("root language"))
-}
-
-func cmdInit(cmd *cobra.Command) {
-	if debug, err := cmd.Flags().GetBool("debug"); err != nil || !debug {
-		logs.SetInfoLevel()
-	}
-
-	if language, err := cmd.Flags().GetString("language"); err == nil && language != "" {
-		logs.Info(language)
-		Printer = i18n.GetPrinter(i18n.GetTag([]string{language}))
-	}
 }

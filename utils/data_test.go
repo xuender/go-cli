@@ -8,6 +8,10 @@ func (p *PublicStruct) PublicFunc() {
 	p.privateFunc()
 }
 
+func (p PublicStruct) PublicFunc2() {
+	p.privateFunc()
+}
+
 func (p *PublicStruct) privateFunc() {
 	p.obj.Test()
 }

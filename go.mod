@@ -2,7 +2,7 @@ module github.com/xuender/go-cli
 
 go 1.18
 
-// replace github.com/xuender/oils => ../oils
+replace github.com/xuender/oils => ../oils
 
 require (
 	gitee.com/xuender/oils v1.1.23
@@ -21,6 +21,7 @@ require (
 	go.uber.org/zap v1.21.0 // indirect
 	golang.org/x/exp v0.0.0-20220518171630-0b5c67f07fdf // indirect
 	golang.org/x/text v0.3.7 // indirect
+	google.golang.org/protobuf v1.28.0 // indirect
 	gopkg.in/natefinch/lumberjack.v2 v2.0.0 // indirect
 	gorm.io/gorm v1.23.5 // indirect
 )

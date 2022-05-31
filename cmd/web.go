@@ -11,7 +11,9 @@ import (
 
 	"github.com/spf13/cobra"
 	"github.com/xuender/oils/base"
+	"github.com/xuender/oils/i18n"
 	"github.com/xuender/oils/logs"
+	"github.com/xuender/oils/nets"
 )
 
 // nolint
@@ -26,7 +28,13 @@ func init() {
 		Example: "  go-cli web",
 		Aliases: []string{"w"},
 		Run: func(cmd *cobra.Command, args []string) {
-			cmdInit(cmd)
+			if debug, err := cmd.Flags().GetBool("debug"); err != nil || !debug {
+				logs.SetInfoLevel()
+			}
+
+			if language, err := cmd.Flags().GetString("language"); err == nil && language != "" {
+				Printer = i18n.GetPrinter(i18n.GetTag([]string{language}))
+			}
 
 			if portVal, err := cmd.Flags().GetInt16("port"); err == nil {
 				port = portVal
@@ -34,12 +42,19 @@ func init() {
 
 			dir := base.Must1(os.Getwd())
 
-			if len(args) > 0 {
+			if len(args) == 1 {
 				dir = args[0]
 			}
 
-			logs.Debugw("web", "port", port, "path", dir)
-			base.Must(http.ListenAndServe(fmt.Sprintf(":%d", port), http.FileServer(http.Dir(dir))))
+			var files http.FileSystem
+			if len(args) < 2 {
+				files = http.Dir(dir)
+			} else {
+				files = nets.Dirs(args)
+			}
+
+			logs.Infow("web", "port", port, "paths", args)
+			base.Must(http.ListenAndServe(fmt.Sprintf(":%d", port), http.FileServer(files)))
 		},
 	}
 

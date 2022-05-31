@@ -55,10 +55,14 @@ func getName(node *ast.FuncDecl) string {
 	}
 
 	for _, field := range node.Recv.List {
-		if star, ok := field.Type.(*ast.StarExpr); ok {
-			if ident, ok := star.X.(*ast.Ident); ok && unicode.IsUpper([]rune(ident.Name)[0]) {
+		switch elem := field.Type.(type) {
+		case *ast.StarExpr:
+			if ident, ok := elem.X.(*ast.Ident); ok && unicode.IsUpper([]rune(ident.Name)[0]) {
 				return ident.Name + "_" + node.Name.Name
 			}
+
+		case *ast.Ident:
+			return elem.Name + "_" + node.Name.Name
 		}
 	}
 
