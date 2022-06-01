@@ -1,0 +1,2 @@
+"error empty" = "not empty"
+"select help" = "{{ \"Use the arrow keys to navigate:\" | faint }} {{ .NextKey | faint }} {{ .PrevKey | faint }} {{ .PageDownKey | faint }} {{ .PageUpKey | faint }} {{ if .Search }} {{ \"and\" | faint }} {{ .SearchKey | faint }} {{ \"toggles search\" | faint }}{{ end }}"

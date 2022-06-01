@@ -60,6 +60,7 @@ func init() {
 	root := getRoot()
 	initCmd := &cobra.Command{
 		Use:     "init",
+		Aliases: []string{"i"},
 		Short:   Printer.Sprintf("init short"),
 		Long:    Printer.Sprintf("init long"),
 		Example: "  go-cli init\n  go-cli init path",
@@ -110,13 +111,10 @@ func selectLicense(dir, license string, env *Env) {
 	}
 
 	if license == "" {
-		template := &promptui.SelectTemplates{
-			Help: Printer.Sprintf("init select help"),
-		}
 		prompt := promptui.Select{
 			Label:     Printer.Sprintf("init select license"),
 			Items:     []string{"MIT", "APACHE2", "BSD3"},
-			Templates: template,
+			Templates: NewSelectTemplates(),
 		}
 		_, license = base.Must2(prompt.Run())
 		license = strings.ToLower(license)
