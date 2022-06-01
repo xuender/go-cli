@@ -1,3 +1,6 @@
 "init file %s" = "init file: %s\n"
+"init license" = "license: apache2, bsd3, mit"
 "init long" = "init Golang project\n\nfiles:\n  .editorconfig\n  .gitignore\n  .golangci.toml\n  go.mod\n  README.md"
+"init select help" = "{{ \"Use the arrow keys to navigate:\" | faint }} {{ .NextKey | faint }} {{ .PrevKey | faint }} {{ .PageDownKey | faint }} {{ .PageUpKey | faint }} {{ if .Search }} {{ \"and\" | faint }} {{ .SearchKey | faint }} {{ \"toggles search\" | faint }}{{ end }}"
+"init select license" = "select license"
 "init short" = "init Golang project"

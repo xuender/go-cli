@@ -1,3 +1,6 @@
 "init file %s" = "初始化文件: %s\n"
+"init license" = "软件许可: apache2, bsd3, mit"
 "init long" = "初始化 Golang 项目\n\n生成缺少的文件:\n  .editorconfig\n  .gitignore\n  .golangci.toml\n  go.mod\n  README.md"
+"init select help" = "{{ \"使用箭头选择: \" | faint }} {{ .NextKey | faint }} {{ .PrevKey | faint }} {{ .PageDownKey | faint }} {{ .PageUpKey | faint }} {{ if .Search }} {{ \"and\" | faint }} {{ .SearchKey | faint }} {{ \"toggles search\" | faint }}{{ end }}"
+"init select license" = "选择软件许可"
 "init short" = "初始化 Golang 项目"

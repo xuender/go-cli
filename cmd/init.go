@@ -15,6 +15,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/manifoldco/promptui"
 	"github.com/spf13/cobra"
 	"github.com/xuender/go-cli/utils"
 	"github.com/xuender/oils/base"
@@ -55,6 +56,7 @@ func NewEnv(dir string) *Env {
 
 // nolint
 func init() {
+	license := ""
 	root := getRoot()
 	initCmd := &cobra.Command{
 		Use:     "init",
@@ -70,6 +72,10 @@ func init() {
 				Printer = i18n.GetPrinter(i18n.GetTag([]string{language}))
 			}
 
+			if licenseStr, err := cmd.Flags().GetString("license"); err == nil && licenseStr != "" {
+				license = licenseStr
+			}
+
 			dir := "."
 			if len(args) > 0 {
 				dir = args[0]
@@ -78,7 +84,7 @@ func init() {
 			logs.Debugw("init", "dir", dir)
 			env := NewEnv(dir)
 
-			for _, entry := range base.Must1(static.ReadDir(staticName)) {
+			for _, entry := range base.Must1(static.ReadDir(filepath.Join(staticName, "init"))) {
 				file, data := readStatic(dir, entry.Name(), env)
 
 				if oss.Exist(file) {
@@ -88,10 +94,39 @@ func init() {
 				Printer.Printf("init file %s", file)
 				base.Must(os.WriteFile(file, data, oss.DefaultFileMode))
 			}
+
+			selectLicense(dir, license, env)
 		},
 	}
 
+	initCmd.Flags().StringP("license", "s", "", Printer.Sprintf("init license"))
 	root.AddCommand(initCmd)
+}
+
+func selectLicense(dir, license string, env *Env) {
+	file := filepath.Join(dir, "LICENSE")
+	if oss.Exist(file) {
+		return
+	}
+
+	if license == "" {
+		template := &promptui.SelectTemplates{
+			Help: Printer.Sprintf("init select help"),
+		}
+		prompt := promptui.Select{
+			Label:     Printer.Sprintf("init select license"),
+			Items:     []string{"MIT", "APACHE2", "BSD3"},
+			Templates: template,
+		}
+		_, license = base.Must2(prompt.Run())
+		license = strings.ToLower(license)
+	}
+
+	tmpl := base.Must1(template.ParseFS(static, filepath.Join(staticName, "license", license)+".tpl"))
+	buffer := &bytes.Buffer{}
+
+	base.Must(tmpl.Execute(buffer, env))
+	base.Must(os.WriteFile(file, buffer.Bytes(), oss.DefaultFileMode))
 }
 
 func readStatic(dir, name string, env *Env) (string, []byte) {
@@ -110,7 +145,7 @@ func readStatic(dir, name string, env *Env) (string, []byte) {
 	file := base.Must1(filepath.Abs(filepath.Join(dir, out)))
 
 	if tpl {
-		tmpl := base.Must1(template.ParseFS(static, staticName+"/"+name))
+		tmpl := base.Must1(template.ParseFS(static, filepath.Join(staticName, "init", name)))
 		buffer := &bytes.Buffer{}
 
 		base.Must(tmpl.Execute(buffer, env))
@@ -118,7 +153,7 @@ func readStatic(dir, name string, env *Env) (string, []byte) {
 		return file, buffer.Bytes()
 	}
 
-	reader := base.Must1(static.Open(filepath.Join(staticName, name)))
+	reader := base.Must1(static.Open(filepath.Join(staticName, "init", name)))
 	defer reader.Close()
 
 	return file, base.Must1(io.ReadAll(reader))
