@@ -1,6 +1,6 @@
 "generate allergen" = "allergen"
 "generate increment" = "increment"
-"generate long" = "generate cmd, service, enum"
+"generate long" = "generate:\n  cmd(c)\n  service(s)\n  enum(e}\n  protobuf(p)"
 "generate prompt name" = "input name"
 "generate select enum" = "select enum type"
 "generate select type" = "select generate type"

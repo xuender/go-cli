@@ -1,6 +1,6 @@
 "generate allergen" = "掩码"
 "generate increment" = "连续"
-"generate long" = "创建命令, 服务等"
+"generate long" = "创建:\n  命令 cmd(c)\n  服务 service(s)\n  枚举 enum(e)\n  数据定义 protobuf(p)"
 "generate prompt name" = "输入名称"
 "generate select enum" = "选择枚举类型"
 "generate select type" = "选择创建类型"
