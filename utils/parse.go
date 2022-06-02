@@ -43,12 +43,32 @@ func PackageAndFuncs(files ...string) (string, []string) {
 			}
 		case *ast.File:
 			pack = node.Name.Name
+			// case *ast.IndexExpr:
+			// 	logs.Debug(node)
+			// default:
+			// 	logs.Infow("ss", "node", node)
 		}
 
 		return true
 	})
 
 	return pack, funcs
+}
+
+func getX(expr ast.Expr) string {
+	ret := ""
+	switch elem := expr.(type) {
+	case *ast.Ident:
+		ret = elem.Name
+	case *ast.IndexExpr:
+		ret = getX(elem.X)
+	}
+
+	if ret != "" && unicode.IsUpper([]rune(ret)[0]) {
+		return ret
+	}
+
+	return ""
 }
 
 func getName(node *ast.FuncDecl) string {
@@ -59,13 +79,23 @@ func getName(node *ast.FuncDecl) string {
 	for _, field := range node.Recv.List {
 		switch elem := field.Type.(type) {
 		case *ast.StarExpr:
-			if ident, ok := elem.X.(*ast.Ident); ok && unicode.IsUpper([]rune(ident.Name)[0]) {
-				return ident.Name + "_" + node.Name.Name
+			if name := getX(elem.X); name != "" {
+				return name + "_" + node.Name.Name
 			}
 		case *ast.Ident:
 			if unicode.IsUpper([]rune(elem.Name)[0]) {
 				return elem.Name + "_" + node.Name.Name
 			}
+		case *ast.IndexExpr:
+			if name := getX(elem.X); name != "" {
+				return name + "_" + node.Name.Name
+			}
+		case *ast.IndexListExpr:
+			if name := getX(elem.X); name != "" {
+				return name + "_" + node.Name.Name
+			}
+			// default:
+			// 	logs.Debug(elem)
 		}
 	}
 

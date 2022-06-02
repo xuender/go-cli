@@ -38,6 +38,24 @@ func TestPackageAndFuncs_Struct(t *testing.T) {
 	assert.Equal(t, "utils_test", pack)
 }
 
+func TestPackageAndFuncs_Struct2(t *testing.T) {
+	t.Parallel()
+
+	pack, funcs := utils.PackageAndFuncs("data2_test.go")
+
+	assert.Equals(t, []string{"Slice_Clip", "Slice_Cls"}, funcs)
+	assert.Equal(t, "utils_test", pack)
+}
+
+func TestPackageAndFuncs_Struct3(t *testing.T) {
+	t.Parallel()
+
+	pack, funcs := utils.PackageAndFuncs("data3_test.go")
+
+	assert.Equals(t, []string{"Map_Has"}, funcs)
+	assert.Equal(t, "utils_test", pack)
+}
+
 func TestGitURL(t *testing.T) {
 	t.Parallel()
 

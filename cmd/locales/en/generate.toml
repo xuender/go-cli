@@ -1,0 +1,5 @@
+"generate long" = "generate cmd, service, enum"
+"generate prompt name" = "input name"
+"generate select enum" = "select enum type"
+"generate select type" = "select generate type"
+"generate short" = "generate cmd, service, enum"

@@ -31,10 +31,10 @@ func FileName(name string) string {
 }
 
 func TypeName(name string) string {
-	names := base.Split(strings.TrimFunc(name, unicode.IsSpace), '-', '_', ' ', '\t')
+	names := base.Split(strings.TrimFunc(name, unicode.IsSpace), base.SepInitialisms, '-', '_', ' ', '\t')
 
 	for index, str := range names {
-		if upper := strings.ToUpper(str); commonInitialisms.Has(upper) {
+		if upper := strings.ToUpper(str); base.CommonInitialisms.Has(upper) {
 			names[index] = upper
 		} else {
 			names[index] = strings.ToUpper(str[0:1]) + str[1:]
@@ -43,45 +43,3 @@ func TypeName(name string) string {
 
 	return strings.Join(names, "")
 }
-
-// nolint
-var commonInitialisms = base.NewSet(
-	"ACL",
-	"API",
-	"ASCII",
-	"CPU",
-	"CSS",
-	"DNS",
-	"EOF",
-	"GUID",
-	"HTML",
-	"HTTP",
-	"HTTPS",
-	"ID",
-	"IP",
-	"JSON",
-	"LHS",
-	"QPS",
-	"RAM",
-	"RHS",
-	"RPC",
-	"SLA",
-	"SMTP",
-	"SQL",
-	"SSH",
-	"TCP",
-	"TLS",
-	"TTL",
-	"UDP",
-	"UI",
-	"UID",
-	"UUID",
-	"URI",
-	"URL",
-	"UTF8",
-	"VM",
-	"XML",
-	"XMPP",
-	"XSRF",
-	"XSS",
-)

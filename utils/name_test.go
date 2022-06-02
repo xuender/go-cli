@@ -22,4 +22,5 @@ func TestTypeName(t *testing.T) {
 	assert.Equal(t, "AaBb", utils.TypeName("aa_bb"))
 	assert.Equal(t, "AaBb", utils.TypeName("aa bb"))
 	assert.Equal(t, "GetURL", utils.TypeName("get_url"))
+	assert.Equal(t, "GetURLName", utils.TypeName("getURLname"))
 }
