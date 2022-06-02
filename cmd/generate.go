@@ -19,6 +19,7 @@ import (
 	"github.com/xuender/oils/oss"
 )
 
+// nolint
 func init() {
 	root := getRoot()
 	generateCmd := &cobra.Command{

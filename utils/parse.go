@@ -77,25 +77,31 @@ func getName(node *ast.FuncDecl) string {
 	}
 
 	for _, field := range node.Recv.List {
-		switch elem := field.Type.(type) {
-		case *ast.StarExpr:
-			if name := getX(elem.X); name != "" {
-				return name + "_" + node.Name.Name
-			}
-		case *ast.Ident:
-			if unicode.IsUpper([]rune(elem.Name)[0]) {
-				return elem.Name + "_" + node.Name.Name
-			}
-		case *ast.IndexExpr:
-			if name := getX(elem.X); name != "" {
-				return name + "_" + node.Name.Name
-			}
-		case *ast.IndexListExpr:
-			if name := getX(elem.X); name != "" {
-				return name + "_" + node.Name.Name
-			}
-			// default:
-			// 	logs.Debug(elem)
+		if name := recvName(field, node); name != "" {
+			return name
+		}
+	}
+
+	return ""
+}
+
+func recvName(field *ast.Field, node *ast.FuncDecl) string {
+	switch elem := field.Type.(type) {
+	case *ast.StarExpr:
+		if name := getX(elem.X); name != "" {
+			return name + "_" + node.Name.Name
+		}
+	case *ast.Ident:
+		if unicode.IsUpper([]rune(elem.Name)[0]) {
+			return elem.Name + "_" + node.Name.Name
+		}
+	case *ast.IndexExpr:
+		if name := getX(elem.X); name != "" {
+			return name + "_" + node.Name.Name
+		}
+	case *ast.IndexListExpr:
+		if name := getX(elem.X); name != "" {
+			return name + "_" + node.Name.Name
 		}
 	}
 

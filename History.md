@@ -1,4 +1,14 @@
 
+0.1.7 / 2022-06-02
+==================
+
+* test: FileName, TypeName
+* feat: generate
+* feat: select license
+* feat: add init
+* fix: test add ident func
+* feat: add web
+
 0.1.6 / 2022-05-31
 ==================
 
