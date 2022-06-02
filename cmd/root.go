@@ -6,11 +6,13 @@ package cmd
 
 import (
 	"embed"
+	"fmt"
 	"os"
 
 	"github.com/spf13/cobra"
 	"github.com/xuender/oils/base"
 	"github.com/xuender/oils/i18n"
+	"github.com/xuender/oils/oss"
 )
 
 //go:embed locales
@@ -26,10 +28,13 @@ func getRoot() *cobra.Command {
 	if rootCmd == nil {
 		base.Must(i18n.Load(locales))
 
+		mod := oss.GetMod("cmd")
 		rootCmd = &cobra.Command{
-			Use:   "go-cli",
-			Short: Printer.Sprintf("root short"),
-			Long:  Printer.Sprintf("root long"),
+			Use:     "go-cli",
+			Short:   Printer.Sprintf("root short"),
+			Long:    Printer.Sprintf("root long"),
+			Version: fmt.Sprintf("%s [%s]", mod.Version, mod.Sum),
+			Example: "  go-cli init\n  go-cli g\n  go-cli g cmd\n  go-cli g service pkg/service\n  go-cli test pkg/service.go",
 			// Run: func(cmd *cobra.Command, args []string) { },
 		}
 

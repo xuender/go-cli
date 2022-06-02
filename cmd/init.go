@@ -34,6 +34,7 @@ type Env struct {
 	User    string
 	Package string
 	Name    string
+	Path    string
 }
 
 func NewEnv(dir string) *Env {

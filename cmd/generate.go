@@ -57,12 +57,14 @@ func init() {
 			logs.Debugw("g", "type", typeStr, "name", name)
 
 			switch typeStr {
-			case "cmd":
+			case "cmd", "c":
 				createCmd(name)
-			case "service":
+			case "service", "s":
 				createService(name)
-			case "enum":
+			case "enum", "e":
 				createEnum(name, mod)
+			case "proto", "protobuf", "p":
+				createProto(name, mod)
 			}
 		},
 	}
@@ -70,11 +72,34 @@ func init() {
 	root.AddCommand(generateCmd)
 }
 
+func createProto(name, mod string) {
+	if mod == "" {
+		prompt := promptui.Select{
+			Label:     Printer.Sprintf("generate select proto"),
+			Items:     []string{"message", "enum"},
+			Templates: NewSelectTemplates(),
+		}
+		index, _ := base.Must2(prompt.Run())
+
+		if index > 0 {
+			mod = "enum"
+		}
+	}
+
+	if mod == "enum" {
+		createFile(name, "proto_enum.tpl", ".proto")
+
+		return
+	}
+
+	createFile(name, "proto_message.tpl", ".proto")
+}
+
 func createEnum(name, mod string) {
 	if mod == "" {
 		prompt := promptui.Select{
 			Label:     Printer.Sprintf("generate select enum"),
-			Items:     []string{"连续", "掩码"},
+			Items:     []string{Printer.Sprintf("generate increment"), Printer.Sprintf("generate allergen")},
 			Templates: NewSelectTemplates(),
 		}
 		index, _ := base.Must2(prompt.Run())
@@ -85,28 +110,29 @@ func createEnum(name, mod string) {
 	}
 
 	if mod == "allergen" {
-		createFile(name, "enum_allergen.tpl")
+		createFile(name, "enum_allergen.tpl", ".go")
 
 		return
 	}
 
-	createFile(name, "enum_increment.tpl")
+	createFile(name, "enum_increment.tpl", ".go")
 }
 
 func createService(name string) {
-	createFile(name, "service.tpl")
+	createFile(name, "service.tpl", ".go")
 }
 
-func createFile(name, tpl string) {
+func createFile(name, tpl, ext string) {
 	dir := filepath.Dir(name)
 	baseName := filepath.Base(name)
-	file := filepath.Join(dir, utils.FileName(baseName)+".go")
+	file := filepath.Join(dir, utils.FileName(baseName)+ext)
 
 	if oss.Exist(file) {
 		return
 	}
 
 	env := NewEnv(".")
+	env.Path = dir
 
 	if dir == "." {
 		if index := strings.LastIndex(env.Package, "/"); index > 0 {
@@ -162,7 +188,7 @@ func createCmd(name string) {
 func selectType() string {
 	prompt := promptui.Select{
 		Label:     Printer.Sprintf("generate select type"),
-		Items:     []string{"cmd", "service", "enum"},
+		Items:     []string{"cmd", "service", "enum", "protobuf"},
 		Templates: NewSelectTemplates(),
 	}
 	_, res := base.Must2(prompt.Run())

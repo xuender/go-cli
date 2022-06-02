@@ -1,3 +1,5 @@
+"generate allergen" = "allergen"
+"generate increment" = "increment"
 "generate long" = "generate cmd, service, enum"
 "generate prompt name" = "input name"
 "generate select enum" = "select enum type"
