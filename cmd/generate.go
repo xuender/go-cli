@@ -13,6 +13,7 @@ import (
 
 	"github.com/manifoldco/promptui"
 	"github.com/spf13/cobra"
+	"github.com/xuender/go-cli/pb"
 	"github.com/xuender/go-cli/utils"
 	"github.com/xuender/oils/base"
 	"github.com/xuender/oils/logs"
@@ -31,7 +32,7 @@ func init() {
 		Run: func(cmd *cobra.Command, args []string) {
 			typeStr := ""
 			name := ""
-			mod := ""
+			mod := pb.Mod_default
 			size := len(args)
 
 			if size == 0 {
@@ -51,7 +52,9 @@ func init() {
 			}
 
 			if size > base.Two {
-				mod = args[base.Two]
+				if modValue, has := pb.Mod_value[args[base.Two]]; has {
+					mod = pb.Mod(modValue)
+				}
 			}
 
 			logs.Debugw("g", "type", typeStr, "name", name)
@@ -60,7 +63,25 @@ func init() {
 			case "cmd", "c":
 				createCmd(name)
 			case "service", "s":
-				createService(name)
+				if oss.IsDir(name) {
+					name = filepath.Join(name, "service")
+				}
+
+				if !strings.HasSuffix(strings.ToLower(name), "service") {
+					name += "Service"
+				}
+
+				createService(name, mod)
+			case "router", "r":
+				if oss.IsDir(name) {
+					name = filepath.Join(name, "router")
+				}
+
+				if !strings.HasSuffix(strings.ToLower(name), "router") {
+					name += "Router"
+				}
+
+				createRouter(name, mod)
 			case "enum", "e":
 				createEnum(name, mod)
 			case "proto", "protobuf", "p":
@@ -72,8 +93,41 @@ func init() {
 	root.AddCommand(generateCmd)
 }
 
-func createProto(name, mod string) {
-	if mod == "" {
+func createRouter(name string, mod pb.Mod) {
+	if mod == pb.Mod_default {
+		prompt := promptui.Select{
+			Label: Printer.Sprintf("generate select router"),
+			Items: []string{
+				Printer.Sprintf("generate http"),
+				Printer.Sprintf("generate gin"),
+				Printer.Sprintf("generate gin_gorm"),
+			},
+			Templates: NewSelectTemplates(),
+		}
+		index, _ := base.Must2(prompt.Run())
+
+		switch index {
+		case 0:
+			mod = pb.Mod_default
+		case 1:
+			mod = pb.Mod_gin
+		case base.Two:
+			mod = pb.Mod_gin | pb.Mod_gorm
+		}
+	}
+	// nolint
+	switch mod {
+	case pb.Mod_gin:
+		createFile(name, "router_gin.tpl", ".go")
+	case pb.Mod_gin | pb.Mod_gorm:
+		createFile(name, "router_gin_gorm.tpl", ".go")
+	default:
+		createFile(name, "router_http.tpl", ".go")
+	}
+}
+
+func createProto(name string, mod pb.Mod) {
+	if mod == pb.Mod_default {
 		prompt := promptui.Select{
 			Label:     Printer.Sprintf("generate select proto"),
 			Items:     []string{"message", "enum"},
@@ -82,11 +136,11 @@ func createProto(name, mod string) {
 		index, _ := base.Must2(prompt.Run())
 
 		if index > 0 {
-			mod = "enum"
+			mod = pb.Mod_enum
 		}
 	}
 
-	if mod == "enum" {
+	if mod == pb.Mod_enum {
 		createFile(name, "proto_enum.tpl", ".proto")
 
 		return
@@ -95,8 +149,8 @@ func createProto(name, mod string) {
 	createFile(name, "proto_message.tpl", ".proto")
 }
 
-func createEnum(name, mod string) {
-	if mod == "" {
+func createEnum(name string, mod pb.Mod) {
+	if mod == pb.Mod_default {
 		prompt := promptui.Select{
 			Label:     Printer.Sprintf("generate select enum"),
 			Items:     []string{Printer.Sprintf("generate increment"), Printer.Sprintf("generate allergen")},
@@ -105,11 +159,11 @@ func createEnum(name, mod string) {
 		index, _ := base.Must2(prompt.Run())
 
 		if index > 0 {
-			mod = "allergen"
+			mod = pb.Mod_allergen
 		}
 	}
 
-	if mod == "allergen" {
+	if mod == pb.Mod_allergen {
 		createFile(name, "enum_allergen.tpl", ".go")
 
 		return
@@ -118,8 +172,27 @@ func createEnum(name, mod string) {
 	createFile(name, "enum_increment.tpl", ".go")
 }
 
-func createService(name string) {
-	createFile(name, "service.tpl", ".go")
+func createService(name string, mod pb.Mod) {
+	if mod == pb.Mod_default {
+		prompt := promptui.Select{
+			Label:     Printer.Sprintf("generate select service"),
+			Items:     []string{Printer.Sprintf("generate default"), Printer.Sprintf("generate gorm")},
+			Templates: NewSelectTemplates(),
+		}
+		index, _ := base.Must2(prompt.Run())
+
+		if index > 0 {
+			mod = pb.Mod_gorm
+		}
+	}
+
+	if mod == pb.Mod_gorm {
+		createFile(name, "service_gorm.tpl", ".go")
+
+		return
+	}
+
+	createFile(name, "service_default.tpl", ".go")
 }
 
 func createFile(name, tpl, ext string) {

@@ -1,4 +1,6 @@
 "generate allergen" = "allergen"
+"generate default" = "default"
+"generate gorm" = "gorm"
 "generate increment" = "increment"
 "generate long" = "generate:\n  cmd(c)\n  service(s)\n  enum(e}\n  protobuf(p)"
 "generate prompt name" = "input name"

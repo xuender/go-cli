@@ -11,3 +11,6 @@ clean:
 
 build:
 	go build -o dist/go-cli main.go
+
+proto:
+	protoc --go_out=. pb/*.proto
