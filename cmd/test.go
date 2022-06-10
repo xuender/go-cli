@@ -7,11 +7,11 @@ import (
 	"path/filepath"
 	"strings"
 
-	"gitee.com/xuender/oils/logs"
 	"github.com/spf13/cobra"
 	"github.com/xuender/go-cli/utils"
 	"github.com/xuender/oils/base"
 	"github.com/xuender/oils/i18n"
+	"github.com/xuender/oils/logs"
 	"github.com/xuender/oils/oss"
 )
 
