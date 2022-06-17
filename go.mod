@@ -7,8 +7,8 @@ go 1.18
 require (
 	github.com/manifoldco/promptui v0.9.0
 	github.com/spf13/cobra v1.4.0
-	github.com/xuender/oils v0.2.14
-	golang.org/x/exp v0.0.0-20220518171630-0b5c67f07fdf
+	github.com/xuender/oils v0.2.17
+	golang.org/x/exp v0.0.0-20220613132600-b0d781184e0d
 	google.golang.org/protobuf v1.28.0
 )
 
@@ -20,7 +20,7 @@ require (
 	go.uber.org/atomic v1.9.0 // indirect
 	go.uber.org/multierr v1.8.0 // indirect
 	go.uber.org/zap v1.21.0 // indirect
-	golang.org/x/sys v0.0.0-20220503163025-988cb79eb6c6 // indirect
+	golang.org/x/sys v0.0.0-20220610221304-9f5ed59c137d // indirect
 	golang.org/x/text v0.3.7 // indirect
 	gopkg.in/natefinch/lumberjack.v2 v2.0.0 // indirect
 )
