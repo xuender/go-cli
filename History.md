@@ -1,4 +1,13 @@
 
+0.1.8 / 2022-12-08
+==================
+
+* refactor: go.mod
+* feat: static 资源
+* chore: oils version
+* test
+* feat: add router
+
 0.1.7 / 2022-06-02
 ==================
 
