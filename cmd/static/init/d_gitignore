@@ -20,3 +20,5 @@ log.txt
 /.vscode
 /coverage
 /dist
+cover.out
+cover.html

@@ -22,5 +22,10 @@ disable = [
   "nolintlint",
   "wrapcheck",
   "exhaustivestruct",
+  "varcheck",
+  "ifshort",
+  "nosnakecase",
+  "deadcode",
+  "exhaustruct",
 ]
 enable-all = true
