@@ -7,6 +7,7 @@ import (
 	"path/filepath"
 	"strings"
 
+	"github.com/samber/lo"
 	"github.com/spf13/cobra"
 	"github.com/xuender/go-cli/utils"
 	"github.com/xuender/oils/base"
@@ -52,7 +53,7 @@ func init() {
 func createTest(arg string) {
 	logs.Debug(arg)
 
-	abs := base.Must1(filepath.Abs(arg))
+	abs := lo.Must1(filepath.Abs(arg))
 
 	if !oss.Exist(abs) {
 		Printer.Printf("test %s not exist", arg)
@@ -60,10 +61,10 @@ func createTest(arg string) {
 		return
 	}
 
-	file := base.Must1(os.Stat(abs))
+	file := lo.Must1(os.Stat(abs))
 
 	if file.IsDir() {
-		for _, dir := range base.Must1(os.ReadDir(abs)) {
+		for _, dir := range lo.Must1(os.ReadDir(abs)) {
 			createTest(filepath.Join(arg, dir.Name()))
 		}
 
@@ -124,11 +125,11 @@ func addTests(abs string, name string) {
 	}
 
 	if exist {
-		file := base.Must1(os.OpenFile(out, os.O_CREATE|os.O_APPEND|os.O_RDWR, os.ModeAppend|os.ModePerm))
+		file := lo.Must1(os.OpenFile(out, os.O_CREATE|os.O_APPEND|os.O_RDWR, os.ModeAppend|os.ModePerm))
 		defer file.Close()
 
-		base.Must1(file.Write(buffer.Bytes()))
+		lo.Must1(file.Write(buffer.Bytes()))
 	} else {
-		base.Must(os.WriteFile(out, buffer.Bytes(), oss.DefaultFileMode))
+		lo.Must0(os.WriteFile(out, buffer.Bytes(), oss.DefaultFileMode))
 	}
 }

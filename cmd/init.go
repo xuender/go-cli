@@ -12,9 +12,9 @@ import (
 	"time"
 
 	"github.com/manifoldco/promptui"
+	"github.com/samber/lo"
 	"github.com/spf13/cobra"
 	"github.com/xuender/go-cli/utils"
-	"github.com/xuender/oils/base"
 	"github.com/xuender/oils/i18n"
 	"github.com/xuender/oils/logs"
 	"github.com/xuender/oils/oss"
@@ -34,7 +34,7 @@ type Env struct {
 }
 
 func NewEnv(dir string) *Env {
-	currentUser := base.Must1(user.Current())
+	currentUser := lo.Must1(user.Current())
 	git := ""
 	name := ""
 
@@ -82,7 +82,7 @@ func init() {
 			logs.Debugw("init", "dir", dir)
 			env := NewEnv(dir)
 
-			for _, entry := range base.Must1(static.ReadDir(filepath.Join(staticName, "init"))) {
+			for _, entry := range lo.Must1(static.ReadDir(filepath.Join(staticName, "init"))) {
 				file, data := readStatic(dir, entry.Name(), env)
 
 				if oss.Exist(file) {
@@ -90,7 +90,7 @@ func init() {
 				}
 
 				Printer.Printf("init file %s", file)
-				base.Must(os.WriteFile(file, data, oss.DefaultFileMode))
+				lo.Must0(os.WriteFile(file, data, oss.DefaultFileMode))
 			}
 
 			selectLicense(dir, license, env)
@@ -113,15 +113,15 @@ func selectLicense(dir, license string, env *Env) {
 			Items:     []string{"MIT", "APACHE2", "BSD3"},
 			Templates: NewSelectTemplates(),
 		}
-		_, license = base.Must2(prompt.Run())
+		_, license = lo.Must2(prompt.Run())
 		license = strings.ToLower(license)
 	}
 
-	tmpl := base.Must1(template.ParseFS(static, filepath.Join(staticName, "license", license)+".tpl"))
+	tmpl := lo.Must1(template.ParseFS(static, filepath.Join(staticName, "license", license)+".tpl"))
 	buffer := &bytes.Buffer{}
 
-	base.Must(tmpl.Execute(buffer, env))
-	base.Must(os.WriteFile(file, buffer.Bytes(), oss.DefaultFileMode))
+	lo.Must0(tmpl.Execute(buffer, env))
+	lo.Must0(os.WriteFile(file, buffer.Bytes(), oss.DefaultFileMode))
 }
 
 func readStatic(dir, name string, env *Env) (string, []byte) {
@@ -137,19 +137,19 @@ func readStatic(dir, name string, env *Env) (string, []byte) {
 		tpl = true
 	}
 
-	file := base.Must1(filepath.Abs(filepath.Join(dir, out)))
+	file := lo.Must1(filepath.Abs(filepath.Join(dir, out)))
 
 	if tpl {
-		tmpl := base.Must1(template.ParseFS(static, filepath.Join(staticName, "init", name)))
+		tmpl := lo.Must1(template.ParseFS(static, filepath.Join(staticName, "init", name)))
 		buffer := &bytes.Buffer{}
 
-		base.Must(tmpl.Execute(buffer, env))
+		lo.Must0(tmpl.Execute(buffer, env))
 
 		return file, buffer.Bytes()
 	}
 
-	reader := base.Must1(static.Open(filepath.Join(staticName, "init", name)))
+	reader := lo.Must1(static.Open(filepath.Join(staticName, "init", name)))
 	defer reader.Close()
 
-	return file, base.Must1(io.ReadAll(reader))
+	return file, lo.Must1(io.ReadAll(reader))
 }

@@ -8,12 +8,14 @@ import (
 	"text/template"
 
 	"github.com/manifoldco/promptui"
+	"github.com/samber/lo"
 	"github.com/spf13/cobra"
 	"github.com/xuender/go-cli/pb"
 	"github.com/xuender/go-cli/utils"
-	"github.com/xuender/oils/base"
-	"github.com/xuender/oils/logs"
-	"github.com/xuender/oils/oss"
+	"github.com/xuender/kit/base"
+	"github.com/xuender/kit/logs"
+	"github.com/xuender/kit/oss"
+	ooss "github.com/xuender/oils/oss"
 )
 
 // nolint
@@ -53,7 +55,7 @@ func init() {
 				}
 			}
 
-			logs.Debugw("g", "type", typeStr, "name", name)
+			logs.D.Printf("g type: %s, name: %s", typeStr, name)
 
 			switch typeStr {
 			case "cmd", "c":
@@ -100,7 +102,7 @@ func createRouter(name string, mod pb.Mod) {
 			},
 			Templates: NewSelectTemplates(),
 		}
-		index, _ := base.Must2(prompt.Run())
+		index, _ := lo.Must2(prompt.Run())
 
 		switch index {
 		case 0:
@@ -129,7 +131,7 @@ func createProto(name string, mod pb.Mod) {
 			Items:     []string{"message", "enum"},
 			Templates: NewSelectTemplates(),
 		}
-		index, _ := base.Must2(prompt.Run())
+		index, _ := lo.Must2(prompt.Run())
 
 		if index > 0 {
 			mod = pb.Mod_enum
@@ -152,7 +154,7 @@ func createEnum(name string, mod pb.Mod) {
 			Items:     []string{Printer.Sprintf("generate increment"), Printer.Sprintf("generate allergen")},
 			Templates: NewSelectTemplates(),
 		}
-		index, _ := base.Must2(prompt.Run())
+		index, _ := lo.Must2(prompt.Run())
 
 		if index > 0 {
 			mod = pb.Mod_allergen
@@ -175,7 +177,7 @@ func createService(name string, mod pb.Mod) {
 			Items:     []string{Printer.Sprintf("generate default"), Printer.Sprintf("generate gorm")},
 			Templates: NewSelectTemplates(),
 		}
-		index, _ := base.Must2(prompt.Run())
+		index, _ := lo.Must2(prompt.Run())
 
 		if index > 0 {
 			mod = pb.Mod_gorm
@@ -217,41 +219,41 @@ func createFile(name, tpl, ext string) {
 	env.Name = utils.TypeName(baseName)
 
 	_ = os.MkdirAll(dir, oss.DefaultDirFileMod)
-	tmpl := base.Must1(template.ParseFS(static, filepath.Join(staticName, "generate", tpl)))
+	tmpl := lo.Must1(template.ParseFS(static, filepath.Join(staticName, "generate", tpl)))
 	buffer := &bytes.Buffer{}
 
-	base.Must(tmpl.Execute(buffer, env))
-	base.Must(os.WriteFile(file, buffer.Bytes(), oss.DefaultFileMode))
+	lo.Must0(tmpl.Execute(buffer, env))
+	lo.Must0(os.WriteFile(file, buffer.Bytes(), oss.DefaultFileMode))
 }
 
 func createCmd(name string) {
 	file, err := utils.Parse("cmd", "root.go")
 	useCobra := err == nil && utils.UseCobra(file)
 
-	logs.Debugw("cmd", "name", name)
+	logs.D.Println("cmd", "name", name)
 
 	if useCobra {
-		if oss.Exist("cmd", name+".go") {
+		if oss.Exist(filepath.Join("cmd", name+".go")) {
 			panic(Printer.Sprintf("cmd %s exist", name))
 		}
 
-		base.Must(oss.Exec("cobra-cli", "add", name))
+		lo.Must0(ooss.Exec("cobra-cli", "add", name))
 
 		return
 	}
 
-	if oss.Exist("cmd", name) {
+	if oss.Exist(filepath.Join("cmd", name)) {
 		panic(Printer.Sprintf("cmd %s exist", name))
 	}
 
-	base.Must(os.MkdirAll(filepath.Join("cmd", name), oss.DefaultDirFileMod))
+	lo.Must0(os.MkdirAll(filepath.Join("cmd", name), oss.DefaultDirFileMod))
 
-	tmpl := base.Must1(template.ParseFS(static, filepath.Join(staticName, "generate", "cmd.tpl")))
+	tmpl := lo.Must1(template.ParseFS(static, filepath.Join(staticName, "generate", "cmd.tpl")))
 	buffer := &bytes.Buffer{}
 	env := &Env{Name: name}
 
-	base.Must(tmpl.Execute(buffer, env))
-	base.Must(os.WriteFile(filepath.Join("cmd", name, "main.go"), buffer.Bytes(), oss.DefaultFileMode))
+	lo.Must0(tmpl.Execute(buffer, env))
+	lo.Must0(os.WriteFile(filepath.Join("cmd", name, "main.go"), buffer.Bytes(), oss.DefaultFileMode))
 }
 
 func selectType() string {
@@ -260,7 +262,7 @@ func selectType() string {
 		Items:     []string{"cmd", "service", "enum", "protobuf"},
 		Templates: NewSelectTemplates(),
 	}
-	_, res := base.Must2(prompt.Run())
+	_, res := lo.Must2(prompt.Run())
 	res = strings.ToLower(res)
 
 	return res
@@ -272,7 +274,7 @@ func promptName() string {
 		Validate: validate,
 	}
 
-	return base.Must1(prompt.Run())
+	return lo.Must1(prompt.Run())
 }
 
 func validate(input string) error {

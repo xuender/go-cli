@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/samber/lo"
 	"github.com/spf13/cobra"
-	"github.com/xuender/oils/base"
 	"github.com/xuender/oils/i18n"
 	"github.com/xuender/oils/oss"
 )
@@ -22,7 +22,7 @@ var rootCmd *cobra.Command
 
 func getRoot() *cobra.Command {
 	if rootCmd == nil {
-		base.Must(i18n.Load(locales))
+		lo.Must0(i18n.Load(locales))
 
 		mod := oss.GetMod("cmd")
 		rootCmd = &cobra.Command{

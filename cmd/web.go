@@ -5,8 +5,8 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/samber/lo"
 	"github.com/spf13/cobra"
-	"github.com/xuender/oils/base"
 	"github.com/xuender/oils/i18n"
 	"github.com/xuender/oils/logs"
 	"github.com/xuender/oils/nets"
@@ -36,7 +36,7 @@ func init() {
 				port = portVal
 			}
 
-			dir := base.Must1(os.Getwd())
+			dir := lo.Must1(os.Getwd())
 
 			if len(args) == 1 {
 				dir = args[0]
@@ -50,7 +50,7 @@ func init() {
 			}
 
 			logs.Infow("web", "port", port, "paths", args)
-			base.Must(http.ListenAndServe(fmt.Sprintf(":%d", port), http.FileServer(files)))
+			lo.Must0(http.ListenAndServe(fmt.Sprintf(":%d", port), http.FileServer(files)))
 		},
 	}
 
