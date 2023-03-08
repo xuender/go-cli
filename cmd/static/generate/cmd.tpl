@@ -14,8 +14,9 @@ func main() {
 }
 
 func usage() {
-	fmt.Fprintf(flag.CommandLine.Output(), "{{ .Name }}\n\n")
-	fmt.Fprintf(flag.CommandLine.Output(), "TODO.\n\n")
-	fmt.Fprintf(flag.CommandLine.Output(), "usage: %s [path ...]\n", os.Args[0])
+	fmt.Fprintf(os.Stderr, "{{ .Name }}\n\n")
+	fmt.Fprintf(os.Stderr, "TODO.\n\n")
+	fmt.Fprintf(os.Stderr, "Usage: %s [flags]\n", os.Args[0])
 	flag.PrintDefaults()
+	os.Exit(1)
 }
