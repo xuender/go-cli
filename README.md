@@ -26,9 +26,15 @@ cd dir
 go-cli init
 ```
 
-## test
+## generate
+
+### struct
+
+### test
 
 create test files and test methods
+
+### example
 
 ## web
 

@@ -1,56 +1,42 @@
 package cmd
 
 import (
-	"embed"
-	"fmt"
 	"os"
 
-	"github.com/samber/lo"
 	"github.com/spf13/cobra"
-	"github.com/xuender/oils/i18n"
-	"github.com/xuender/oils/oss"
+	"github.com/xuender/go-cli/generate"
+	"github.com/xuender/go-cli/initialization"
+	"github.com/xuender/kit/logs"
+	"github.com/youthlin/t"
 )
 
-//go:embed locales
-var locales embed.FS
+func Execute() {
+	rootCmd := &cobra.Command{
+		Use:     "go-cli",
+		Short:   t.T("CLI tool for Golang"),
+		Long:    t.T("CLI tool for Golang\n\n  Generate structures, tests, examples, initialize projects, etc."),
+		Version: "1.1.10",
+	}
 
-// nolint
-var Printer = i18n.GetPrinter()
-
-// nolint
-var rootCmd *cobra.Command
-
-func getRoot() *cobra.Command {
-	if rootCmd == nil {
-		lo.Must0(i18n.Load(locales))
-
-		mod := oss.GetMod("cmd")
-		rootCmd = &cobra.Command{
-			Use:     "go-cli",
-			Short:   Printer.Sprintf("root short"),
-			Long:    Printer.Sprintf("root long"),
-			Version: fmt.Sprintf("%s [%s]", mod.Version, mod.Sum),
-			Example: "  go-cli init\n  go-cli g\n  go-cli g cmd\n  go-cli g service pkg/service\n  go-cli test pkg/service.go",
-			// Run: func(cmd *cobra.Command, args []string) { },
+	rootCmd.PersistentFlags().StringP("language", "l", t.Global().Locale(), t.T("select language: en, zh"))
+	rootCmd.PersistentFlags().BoolP("debug", "d", false, t.T("debug mode, display debug log"))
+	rootCmd.PersistentPreRun = func(cmd *cobra.Command, args []string) {
+		if debug, err := cmd.Flags().GetBool("debug"); err == nil && debug {
+			logs.D.Println(t.T("set debug: %v", debug))
+			logs.SetLevel(logs.Debug)
+		} else {
+			logs.SetLevel(logs.Info)
 		}
 
-		rootCmd.CompletionOptions.DisableDefaultCmd = true
+		if lang, err := cmd.Flags().GetString("language"); err == nil {
+			logs.D.Println(t.T("set language: %s", lang))
+			t.SetLocale(lang)
+		}
 	}
+	rootCmd.AddCommand(initialization.SubCmd(&cobra.Command{Use: "init", Aliases: []string{"i", "initialization"}}))
+	rootCmd.AddCommand(generate.SubCmd(&cobra.Command{Use: "generate", Aliases: []string{"g", "creaet"}}))
 
-	return rootCmd
-}
-
-// Execute adds all child commands to the root command and sets flags appropriately.
-// This is called by main.main(). It only needs to happen once to the rootCmd.
-func Execute() {
-	if err := rootCmd.Execute(); err != nil {
+	if rootCmd.Execute() != nil {
 		os.Exit(1)
 	}
-}
-
-// nolint
-func init() {
-	root := getRoot()
-	root.PersistentFlags().BoolP("debug", "d", false, Printer.Sprintf("root debug"))
-	root.PersistentFlags().StringP("language", "l", "", Printer.Sprintf("root language"))
 }

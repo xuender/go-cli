@@ -25,3 +25,9 @@ lint:
 
 lint-fix:
 	golangci-lint run --timeout 60s --max-same-issues 50 --fix ./...
+
+msg:
+	xgettext -C --add-comments=TRANSLATORS: --force-po -kT -kN:1,2 -kX:2,1c -kXN:2,3,1c -o doc/message.pot */*.go
+
+msginit:
+	msginit -l zh_CN --no-translator -i doc/message.pot -o doc/zh_CN.po

@@ -1,0 +1,170 @@
+# go-cli
+# Copyright (C) 2023 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the github.com/xuender/go-cli package.
+# xuender <xuender@gmail.com>, 2023.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: 1.1.10\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-03-30 15:19+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: xuender <xuender@gmail.com>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: cmd/root.go:16
+msgid "CLI tool for Golang"
+msgstr ""
+
+#: cmd/root.go:17
+msgid ""
+"CLI tool for Golang\n"
+"\n"
+"  Generate structures, tests, examples, initialize projects, etc."
+msgstr ""
+
+#: cmd/root.go:21
+msgid "select language: en, zh"
+msgstr ""
+
+#: cmd/root.go:22
+msgid "debug mode, display debug log"
+msgstr ""
+
+#: cmd/root.go:25
+msgid "set debug: %v"
+msgstr ""
+
+#: cmd/root.go:32
+#, c-format
+msgid "set language: %s"
+msgstr ""
+
+#: generate/cmd.go:14
+msgid "generate struct, test, example"
+msgstr ""
+
+#: generate/cmd.go:15
+msgid ""
+"generate:\n"
+"  example(e)\n"
+"  struct(s)\n"
+"  test(t}"
+msgstr ""
+
+#: generate/cmd.go:17
+msgid "output file"
+msgstr ""
+
+#: generate/example.go:11 generate/example.go:12
+msgid "generate example"
+msgstr ""
+
+#: generate/example.go:13
+msgid ""
+"  # create example\n"
+"  go-cli g e pkg/source.go"
+msgstr ""
+
+#: generate/proto.go:18
+msgid "message or enum"
+msgstr ""
+
+#: generate/proto.go:19 generate/proto.go:20
+msgid "generate protobuf"
+msgstr ""
+
+#: generate/proto.go:21
+msgid ""
+"  # create message\n"
+"  go-cli g p pb/Book\n"
+"  # create enum\n"
+"  go-cli g p BookType -t enum -o pb/book.proto"
+msgstr ""
+
+#: generate/proto.go:46
+#, c-format
+msgid "create Proto: %s"
+msgstr ""
+
+#: generate/struct.go:16 generate/struct.go:17
+msgid "generate struct"
+msgstr ""
+
+#: generate/struct.go:18
+msgid ""
+"  # create struct\n"
+"  go-cli g s Book"
+msgstr ""
+
+#: generate/struct.go:43
+#, c-format
+msgid "create struct: %s"
+msgstr ""
+
+#: generate/struct.go:53
+#, c-format
+msgid "exist: %s"
+msgstr ""
+
+#: generate/test.go:16 generate/test.go:17
+msgid "generate test"
+msgstr ""
+
+#: generate/test.go:18
+msgid ""
+"  # create test\n"
+"  go-cli g t pkg/source.go"
+msgstr ""
+
+#: generate/test.go:43
+#, c-format
+msgid "create test: %s"
+msgstr ""
+
+#: generate/test.go:46
+#, c-format
+msgid "not found: %s"
+msgstr ""
+
+#: generate/test.go:76
+#, c-format
+msgid "create: %s %s"
+msgstr ""
+
+#: initialization/cmd.go:30
+msgid "init Golang project"
+msgstr ""
+
+#: initialization/cmd.go:31
+msgid ""
+"init Golang project\n"
+"\n"
+"files:\n"
+"  .editorconfig\n"
+"  .gitignore\n"
+"  .golangci.toml\n"
+"  go.mod\n"
+"  LICENSE\n"
+"  Makefile\n"
+"  README.md"
+msgstr ""
+
+#: initialization/cmd.go:33
+msgid "license: apache2, bsd3, mit"
+msgstr ""
+
+#: initialization/cmd.go:46
+#, c-format
+msgid "init dir: %s"
+msgstr ""
+
+#: initialization/cmd.go:57 initialization/cmd.go:73
+#, c-format
+msgid "init file %s"
+msgstr ""

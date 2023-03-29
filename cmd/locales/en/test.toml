@@ -1,8 +1,0 @@
-"test %s add %s" = "file %s add test func %s\n"
-"test %s not exist" = "file or dir %s not exist\n"
-"test exist %s" = "test file exists: %s"
-"test long" = "create test files based on source program files or directories test methods"
-"test missing file" = "missing source program to generate test file\n"
-"test no add %s" = "golang source %s no test method add\n"
-"test not gofile %s" = "file %s not golang source\n"
-"test short" = "create test files and test methods"
