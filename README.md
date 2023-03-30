@@ -12,10 +12,6 @@ CLI tool for Golang.
 go install github.com/xuender/go-cli@latest
 ```
 
-## cmd
-
-create subcommand
-
 ## init
 
 init golang project
@@ -30,12 +26,18 @@ go-cli init
 
 ### struct
 
+```shell
+go-cli g s dir/Book
+```
+
 ### test
 
-create test files and test methods
+```shell
+go-cli g t dir/book.go
+```
 
 ### example
 
-## web
-
-simple web service
+```shell
+go-cli g e dir/book.go
+```
