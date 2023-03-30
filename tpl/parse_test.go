@@ -27,7 +27,7 @@ func TestPackageAndFuncs(t *testing.T) {
 
 	pack, funcs := tpl.PackageAndFuncs("parse.go")
 
-	assert.Equal(t, []string{"Parse", "PackageAndFuncs"}, funcs)
+	assert.Equal(t, []string{"Parse", "PackageAndStructs", "PackageAndFuncs"}, funcs)
 	assert.Equal(t, "tpl", pack)
 }
 

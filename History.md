@@ -2,6 +2,7 @@
 1.1.10 / 2023-03-30
 ==================
 
+* test: PackageAndStructs
 * style: must error
 * feat: struct, test, example, init, proto, i18n
 * chan: use kit
