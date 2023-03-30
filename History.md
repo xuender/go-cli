@@ -1,4 +1,11 @@
 
+1.1.10 / 2023-03-30
+==================
+
+* feat: struct, test, example, init, proto, i18n
+* chan: use kit
+* feat: update usage
+
 0.1.9 / 2022-12-08
 ==================
 

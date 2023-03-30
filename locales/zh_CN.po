@@ -1,5 +1,5 @@
 # go-cli
-# Copyright (C) 2023 THE 1.1.10'S COPYRIGHT HOLDER
+# Copyright (C) 2023 THE 0.2.10'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the github.com/xuender/go-cli package.
 # xuender <xuender@gmail.com>, 2023.
 #
