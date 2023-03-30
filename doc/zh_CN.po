@@ -7,18 +7,18 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.1.11\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-03-30 15:19+0800\n"
-"PO-Revision-Date: 2023-03-30 15:19+0800\n"
+"POT-Creation-Date: 2023-03-30 16:46+0800\n"
+"PO-Revision-Date: 2023-03-30 16:46+0800\n"
 "Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
 "Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language-Team: none\n"
 
 #: cmd/root.go:16
 msgid "CLI tool for Golang"
-msgstr "Go 语言命令行工具"
+msgstr ""
 
 #: cmd/root.go:17
 msgid ""
@@ -26,42 +26,37 @@ msgid ""
 "\n"
 "  Generate structures, tests, examples, initialize projects, etc."
 msgstr ""
-"Go 语言命令行工具\n"
-"\n"
-"  生成结构、测试、例子，初始化项目等。"
 
 #: cmd/root.go:21
 msgid "select language: en, zh"
-msgstr "选择语言: 英语(en_US), 中文(zh_CN)"
+msgstr ""
 
 #: cmd/root.go:22
 msgid "debug mode, display debug log"
-msgstr "调试模式，显示调试日志"
+msgstr ""
 
 #: cmd/root.go:25
 msgid "set debug: %v"
-msgstr "设置调试模式: %v"
+msgstr ""
 
 #: cmd/root.go:32
 #, c-format
 msgid "set language: %s"
-msgstr "设置语言: %s"
+msgstr ""
 
 #: generate/cmd.go:21
 msgid "cobra or flag"
-msgstr "cobra 或 flag"
+msgstr ""
 
 #: generate/cmd.go:22
 msgid "generate cmd"
-msgstr "生成命令"
+msgstr ""
 
 #: generate/cmd.go:23
 msgid ""
 "generate cmd\n"
 "  support for cobra and flag."
 msgstr ""
-"生成命令\n"
-"  支持 cobra 和 flag。"
 
 #: generate/cmd.go:25
 msgid ""
@@ -70,129 +65,109 @@ msgid ""
 "  # create cobra\n"
 "  go-cli g c cmd -t cobra"
 msgstr ""
-"  # 生成命令\n"
-"  go-cli g c cmd\n"
-"  # 生成 cobra 命令\n"
-"  go-cli g c cmd -t cobra"
 
 #: generate/cmd.go:69 generate/struct.go:53
 #, c-format
 msgid "exist: %s"
-msgstr "已经存在: %s"
+msgstr ""
 
 #: generate/cmd.go:74
 #, c-format
 msgid "create cmd: %s"
-msgstr "创建命令: %s"
-
-#: generate/root.go:14
-msgid "generate struct, test, example"
-msgstr "生成结构、测试、例子"
-
-#: generate/root.go:15
-msgid ""
-"generate:\n"
-"  cmd(c)\n"
-"  example(e)\n"
-"  struct(s)\n"
-"  test(t}"
 msgstr ""
-"生成:\n"
-"  命令 cmd(c)\n"
-"  例子 example(e)\n"
-"  结构 struct(s)\n"
-"  测试 test(t}"
-
-#: generate/root.go:17
-msgid "output file"
-msgstr "输出文件"
 
 #: generate/example.go:11 generate/example.go:12
 msgid "generate example"
-msgstr "生成例子"
+msgstr ""
 
 #: generate/example.go:13
 msgid ""
 "  # create example\n"
 "  go-cli g e pkg/source.go"
 msgstr ""
-"  # 生成例子\n"
-"  go-cli g e pkg/source.go"
 
 #: generate/proto.go:18
 msgid "message or enum"
-msgstr "消息(message)或枚举(enum)"
+msgstr ""
 
 #: generate/proto.go:19 generate/proto.go:20
 msgid "generate protobuf"
-msgstr "生成 protobuf"
+msgstr ""
 
-#: generate/proto.go:21
+#: generate/proto.go:22
 msgid ""
 "  # create message\n"
 "  go-cli g p pb/Book\n"
 "  # create enum\n"
 "  go-cli g p BookType -t enum -o pb/book.proto"
 msgstr ""
-"  # 生成消息\n"
-"  go-cli g p pb/Book\n"
-"  # create enum\n"
-"  go-cli g p BookType -t enum -o pb/book.proto"
 
-#: generate/proto.go:46
+#: generate/proto.go:47
 #, c-format
 msgid "create Proto: %s"
-msgstr "创建结构: %s"
+msgstr ""
+
+#: generate/root.go:14
+msgid "generate struct, test, example"
+msgstr ""
+
+#: generate/root.go:15
+msgid ""
+"generate:\n"
+"  example(e)\n"
+"  struct(s)\n"
+"  test(t}"
+msgstr ""
+
+#: generate/root.go:17
+msgid "output file"
+msgstr ""
 
 #: generate/struct.go:16 generate/struct.go:17
 msgid "generate struct"
-msgstr "生成结构"
+msgstr ""
 
 #: generate/struct.go:18
 msgid ""
 "  # create struct\n"
 "  go-cli g s Book"
 msgstr ""
-"  # 生成结构\n"
-"  go-cli g s Book"
 
 #: generate/struct.go:43
 #, c-format
 msgid "create struct: %s"
-msgstr "创建结构: %s"
+msgstr ""
 
 #: generate/test.go:16 generate/test.go:17
 msgid "generate test"
-msgstr "生成测试"
+msgstr ""
 
 #: generate/test.go:18
 msgid ""
 "  # create test\n"
 "  go-cli g t pkg/source.go"
 msgstr ""
-"  # 生成测试\n"
-"  go-cli g t pkg/source.go"
 
 #: generate/test.go:43
 #, c-format
 msgid "create test: %s"
-msgstr "创建测试: %s"
+msgstr ""
 
 #: generate/test.go:46
 #, c-format
 msgid "not found: %s"
-msgstr "未找到: %s"
+msgstr ""
 
 #: generate/test.go:76
 #, c-format
 msgid "create: %s %s"
-msgstr "创建: %s %s"
+msgstr ""
 
-#: initialization/cmd.go:30
+#: initialization/root.go:30
 msgid "init Golang project"
-msgstr "初始化Go语言项目"
+msgstr ""
 
-#: initialization/cmd.go:31
+#: initialization/root.go:32
 msgid ""
 "init Golang project\n"
 "\n"
@@ -205,27 +180,17 @@ msgid ""
 "  Makefile\n"
 "  README.md"
 msgstr ""
-"初始化Go语言项目\n"
-"\n"
-"生成文件:\n"
-"  .editorconfig\n"
-"  .gitignore\n"
-"  .golangci.toml\n"
-"  go.mod\n"
-"  LICENSE\n"
-"  Makefile\n"
-"  README.md"
 
-#: initialization/cmd.go:33
+#: initialization/root.go:34
 msgid "license: apache2, bsd3, mit"
-msgstr "选择许可协议: apache2, bsd3, mit"
+msgstr ""
 
-#: initialization/cmd.go:46
+#: initialization/root.go:47
 #, c-format
 msgid "init dir: %s"
-msgstr "初始化目录: %s"
+msgstr ""
 
-#: initialization/cmd.go:57 initialization/cmd.go:73
+#: initialization/root.go:58 initialization/root.go:74
 #, c-format
 msgid "init file %s"
-msgstr "初始化文件 %s"
+msgstr ""

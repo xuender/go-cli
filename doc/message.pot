@@ -6,11 +6,11 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: 1.1.10\n"
+"Project-Id-Version: 1.1.11\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-03-30 15:19+0800\n"
+"POT-Creation-Date: 2023-03-30 16:46+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: xuender <xuender@gmail.com>\n"
+"Last-Translator: xuender <xuender@gmail.com>"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
@@ -45,20 +45,36 @@ msgstr ""
 msgid "set language: %s"
 msgstr ""
 
-#: generate/cmd.go:14
-msgid "generate struct, test, example"
+#: generate/cmd.go:21
+msgid "cobra or flag"
 msgstr ""
 
-#: generate/cmd.go:15
+#: generate/cmd.go:22
+msgid "generate cmd"
+msgstr ""
+
+#: generate/cmd.go:23
 msgid ""
-"generate:\n"
-"  example(e)\n"
-"  struct(s)\n"
-"  test(t}"
+"generate cmd\n"
+"  support for cobra and flag."
 msgstr ""
 
-#: generate/cmd.go:17
-msgid "output file"
+#: generate/cmd.go:25
+msgid ""
+"  # create cmd\n"
+"  go-cli g c cmd\n"
+"  # create cobra\n"
+"  go-cli g c cmd -t cobra"
+msgstr ""
+
+#: generate/cmd.go:69 generate/struct.go:53
+#, c-format
+msgid "exist: %s"
+msgstr ""
+
+#: generate/cmd.go:74
+#, c-format
+msgid "create cmd: %s"
 msgstr ""
 
 #: generate/example.go:11 generate/example.go:12
@@ -79,7 +95,7 @@ msgstr ""
 msgid "generate protobuf"
 msgstr ""
 
-#: generate/proto.go:21
+#: generate/proto.go:22
 msgid ""
 "  # create message\n"
 "  go-cli g p pb/Book\n"
@@ -87,9 +103,25 @@ msgid ""
 "  go-cli g p BookType -t enum -o pb/book.proto"
 msgstr ""
 
-#: generate/proto.go:46
+#: generate/proto.go:47
 #, c-format
 msgid "create Proto: %s"
+msgstr ""
+
+#: generate/root.go:14
+msgid "generate struct, test, example"
+msgstr ""
+
+#: generate/root.go:15
+msgid ""
+"generate:\n"
+"  example(e)\n"
+"  struct(s)\n"
+"  test(t}"
+msgstr ""
+
+#: generate/root.go:17
+msgid "output file"
 msgstr ""
 
 #: generate/struct.go:16 generate/struct.go:17
@@ -105,11 +137,6 @@ msgstr ""
 #: generate/struct.go:43
 #, c-format
 msgid "create struct: %s"
-msgstr ""
-
-#: generate/struct.go:53
-#, c-format
-msgid "exist: %s"
 msgstr ""
 
 #: generate/test.go:16 generate/test.go:17
@@ -137,11 +164,11 @@ msgstr ""
 msgid "create: %s %s"
 msgstr ""
 
-#: initialization/cmd.go:30
+#: initialization/root.go:30
 msgid "init Golang project"
 msgstr ""
 
-#: initialization/cmd.go:31
+#: initialization/root.go:32
 msgid ""
 "init Golang project\n"
 "\n"
@@ -155,16 +182,16 @@ msgid ""
 "  README.md"
 msgstr ""
 
-#: initialization/cmd.go:33
+#: initialization/root.go:34
 msgid "license: apache2, bsd3, mit"
 msgstr ""
 
-#: initialization/cmd.go:46
+#: initialization/root.go:47
 #, c-format
 msgid "init dir: %s"
 msgstr ""
 
-#: initialization/cmd.go:57 initialization/cmd.go:73
+#: initialization/root.go:58 initialization/root.go:74
 #, c-format
 msgid "init file %s"
 msgstr ""

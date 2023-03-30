@@ -24,6 +24,14 @@ go-cli init
 
 ## generate
 
+### cmd
+
+```shell
+go-cli g c cmdName
+go-cli g c cmdName -t flag
+go-cli g c cmdName -t cobra
+```
+
 ### struct
 
 ```shell
