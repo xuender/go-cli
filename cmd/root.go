@@ -33,8 +33,8 @@ func Execute() {
 			t.SetLocale(lang)
 		}
 	}
-	rootCmd.AddCommand(initialization.SubCmd(&cobra.Command{Use: "init", Aliases: []string{"i", "initialization"}}))
-	rootCmd.AddCommand(generate.SubCmd(&cobra.Command{Use: "generate", Aliases: []string{"g", "creaet"}}))
+	rootCmd.AddCommand(initialization.NewCmd(&cobra.Command{Use: "init", Aliases: []string{"i", "initialization"}}))
+	rootCmd.AddCommand(generate.NewCmd(&cobra.Command{Use: "generate", Aliases: []string{"g", "creaet"}}))
 
 	if rootCmd.Execute() != nil {
 		os.Exit(1)

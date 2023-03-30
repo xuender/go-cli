@@ -27,7 +27,7 @@ func ExampleCmd(cmd *cobra.Command) *cobra.Command {
 				env.Path = output
 			}
 
-			CreateTest(env, "_example_test.go", "example.tpl", "example_func.tpl")
+			createTest(env, "_example_test.go", "example.tpl", "example_func.tpl")
 		}
 	}
 

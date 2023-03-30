@@ -15,7 +15,7 @@ import (
 )
 
 func ProtoCmd(cmd *cobra.Command) *cobra.Command {
-	cmd.Flags().StringP("type", "t", "message", t.T("message or enum"))
+	cmd.Flags().StringP(_type, "t", "message", t.T("message or enum"))
 	cmd.Short = t.T("generate protobuf")
 	cmd.Long = t.T("generate protobuf")
 	// nolint: lll
@@ -36,14 +36,14 @@ func ProtoCmd(cmd *cobra.Command) *cobra.Command {
 				env.Path = output
 			}
 
-			CreateProto(env, strings.ToLower(lo.Must1(cmd.Flags().GetString(_type))))
+			createProto(env, strings.ToLower(lo.Must1(cmd.Flags().GetString(_type))))
 		}
 	}
 
 	return cmd
 }
 
-func CreateProto(env *tpl.Env, typeCode string) {
+func createProto(env *tpl.Env, typeCode string) {
 	logs.D.Println(t.T("create Proto: %s", env.Name))
 
 	var file *os.File

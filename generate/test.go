@@ -32,14 +32,14 @@ func TestCmd(cmd *cobra.Command) *cobra.Command {
 				env.Test = output
 			}
 
-			CreateTest(env, "_test.go", "test.tpl", "test_func.tpl")
+			createTest(env, "_test.go", "test.tpl", "test_func.tpl")
 		}
 	}
 
 	return cmd
 }
 
-func CreateTest(env *tpl.Env, ext, headFile, funcFile string) {
+func createTest(env *tpl.Env, ext, headFile, funcFile string) {
 	logs.D.Println(t.T("create test: %s", env.Name))
 
 	if !oss.Exist(env.Path) {
