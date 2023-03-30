@@ -9,6 +9,7 @@ import (
 	"github.com/samber/lo"
 	"github.com/spf13/cobra"
 	"github.com/xuender/go-cli/tpl"
+	"github.com/xuender/go-cli/utils"
 	"github.com/xuender/kit/logs"
 	"github.com/xuender/kit/oss"
 	"github.com/youthlin/t"
@@ -50,9 +51,9 @@ func createProto(env *tpl.Env, typeCode string) {
 	defer file.Close()
 
 	if oss.Exist(env.Path) {
-		file = AppendFile(env.Path)
+		file = utils.AppendFile(env.Path)
 	} else {
-		file = CreateFile(env.Path)
+		file = utils.CreateFile(env.Path)
 
 		lo.Must1(file.Write(env.Bytes(_static, filepath.Join(_staticPath, "proto.tpl"))))
 	}

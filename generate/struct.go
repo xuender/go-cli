@@ -7,6 +7,7 @@ import (
 	"github.com/samber/lo"
 	"github.com/spf13/cobra"
 	"github.com/xuender/go-cli/tpl"
+	"github.com/xuender/go-cli/utils"
 	"github.com/xuender/kit/logs"
 	"github.com/xuender/kit/oss"
 	"github.com/youthlin/t"
@@ -46,7 +47,7 @@ func createStruct(env *tpl.Env) {
 	defer file.Close()
 
 	if oss.Exist(env.Path) {
-		pkg, names := tpl.PackageAndStructs(env.Path)
+		pkg, names := utils.PackageAndStructs(env.Path)
 		env.Package = pkg
 
 		if lo.Contains(names, env.Name) {
@@ -55,34 +56,12 @@ func createStruct(env *tpl.Env) {
 			return
 		}
 
-		file = AppendFile(env.Path)
+		file = utils.AppendFile(env.Path)
 	} else {
-		file = CreateFile(env.Path)
+		file = utils.CreateFile(env.Path)
 
 		lo.Must1(file.Write(env.Bytes(_static, filepath.Join(_staticPath, "package.tpl"))))
 	}
 
 	lo.Must1(file.Write(env.Bytes(_static, filepath.Join(_staticPath, "struct.tpl"))))
-}
-
-func AppendFile(filename string) *os.File {
-	if dir := filepath.Dir(filename); dir != "" && dir != "." && !oss.Exist(dir) {
-		lo.Must0(os.MkdirAll(dir, oss.DefaultDirFileMod))
-	}
-
-	file := lo.Must1(os.OpenFile(filename, os.O_WRONLY|os.O_APPEND, oss.DefaultFileMode))
-
-	lo.Must1(file.Seek(0, os.SEEK_END))
-
-	return file
-}
-
-func CreateFile(filename string) *os.File {
-	if dir := filepath.Dir(filename); dir != "" && dir != "." && !oss.Exist(dir) {
-		lo.Must0(os.MkdirAll(dir, oss.DefaultDirFileMod))
-	}
-
-	file := lo.Must1(os.Create(filename))
-
-	return file
 }

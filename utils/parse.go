@@ -1,10 +1,11 @@
-package tpl
+package utils
 
 import (
 	"go/ast"
 	"go/parser"
 	"go/token"
 	"path/filepath"
+	"strings"
 	"unicode"
 )
 
@@ -126,4 +127,15 @@ func recvName(field *ast.Field, node *ast.FuncDecl) string {
 	}
 
 	return ""
+}
+
+// UseCobra 判断是否使用 spf13/cobra.
+func UseCobra(root *ast.File) bool {
+	for _, imp := range root.Imports {
+		if strings.Contains(imp.Path.Value, "spf13/cobra") {
+			return true
+		}
+	}
+
+	return false
 }

@@ -12,6 +12,7 @@ import (
 	"time"
 
 	"github.com/samber/lo"
+	"github.com/xuender/go-cli/utils"
 )
 
 type Env struct {
@@ -37,7 +38,7 @@ func NewEnvByFile(arg, ext string) *Env {
 		pkg = filepath.Base(dir)
 	}
 
-	path := filepath.Join(dir, SnakeCase(name))
+	path := filepath.Join(dir, utils.SnakeCase(name))
 
 	if !strings.HasSuffix(path, ext) {
 		path += ext

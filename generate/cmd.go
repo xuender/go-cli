@@ -2,16 +2,13 @@ package generate
 
 import (
 	"fmt"
-	"go/ast"
-	"go/parser"
-	"go/token"
 	"os"
 	"path/filepath"
-	"strings"
 
 	"github.com/samber/lo"
 	"github.com/spf13/cobra"
 	"github.com/xuender/go-cli/tpl"
+	"github.com/xuender/go-cli/utils"
 	"github.com/xuender/kit/logs"
 	"github.com/xuender/kit/oss"
 	"github.com/youthlin/t"
@@ -34,7 +31,7 @@ func cmdCmd(cmd *cobra.Command) *cobra.Command {
 		typeCode := lo.Must1(cmd.Flags().GetString(_type))
 
 		if typeCode == "" {
-			if file, err := Parse("cmd", "root.go"); err == nil && UseCobra(file) {
+			if file, err := utils.Parse("cmd", "root.go"); err == nil && utils.UseCobra(file) {
 				typeCode = _cobra
 			}
 		}
@@ -76,30 +73,7 @@ func createCmd(env *tpl.Env, typeCode string) {
 	var file *os.File
 	defer file.Close()
 
-	file = CreateFile(env.Path)
+	file = utils.CreateFile(env.Path)
 
 	lo.Must1(file.Write(env.Bytes(_static, filepath.Join(_staticPath, fmt.Sprintf("cmd_%s.tpl", typeCode)))))
-}
-
-// UseCobra 判断是否使用 spf13/cobra.
-func UseCobra(root *ast.File) bool {
-	for _, imp := range root.Imports {
-		if strings.Contains(imp.Path.Value, "spf13/cobra") {
-			return true
-		}
-	}
-
-	return false
-}
-
-// Parse Go源程序解析.
-func Parse(files ...string) (*ast.File, error) {
-	filename, err := filepath.Abs(filepath.Join(files...))
-	if err != nil {
-		return nil, err
-	}
-
-	fset := token.NewFileSet()
-
-	return parser.ParseFile(fset, filename, nil, parser.ParseComments)
 }

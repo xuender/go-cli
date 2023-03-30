@@ -42,7 +42,7 @@ func createExamples(path, output string) {
 		return
 	}
 
-	if strings.HasSuffix(path, "_test.go") {
+	if strings.HasSuffix(path, "_test.go") || !strings.HasSuffix(path, ".go") {
 		return
 	}
 

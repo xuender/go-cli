@@ -8,6 +8,7 @@ import (
 	"github.com/samber/lo"
 	"github.com/spf13/cobra"
 	"github.com/xuender/go-cli/tpl"
+	"github.com/xuender/go-cli/utils"
 	"github.com/xuender/kit/logs"
 	"github.com/xuender/kit/oss"
 	"github.com/youthlin/t"
@@ -43,7 +44,7 @@ func createTests(path, output string) {
 		return
 	}
 
-	if strings.HasSuffix(path, "_test.go") {
+	if strings.HasSuffix(path, "_test.go") || !strings.HasSuffix(path, ".go") {
 		return
 	}
 
@@ -69,7 +70,11 @@ func createTest(env *tpl.Env, ext, headFile, funcFile string) {
 		env.Test = env.Path[:len(env.Path)-3] + ext
 	}
 
-	pkg, funcs := tpl.PackageAndFuncs(env.Path)
+	pkg, funcs := utils.PackageAndFuncs(env.Path)
+	if len(funcs) == 0 {
+		return
+	}
+
 	tests := []string{}
 
 	env.Package = pkg
@@ -78,10 +83,10 @@ func createTest(env *tpl.Env, ext, headFile, funcFile string) {
 	defer file.Close()
 
 	if oss.Exist(env.Test) {
-		file = AppendFile(env.Test)
-		_, tests = tpl.PackageAndFuncs(env.Test)
+		file = utils.AppendFile(env.Test)
+		_, tests = utils.PackageAndFuncs(env.Test)
 	} else {
-		file = CreateFile(env.Test)
+		file = utils.CreateFile(env.Test)
 		lo.Must1(file.Write(env.Bytes(_static, filepath.Join(_staticPath, headFile))))
 	}
 
@@ -90,7 +95,7 @@ func createTest(env *tpl.Env, ext, headFile, funcFile string) {
 			continue
 		}
 
-		logs.D.Println(t.T("create: %s %s", env.Test, name))
+		logs.I.Println(t.T("create: %s %s", env.Test, name))
 		env.Name = name
 
 		lo.Must1(file.Write(env.Bytes(_static, filepath.Join(_staticPath, funcFile))))
