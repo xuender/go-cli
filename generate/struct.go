@@ -12,7 +12,7 @@ import (
 	"github.com/youthlin/t"
 )
 
-func StructCmd(cmd *cobra.Command) *cobra.Command {
+func structCmd(cmd *cobra.Command) *cobra.Command {
 	cmd.Short = t.T("generate struct")
 	cmd.Long = t.T("generate struct")
 	cmd.Example = t.T("  # create struct\n  go-cli g s Book")
@@ -32,14 +32,14 @@ func StructCmd(cmd *cobra.Command) *cobra.Command {
 				env.Path = output
 			}
 
-			CreateStruct(env)
+			createStruct(env)
 		}
 	}
 
 	return cmd
 }
 
-func CreateStruct(env *tpl.Env) {
+func createStruct(env *tpl.Env) {
 	logs.D.Println(t.T("create struct: %s", env.Name))
 
 	var file *os.File

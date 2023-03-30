@@ -14,7 +14,7 @@ import (
 	"github.com/youthlin/t"
 )
 
-func ProtoCmd(cmd *cobra.Command) *cobra.Command {
+func protoCmd(cmd *cobra.Command) *cobra.Command {
 	cmd.Flags().StringP(_type, "t", "message", t.T("message or enum"))
 	cmd.Short = t.T("generate protobuf")
 	cmd.Long = t.T("generate protobuf")

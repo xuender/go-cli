@@ -3,6 +3,7 @@ package generate
 import (
 	"os"
 	"path/filepath"
+	"strings"
 
 	"github.com/samber/lo"
 	"github.com/spf13/cobra"
@@ -12,7 +13,7 @@ import (
 	"github.com/youthlin/t"
 )
 
-func TestCmd(cmd *cobra.Command) *cobra.Command {
+func testCmd(cmd *cobra.Command) *cobra.Command {
 	cmd.Short = t.T("generate test")
 	cmd.Long = t.T("generate test")
 	cmd.Example = t.T("  # create test\n  go-cli g t pkg/source.go")
@@ -26,17 +27,33 @@ func TestCmd(cmd *cobra.Command) *cobra.Command {
 		output, _ := cmd.Flags().GetString(_output)
 
 		for _, arg := range args {
-			env := tpl.NewEnvByGo(arg)
-
-			if output != "" {
-				env.Test = output
-			}
-
-			createTest(env, "_test.go", "test.tpl", "test_func.tpl")
+			createTests(arg, output)
 		}
 	}
 
 	return cmd
+}
+
+func createTests(path, output string) {
+	if oss.IsDir(path) {
+		for _, dir := range lo.Must1(os.ReadDir(path)) {
+			createTests(filepath.Join(path, dir.Name()), output)
+		}
+
+		return
+	}
+
+	if strings.HasSuffix(path, "_test.go") {
+		return
+	}
+
+	env := tpl.NewEnvByGo(path)
+
+	if output != "" {
+		env.Test = output
+	}
+
+	createTest(env, "_test.go", "test.tpl", "test_func.tpl")
 }
 
 func createTest(env *tpl.Env, ext, headFile, funcFile string) {

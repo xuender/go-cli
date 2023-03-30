@@ -17,7 +17,7 @@ import (
 	"github.com/youthlin/t"
 )
 
-func CmdCmd(cmd *cobra.Command) *cobra.Command {
+func cmdCmd(cmd *cobra.Command) *cobra.Command {
 	cmd.Flags().StringP(_type, "t", "", t.T("cobra or flag"))
 	cmd.Short = t.T("generate cmd")
 	cmd.Long = t.T("generate cmd\n  support for cobra and flag.")
