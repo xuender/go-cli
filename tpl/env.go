@@ -83,7 +83,7 @@ func NewEnvByDir(arg string) *Env {
 func (p *Env) Bytes(fs fs.FS, path string) []byte {
 	buf := &bytes.Buffer{}
 	funcs := template.FuncMap{
-		"dir": func(str string) string { return filepath.Dir(str) },
+		"dir": filepath.Dir,
 	}
 	tmpl := lo.Must1(template.New("text").Funcs(funcs).ParseFS(fs, path))
 

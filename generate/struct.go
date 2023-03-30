@@ -67,7 +67,7 @@ func CreateStruct(env *tpl.Env) {
 
 func AppendFile(filename string) *os.File {
 	if dir := filepath.Dir(filename); dir != "" && dir != "." && !oss.Exist(dir) {
-		os.MkdirAll(dir, oss.DefaultDirFileMod)
+		lo.Must0(os.MkdirAll(dir, oss.DefaultDirFileMod))
 	}
 
 	file := lo.Must1(os.OpenFile(filename, os.O_WRONLY|os.O_APPEND, oss.DefaultFileMode))
@@ -79,7 +79,7 @@ func AppendFile(filename string) *os.File {
 
 func CreateFile(filename string) *os.File {
 	if dir := filepath.Dir(filename); dir != "" && dir != "." && !oss.Exist(dir) {
-		os.MkdirAll(dir, oss.DefaultDirFileMod)
+		lo.Must0(os.MkdirAll(dir, oss.DefaultDirFileMod))
 	}
 
 	file := lo.Must1(os.Create(filename))

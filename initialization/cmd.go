@@ -28,6 +28,7 @@ const (
 
 func SubCmd(cmd *cobra.Command) *cobra.Command {
 	cmd.Short = t.T("init Golang project")
+	// nolint: lll
 	cmd.Long = t.T("init Golang project\n\nfiles:\n  .editorconfig\n  .gitignore\n  .golangci.toml\n  go.mod\n  LICENSE\n  Makefile\n  README.md")
 
 	cmd.Flags().StringP("license", "", "MIT", t.T("license: apache2, bsd3, mit"))
