@@ -22,6 +22,7 @@ type Env struct {
 	Name    string
 	Path    string
 	Test    string
+	License string
 }
 
 func NewEnvByGo(arg string) *Env {

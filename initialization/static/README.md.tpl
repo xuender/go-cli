@@ -12,4 +12,4 @@ go install {{ .Package }}@latest
 
 © {{ .User }}, {{ .Year }}~time.Now
 
-[LICENSE](https://{{ .Package }}/blob/master/LICENSE)
+[{{ .License }} LICENSE](https://{{ .Package }}/blob/master/LICENSE)

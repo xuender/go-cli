@@ -47,6 +47,8 @@ func run(cmd *cobra.Command, args []string) {
 	logs.D.Println(t.T("init dir: %s", dir))
 
 	env := tpl.NewEnvByDir(dir)
+	code := lo.Must1(cmd.Flags().GetString("license"))
+	env.License = strings.ToUpper(code)
 
 	for _, entry := range lo.Must1(_static.ReadDir(_staticPath)) {
 		file, data := readStatic(dir, entry.Name(), env)
@@ -64,8 +66,6 @@ func run(cmd *cobra.Command, args []string) {
 	if oss.Exist(license) {
 		return
 	}
-
-	code := lo.Must1(cmd.Flags().GetString("license"))
 
 	file := lo.Must1(os.Create(license))
 	defer file.Close()
