@@ -11,7 +11,6 @@ import (
 	"github.com/samber/lo"
 	"github.com/spf13/cobra"
 	"github.com/xuender/go-cli/tpl"
-	"github.com/xuender/go-cli/utils"
 	"github.com/xuender/kit/logs"
 	"github.com/xuender/kit/oss"
 	"github.com/youthlin/t"
@@ -28,7 +27,7 @@ func getRun(path string, files embed.FS) func(*cobra.Command, []string) {
 
 		env := tpl.NewEnvByDir(dir)
 
-		lo.Must0(utils.Walk(files, path, func(path string, entry fs.DirEntry) error {
+		lo.Must0(tpl.Walk(files, path, func(path string, entry fs.DirEntry) error {
 			file, data := readFile(env, files, dir, filepath.Join(path, entry.Name()))
 			if oss.Exist(file) {
 				return nil
@@ -45,8 +44,8 @@ func getRun(path string, files embed.FS) func(*cobra.Command, []string) {
 	}
 }
 
-func readFile(env *tpl.Env, static embed.FS, target, path string) (string, []byte) {
-	logs.D.Println("target:", target, "path:", path)
+func readFile(env *tpl.Env, dir tpl.Dir, target, path string) (string, []byte) {
+	logs.D.Println("target:", target, "path:", path, "dir", dir)
 
 	sep := string(os.PathSeparator)
 	out := strings.Join(lo.Map(strings.Split(path, sep), func(name string, _ int) string {
@@ -73,10 +72,10 @@ func readFile(env *tpl.Env, static embed.FS, target, path string) (string, []byt
 	if tpl {
 		logs.D.Println("file:", file, "reader:", path)
 
-		return file, env.Bytes(static, path)
+		return file, env.Bytes(dir, path)
 	}
 
-	reader := lo.Must1(static.Open(path))
+	reader := lo.Must1(dir.Open(path))
 	defer reader.Close()
 
 	logs.D.Println("file:", file, "reader:", path)

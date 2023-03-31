@@ -87,7 +87,7 @@ func createTest(env *tpl.Env, ext, headFile, funcFile string) {
 		_, tests = utils.PackageAndFuncs(env.Test)
 	} else {
 		file = utils.CreateFile(env.Test)
-		lo.Must1(file.Write(env.Bytes(_static, filepath.Join(_staticPath, headFile))))
+		lo.Must1(file.Write(env.Bytes(_dir, filepath.Join(_staticPath, headFile))))
 	}
 
 	for _, name := range funcs {
@@ -98,6 +98,6 @@ func createTest(env *tpl.Env, ext, headFile, funcFile string) {
 		logs.I.Println(t.T("create: %s %s", env.Test, name))
 		env.Name = name
 
-		lo.Must1(file.Write(env.Bytes(_static, filepath.Join(_staticPath, funcFile))))
+		lo.Must1(file.Write(env.Bytes(_dir, filepath.Join(_staticPath, funcFile))))
 	}
 }

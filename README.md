@@ -19,7 +19,7 @@ Initialize the Golang project and create a default configuration file.
 ```shell
 git clone url
 cd dir
-go-cli init [path]
+go-cli init
 ```
 
 ### github
@@ -27,7 +27,7 @@ go-cli init [path]
 Initialize the github configuration files.
 
 ```shell
-git-cli init github [path]
+git-cli init github
 ```
 
 ### gitee

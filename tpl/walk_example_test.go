@@ -1,11 +1,11 @@
-package utils_test
+package tpl_test
 
 import (
 	"embed"
 	"fmt"
 	"io/fs"
 
-	"github.com/xuender/go-cli/utils"
+	"github.com/xuender/go-cli/tpl"
 )
 
 //go:embed files
@@ -13,7 +13,7 @@ var _files embed.FS
 
 // ExampleWalk is an example function.
 func ExampleWalk() {
-	err := utils.Walk(_files, ".", func(path string, entry fs.DirEntry) error {
+	err := tpl.Walk(_files, ".", func(path string, entry fs.DirEntry) error {
 		fmt.Println(path, entry.Name())
 
 		return nil

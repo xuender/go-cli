@@ -55,8 +55,8 @@ func createProto(env *tpl.Env, typeCode string) {
 	} else {
 		file = utils.CreateFile(env.Path)
 
-		lo.Must1(file.Write(env.Bytes(_static, filepath.Join(_staticPath, "proto.tpl"))))
+		lo.Must1(file.Write(env.Bytes(_dir, filepath.Join(_staticPath, "proto.tpl"))))
 	}
 
-	lo.Must1(file.Write(env.Bytes(_static, filepath.Join(_staticPath, fmt.Sprintf("proto_%s.tpl", typeCode)))))
+	lo.Must1(file.Write(env.Bytes(_dir, filepath.Join(_staticPath, fmt.Sprintf("proto_%s.tpl", typeCode)))))
 }

@@ -1,13 +1,12 @@
-package utils
+package tpl
 
 import (
-	"embed"
 	"io/fs"
 	"path/filepath"
 )
 
-func Walk(files embed.FS, path string, yield func(string, fs.DirEntry) error) error {
-	entries, err := files.ReadDir(path)
+func Walk(dir Dir, path string, yield func(string, fs.DirEntry) error) error {
+	entries, err := dir.ReadDir(path)
 	if err != nil {
 		return err
 	}
@@ -16,7 +15,7 @@ func Walk(files embed.FS, path string, yield func(string, fs.DirEntry) error) er
 		var err error
 
 		if entry.IsDir() {
-			err = Walk(files, filepath.Join(path, entry.Name()), yield)
+			err = Walk(dir, filepath.Join(path, entry.Name()), yield)
 		} else {
 			err = yield(path, entry)
 		}

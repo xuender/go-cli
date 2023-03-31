@@ -10,13 +10,12 @@ import (
 	"github.com/samber/lo"
 	"github.com/spf13/cobra"
 	"github.com/xuender/go-cli/tpl"
-	"github.com/xuender/go-cli/utils"
 	"github.com/xuender/kit/logs"
 	"github.com/xuender/kit/oss"
 	"github.com/youthlin/t"
 )
 
-//go:embed static
+//go:embed init
 var _static embed.FS
 
 //go:embed license
@@ -25,7 +24,7 @@ var _licenses embed.FS
 func NewCmd(cmd *cobra.Command) *cobra.Command {
 	cmd.Short = t.T("Init Golang project")
 	cmd.Long = t.T("Initialize the Golang project and create default configuration files.")
-	cmd.Example = t.T("  # Init project\n  go-cli init\n  # Init github config\n go-cli init gh")
+	cmd.Example = t.T("  # Init project\n  go-cli init\n  # Init github config\n go-cli init github")
 
 	cmd.Flags().StringP("license", "", "MIT", t.T("license: APACHE2, BSD3, MIT"))
 	cmd.AddCommand(ghCmd(&cobra.Command{Use: "github", Aliases: []string{"gh"}}))
@@ -36,32 +35,36 @@ func NewCmd(cmd *cobra.Command) *cobra.Command {
 }
 
 func run(cmd *cobra.Command, args []string) {
-	dir := "."
-	if len(args) > 0 {
-		dir = args[0]
-	}
+	tpl.WriteTemplate(cmd, _static)
 
-	logs.D.Println(t.T("init dir: %s", dir))
-
-	env := tpl.NewEnvByDir(dir)
 	code := lo.Must1(cmd.Flags().GetString("license"))
+	env := tpl.NewEnvByDir(".")
 	env.License = strings.ToUpper(code)
+	parent := filepath.Join(lo.Must1(os.UserHomeDir()), ".config", "go-cli", "init")
 
-	lo.Must0(utils.Walk(_static, "static", func(path string, entry fs.DirEntry) error {
-		file, data := readStatic(dir, filepath.Join(path, entry.Name()), env)
-		if oss.Exist(file) {
-			return nil
+	if len(args) > 0 {
+		for _, arg := range args {
+			logs.D.Println(t.T("init: %s", arg))
+
+			if dir := filepath.Join(parent, arg); !oss.Exist(dir) {
+				logs.W.Println(t.T("dir is not exist: %s", dir))
+
+				continue
+			}
+
+			initFiles(tpl.NewDirEntry(parent), arg, env)
 		}
 
-		parent := filepath.Dir(file)
+		return
+	}
 
-		logs.I.Println(t.T("init file %s", file))
-		_ = os.MkdirAll(parent, oss.DefaultDirFileMod)
+	if dir := filepath.Join(parent, "init"); oss.Exist(dir) {
+		initFiles(tpl.NewDirEntry(parent), "init", env)
+	} else {
+		initFiles(_static, "init", env)
+	}
 
-		return os.WriteFile(file, data, oss.DefaultFileMode)
-	}))
-
-	license := filepath.Join(dir, "LICENSE")
+	license := filepath.Join(".", "LICENSE")
 
 	if oss.Exist(license) {
 		return
@@ -74,6 +77,18 @@ func run(cmd *cobra.Command, args []string) {
 	logs.I.Println(t.T("init file %s", license))
 }
 
-func readStatic(dir, name string, env *tpl.Env) (string, []byte) {
-	return readFile(env, _static, dir, name)
+func initFiles(dir tpl.Dir, path string, env *tpl.Env) {
+	lo.Must0(tpl.Walk(dir, path, func(path string, entry fs.DirEntry) error {
+		file, data := readFile(env, dir, ".", filepath.Join(path, entry.Name()))
+		if oss.Exist(file) {
+			return nil
+		}
+
+		parent := filepath.Dir(file)
+
+		logs.I.Println(t.T("init file %s", file))
+		_ = os.MkdirAll(parent, oss.DefaultDirFileMod)
+
+		return os.WriteFile(file, data, oss.DefaultFileMode)
+	}))
 }

@@ -60,8 +60,8 @@ func createStruct(env *tpl.Env) {
 	} else {
 		file = utils.CreateFile(env.Path)
 
-		lo.Must1(file.Write(env.Bytes(_static, filepath.Join(_staticPath, "package.tpl"))))
+		lo.Must1(file.Write(env.Bytes(_dir, filepath.Join(_staticPath, "package.tpl"))))
 	}
 
-	lo.Must1(file.Write(env.Bytes(_static, filepath.Join(_staticPath, "struct.tpl"))))
+	lo.Must1(file.Write(env.Bytes(_dir, filepath.Join(_staticPath, "struct.tpl"))))
 }
