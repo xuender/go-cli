@@ -73,7 +73,8 @@ go-cli g e dir/book.go
 Generate protobuf and comments.
 
 ```shell
-go-cli g p pb/book
+go-cli g p pb/Book
+go-cli g p pb/BookType -t enum
 ```
 
 ## License

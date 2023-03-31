@@ -24,7 +24,6 @@ var _licenses embed.FS
 
 func NewCmd(cmd *cobra.Command) *cobra.Command {
 	cmd.Short = t.T("Init Golang project")
-	// nolint: lll
 	cmd.Long = t.T("Initialize the Golang project and create default configuration files.")
 
 	cmd.Flags().StringP("license", "", "MIT", t.T("license: APACHE2, BSD3, MIT"))
