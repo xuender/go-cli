@@ -35,7 +35,7 @@ git-cli init github
 Initialize the gitee configuration files.
 
 ```shell
-git-cli init gitee [path]
+git-cli init gitee
 ```
 
 ### Custom init template
