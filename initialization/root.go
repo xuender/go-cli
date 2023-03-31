@@ -22,11 +22,6 @@ var _static embed.FS
 //go:embed license
 var _licenses embed.FS
 
-const (
-	_staticPath = "static"
-	_init       = "init"
-)
-
 func NewCmd(cmd *cobra.Command) *cobra.Command {
 	cmd.Short = t.T("Init Golang project")
 	// nolint: lll
@@ -51,7 +46,7 @@ func run(cmd *cobra.Command, args []string) {
 	code := lo.Must1(cmd.Flags().GetString("license"))
 	env.License = strings.ToUpper(code)
 
-	lo.Must0(utils.Walk(_static, _staticPath, func(path string, entry fs.DirEntry) error {
+	lo.Must0(utils.Walk(_static, "static", func(path string, entry fs.DirEntry) error {
 		file, data := readStatic(dir, filepath.Join(path, entry.Name()), env)
 		if oss.Exist(file) {
 			return nil

@@ -13,7 +13,7 @@ var _files embed.FS
 
 // ExampleWalk is an example function.
 func ExampleWalk() {
-	err := utils.Walk(_files, "files", func(path string, entry fs.DirEntry) error {
+	err := utils.Walk(_files, ".", func(path string, entry fs.DirEntry) error {
 		fmt.Println(path, entry.Name())
 
 		return nil

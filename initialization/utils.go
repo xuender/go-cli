@@ -32,12 +32,14 @@ func readFile(env *tpl.Env, static embed.FS, target, path string) (string, []byt
 	}
 
 	if index := strings.Index(out, sep); index > 0 {
-		out = out[:index]
+		out = out[index:]
 	}
 
 	file := lo.Must1(filepath.Abs(filepath.Join(target, out)))
 
 	if tpl {
+		logs.D.Println("file:", file, "reader:", path)
+
 		return file, env.Bytes(static, path)
 	}
 
