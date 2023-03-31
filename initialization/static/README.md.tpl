@@ -12,4 +12,4 @@ go install {{ .Package }}@latest
 
 © {{ .User }}, {{ .Year }}~time.Now
 
-[MIT License](https://{{ .Package }}/blob/master/License)
+[LICENSE](https://{{ .Package }}/blob/master/LICENSE)

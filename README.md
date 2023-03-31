@@ -49,3 +49,9 @@ go-cli g t dir/book.go
 ```shell
 go-cli g e dir/book.go
 ```
+
+## License
+
+© xuender, 2022~time.Now
+
+[MIT License](https://github.com/xuender/go-cli/blob/master/LICENSE)
