@@ -1,7 +1,7 @@
-// {{ .Name }} TODO.
+// {{ .Name }} TODO: {{ .Name }}.
 message {{ .Name }} {
-	// Id TODO.
+	// Id TODO: Id.
   uint64 id = 1;
-	// Name TODO.
+	// Name TODO: Name.
   string name = 2;
 }

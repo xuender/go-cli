@@ -10,12 +10,12 @@ func main() {
 	flag.Usage = usage
 	flag.Parse()
 
-	// TODO
+	// TODO: {{ .Name }}
 }
 
 func usage() {
 	fmt.Fprintf(os.Stderr, "{{ .Name }}\n\n")
-	fmt.Fprintf(os.Stderr, "TODO.\n\n")
+	fmt.Fprintf(os.Stderr, "TODO: {{ .Name }}.\n\n")
 	fmt.Fprintf(os.Stderr, "Usage: %s [flags]\n", os.Args[0])
 	flag.PrintDefaults()
 	os.Exit(1)

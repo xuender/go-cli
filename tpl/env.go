@@ -25,12 +25,21 @@ type Env struct {
 	License string
 }
 
+func NewEnv() *Env {
+	currentUser := lo.Must1(user.Current())
+
+	return &Env{
+		Year: time.Now().Format("2006"),
+		User: currentUser.Username,
+	}
+}
+
 func NewEnvByGo(arg string) *Env {
 	return NewEnvByFile(arg, ".go")
 }
 
 func NewEnvByFile(arg, ext string) *Env {
-	currentUser := lo.Must1(user.Current())
+	env := NewEnv()
 	pkg := filepath.Base(lo.Must1(os.Getwd()))
 	dir := filepath.Dir(arg)
 	name := filepath.Base(arg)
@@ -45,17 +54,15 @@ func NewEnvByFile(arg, ext string) *Env {
 		path += ext
 	}
 
-	return &Env{
-		Year:    time.Now().Format("2006"),
-		User:    currentUser.Username,
-		Package: pkg,
-		Name:    name,
-		Path:    path,
-	}
+	env.Package = pkg
+	env.Name = name
+	env.Path = path
+
+	return env
 }
 
 func NewEnvByDir(arg string) *Env {
-	currentUser := lo.Must1(user.Current())
+	env := NewEnv()
 	pkg := filepath.Base(lo.Must1(os.Getwd()))
 	dir := arg
 	name := filepath.Base(arg)
@@ -73,20 +80,16 @@ func NewEnvByDir(arg string) *Env {
 		name = filepath.Base(pkg)
 	}
 
-	return &Env{
-		Year:    time.Now().Format("2006"),
-		User:    currentUser.Username,
-		Package: pkg,
-		Name:    name,
-		Path:    arg,
-	}
+	env.Package = pkg
+	env.Name = name
+	env.Path = arg
+
+	return env
 }
 
 func (p *Env) Bytes(fs fs.FS, path string) []byte {
 	buf := &bytes.Buffer{}
-	funcs := template.FuncMap{
-		"dir": filepath.Dir,
-	}
+	funcs := template.FuncMap{"dir": filepath.Dir}
 	tmpl := lo.Must1(template.New("text").Funcs(funcs).ParseFS(fs, path))
 
 	lo.Must0(tmpl.ExecuteTemplate(buf, filepath.Base(path), p))

@@ -4,5 +4,5 @@ func Test{{ .Name }}(t *testing.T) {
 
 	ass := assert.New(t)
 
-	ass.Fail("TODO")
+	ass.Fail("TODO: {{ .Name }}")
 }
