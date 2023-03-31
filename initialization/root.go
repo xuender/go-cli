@@ -40,26 +40,25 @@ func run(cmd *cobra.Command, args []string) {
 	code := lo.Must1(cmd.Flags().GetString("license"))
 	env := tpl.NewEnvByDir(".")
 	env.License = strings.ToUpper(code)
-	parent := filepath.Join(lo.Must1(os.UserHomeDir()), ".config", "go-cli")
 
 	if len(args) > 0 {
 		for _, arg := range args {
 			logs.D.Println(t.T("init: %s", arg))
 
-			if dir := filepath.Join(parent, arg); !oss.Exist(dir) {
+			if dir := filepath.Join(tpl.ConfigPath, arg); !oss.Exist(dir) {
 				logs.W.Println(t.T("dir is not exist: %s", dir))
 
 				continue
 			}
 
-			initFiles(tpl.NewDirEntry(parent), arg, env)
+			initFiles(tpl.NewDirEntry(tpl.ConfigPath), arg, env)
 		}
 
 		return
 	}
 
-	if dir := filepath.Join(parent, "init"); oss.Exist(dir) {
-		initFiles(tpl.NewDirEntry(parent), "init", env)
+	if dir := filepath.Join(tpl.ConfigPath, "init"); oss.Exist(dir) {
+		initFiles(tpl.NewDirEntry(tpl.ConfigPath), "init", env)
 	} else {
 		initFiles(_static, "init", env)
 	}

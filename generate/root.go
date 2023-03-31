@@ -2,10 +2,8 @@ package generate
 
 import (
 	"embed"
-	"os"
 	"path/filepath"
 
-	"github.com/samber/lo"
 	"github.com/spf13/cobra"
 	"github.com/xuender/go-cli/tpl"
 	"github.com/xuender/kit/oss"
@@ -19,8 +17,8 @@ var _static embed.FS
 var _dir tpl.Dir
 
 func NewCmd(cmd *cobra.Command) *cobra.Command {
-	if dir := filepath.Join(lo.Must1(os.UserHomeDir()), ".config", "go-cli"); oss.Exist(filepath.Join(dir, "gen")) {
-		_dir = tpl.NewDirEntry(dir)
+	if oss.Exist(filepath.Join(tpl.ConfigPath, "gen")) {
+		_dir = tpl.NewDirEntry(tpl.ConfigPath)
 	} else {
 		_dir = _static
 	}

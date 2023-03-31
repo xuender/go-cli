@@ -20,7 +20,7 @@ func WriteTemplate(cmd *cobra.Command, files embed.FS) {
 	lo.Must0(Walk(files, ".", func(path string, entry fs.DirEntry) error {
 		logs.D.Println("template", path, entry.Name())
 
-		file := filepath.Join(lo.Must1(os.UserHomeDir()), ".config", "go-cli", path, entry.Name())
+		file := filepath.Join(ConfigPath, path, entry.Name())
 		if oss.Exist(file) {
 			return nil
 		}

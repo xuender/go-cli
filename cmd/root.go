@@ -6,6 +6,7 @@ import (
 	"github.com/spf13/cobra"
 	"github.com/xuender/go-cli/generate"
 	"github.com/xuender/go-cli/initialization"
+	"github.com/xuender/go-cli/tpl"
 	"github.com/xuender/kit/logs"
 	"github.com/youthlin/t"
 )
@@ -20,7 +21,7 @@ func Execute() {
 
 	rootCmd.PersistentFlags().StringP("language", "l", t.Global().Locale(), t.T("select language: en, zh"))
 	rootCmd.PersistentFlags().BoolP("debug", "d", false, t.T("Debug mode, display debug log"))
-	rootCmd.PersistentFlags().BoolP("write", "w", false, t.T("Write template to user configuration directory"))
+	rootCmd.PersistentFlags().BoolP("write", "w", false, t.T("Write template to %s", tpl.ConfigPath))
 	rootCmd.PersistentPreRun = func(cmd *cobra.Command, args []string) {
 		if debug, err := cmd.Flags().GetBool("debug"); err == nil && debug {
 			logs.D.Println(t.T("set debug: %v", debug))
