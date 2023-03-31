@@ -11,10 +11,11 @@ import (
 var _static embed.FS
 
 func NewCmd(cmd *cobra.Command) *cobra.Command {
-	cmd.Short = t.T("generate struct, test, example")
-	cmd.Long = t.T("generate:\n  example(e)\n  struct(s)\n  test(t}")
+	cmd.Short = t.T("Generate cmd, struct, test, example, protobuf")
+	// nolint: lll
+	cmd.Long = t.T("Generate cmd, struct, test, example, protobuf:\n  cmd(c)\n  example(e)\n  struct(s)\n  test(t}\n  protobuf(p)")
 
-	cmd.PersistentFlags().StringP(_output, "o", "", t.T("output file"))
+	cmd.PersistentFlags().StringP(_output, "o", "", t.T("Output file"))
 	cmd.AddCommand(structCmd(&cobra.Command{Use: "struct", Aliases: []string{"s"}}))
 	cmd.AddCommand(testCmd(&cobra.Command{Use: "test", Aliases: []string{"t"}}))
 	cmd.AddCommand(exampleCmd(&cobra.Command{Use: "example", Aliases: []string{"e"}}))

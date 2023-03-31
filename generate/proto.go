@@ -16,11 +16,11 @@ import (
 )
 
 func protoCmd(cmd *cobra.Command) *cobra.Command {
-	cmd.Flags().StringP(_type, "t", "message", t.T("message or enum"))
-	cmd.Short = t.T("generate protobuf")
-	cmd.Long = t.T("generate protobuf")
+	cmd.Flags().StringP(_type, "t", "message", t.T("Select type message or enum"))
+	cmd.Short = t.T("Generate protobuf")
+	cmd.Long = t.T("Generate protobuf")
 	// nolint: lll
-	cmd.Example = t.T("  # create message\n  go-cli g p pb/Book\n  # create enum\n  go-cli g p BookType -t enum -o pb/book.proto")
+	cmd.Example = t.T("  # Create message\n  go-cli g p pb/Book\n  # Create enum\n  go-cli g p BookType -t enum -o pb/book.proto")
 	cmd.Run = func(cmd *cobra.Command, args []string) {
 		if len(args) == 0 {
 			lo.Must0(cmd.Usage())

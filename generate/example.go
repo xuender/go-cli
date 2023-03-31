@@ -13,9 +13,9 @@ import (
 )
 
 func exampleCmd(cmd *cobra.Command) *cobra.Command {
-	cmd.Short = t.T("generate example")
-	cmd.Long = t.T("generate example")
-	cmd.Example = t.T("  # create example\n  go-cli g e pkg/source.go")
+	cmd.Short = t.T("Generate example")
+	cmd.Long = t.T("Generate example")
+	cmd.Example = t.T("  # Create example\n  go-cli g e pkg/source.go")
 	cmd.Run = func(cmd *cobra.Command, args []string) {
 		if len(args) == 0 {
 			lo.Must0(cmd.Usage())

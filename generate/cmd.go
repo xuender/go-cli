@@ -15,11 +15,11 @@ import (
 )
 
 func cmdCmd(cmd *cobra.Command) *cobra.Command {
-	cmd.Flags().StringP(_type, "t", "", t.T("cobra or flag"))
-	cmd.Short = t.T("generate cmd")
-	cmd.Long = t.T("generate cmd\n  support for cobra and flag.")
+	cmd.Flags().StringP(_type, "t", "", t.T("Select type cobra or flag"))
+	cmd.Short = t.T("Generate cmd")
+	cmd.Long = t.T("Generate cmd\n  Support for cobra and flag.")
 	// nolint: lll
-	cmd.Example = t.T("  # create cmd\n  go-cli g c cmd\n  # create cobra\n  go-cli g c cmd -t cobra")
+	cmd.Example = t.T("  # Create cmd\n  go-cli g c cmd\n  # Create cobra\n  go-cli g c cmd -t cobra")
 	cmd.Run = func(cmd *cobra.Command, args []string) {
 		if len(args) == 0 {
 			lo.Must0(cmd.Usage())

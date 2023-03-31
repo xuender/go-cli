@@ -28,12 +28,11 @@ const (
 )
 
 func NewCmd(cmd *cobra.Command) *cobra.Command {
-	cmd.Short = t.T("init Golang project")
+	cmd.Short = t.T("Init Golang project")
 	// nolint: lll
-	cmd.Long = t.T("init Golang project\n\nfiles:\n  .editorconfig\n  .gitignore\n  .golangci.toml\n  go.mod\n  LICENSE\n  Makefile\n  README.md")
+	cmd.Long = t.T("Init Golang project\n\nCreate files:\n  .editorconfig\n  .gitignore\n  .golangci.toml\n  go.mod\n  LICENSE\n  Makefile\n  README.md")
 
-	cmd.Flags().StringP("license", "", "MIT", t.T("license: apache2, bsd3, mit"))
-
+	cmd.Flags().StringP("license", "", "MIT", t.T("license: APACHE2, BSD3, MIT"))
 	cmd.AddCommand(ghCmd(&cobra.Command{Use: "github", Aliases: []string{"g"}}))
 	cmd.Run = run
 
@@ -58,10 +57,9 @@ func run(cmd *cobra.Command, args []string) {
 			return nil
 		}
 
-		logs.I.Println(t.T("init file %s", file))
-
 		parent := filepath.Dir(file)
 
+		logs.I.Println(t.T("init file %s", file))
 		_ = os.MkdirAll(parent, oss.DefaultDirFileMod)
 
 		return os.WriteFile(file, data, oss.DefaultFileMode)

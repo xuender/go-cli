@@ -19,7 +19,7 @@ func Execute() {
 	}
 
 	rootCmd.PersistentFlags().StringP("language", "l", t.Global().Locale(), t.T("select language: en, zh"))
-	rootCmd.PersistentFlags().BoolP("debug", "d", false, t.T("debug mode, display debug log"))
+	rootCmd.PersistentFlags().BoolP("debug", "d", false, t.T("Debug mode, display debug log"))
 	rootCmd.PersistentPreRun = func(cmd *cobra.Command, args []string) {
 		if debug, err := cmd.Flags().GetBool("debug"); err == nil && debug {
 			logs.D.Println(t.T("set debug: %v", debug))

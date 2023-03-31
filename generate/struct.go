@@ -14,9 +14,9 @@ import (
 )
 
 func structCmd(cmd *cobra.Command) *cobra.Command {
-	cmd.Short = t.T("generate struct")
-	cmd.Long = t.T("generate struct")
-	cmd.Example = t.T("  # create struct\n  go-cli g s Book")
+	cmd.Short = t.T("Generate struct")
+	cmd.Long = t.T("Generate struct")
+	cmd.Example = t.T("  # Create struct\n  go-cli g s Book")
 	cmd.Run = func(cmd *cobra.Command, args []string) {
 		if len(args) == 0 {
 			lo.Must0(cmd.Usage())
