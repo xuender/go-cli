@@ -27,7 +27,7 @@ func NewCmd(cmd *cobra.Command) *cobra.Command {
 	cmd.Example = t.T("  # Init project\n  go-cli init\n  # Init github config\n go-cli init github")
 
 	cmd.Flags().StringP("license", "", "MIT", t.T("license: APACHE2, BSD3, MIT"))
-	cmd.AddCommand(ghCmd(&cobra.Command{Use: "github", Aliases: []string{"gh"}}))
+	cmd.AddCommand(githubCmd(&cobra.Command{Use: "github", Aliases: []string{"gh"}}))
 	cmd.AddCommand(geteeCmd(&cobra.Command{Use: "gitee", Aliases: []string{"ge"}}))
 	cmd.Run = run
 
