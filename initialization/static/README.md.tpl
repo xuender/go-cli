@@ -2,7 +2,7 @@
 
 [![Go Report Card](https://goreportcard.com/badge/{{ .Package }})](https://goreportcard.com/report/{{ .Package }})
 
-## install
+## Install
 
 ```shell
 go install {{ .Package }}@latest

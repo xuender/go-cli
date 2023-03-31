@@ -6,7 +6,7 @@
 
 CLI tool for Golang.
 
-## install
+## Install
 
 ```shell
 go install github.com/xuender/go-cli@latest
