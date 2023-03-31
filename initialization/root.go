@@ -2,7 +2,7 @@ package initialization
 
 import (
 	"embed"
-	"io"
+	"io/fs"
 	"os"
 	"path/filepath"
 	"strings"
@@ -10,6 +10,7 @@ import (
 	"github.com/samber/lo"
 	"github.com/spf13/cobra"
 	"github.com/xuender/go-cli/tpl"
+	"github.com/xuender/go-cli/utils"
 	"github.com/xuender/kit/logs"
 	"github.com/xuender/kit/oss"
 	"github.com/youthlin/t"
@@ -33,6 +34,7 @@ func NewCmd(cmd *cobra.Command) *cobra.Command {
 
 	cmd.Flags().StringP("license", "", "MIT", t.T("license: apache2, bsd3, mit"))
 
+	cmd.AddCommand(ghCmd(&cobra.Command{Use: "github", Aliases: []string{"g"}}))
 	cmd.Run = run
 
 	return cmd
@@ -50,16 +52,20 @@ func run(cmd *cobra.Command, args []string) {
 	code := lo.Must1(cmd.Flags().GetString("license"))
 	env.License = strings.ToUpper(code)
 
-	for _, entry := range lo.Must1(_static.ReadDir(_staticPath)) {
-		file, data := readStatic(dir, entry.Name(), env)
-
+	lo.Must0(utils.Walk(_static, _staticPath, func(path string, entry fs.DirEntry) error {
+		file, data := readStatic(dir, filepath.Join(path, entry.Name()), env)
 		if oss.Exist(file) {
-			continue
+			return nil
 		}
 
 		logs.I.Println(t.T("init file %s", file))
-		lo.Must0(os.WriteFile(file, data, oss.DefaultFileMode))
-	}
+
+		parent := filepath.Dir(file)
+
+		_ = os.MkdirAll(parent, oss.DefaultDirFileMod)
+
+		return os.WriteFile(file, data, oss.DefaultFileMode)
+	}))
 
 	license := filepath.Join(dir, "LICENSE")
 
@@ -75,26 +81,5 @@ func run(cmd *cobra.Command, args []string) {
 }
 
 func readStatic(dir, name string, env *tpl.Env) (string, []byte) {
-	out := name
-	if strings.HasPrefix(name, "d_") {
-		out = "." + name[2:]
-	}
-
-	tpl := false
-
-	if strings.HasSuffix(out, ".tpl") {
-		out = out[:len(out)-4]
-		tpl = true
-	}
-
-	file := lo.Must1(filepath.Abs(filepath.Join(dir, out)))
-
-	if tpl {
-		return file, env.Bytes(_static, filepath.Join(_staticPath, name))
-	}
-
-	reader := lo.Must1(_static.Open(filepath.Join(_staticPath, name)))
-	defer reader.Close()
-
-	return file, lo.Must1(io.ReadAll(reader))
+	return readFile(env, _static, dir, name)
 }

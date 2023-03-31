@@ -14,12 +14,20 @@ go install github.com/xuender/go-cli@latest
 
 ## init
 
-init golang project
+Init golang project.
 
 ```shell
 git clone url
 cd dir
 go-cli init
+```
+
+### github
+
+Init github project.
+
+```shell
+git-cli init g [path]
 ```
 
 ## generate
