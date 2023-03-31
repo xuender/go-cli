@@ -25,9 +25,11 @@ var _licenses embed.FS
 func NewCmd(cmd *cobra.Command) *cobra.Command {
 	cmd.Short = t.T("Init Golang project")
 	cmd.Long = t.T("Initialize the Golang project and create default configuration files.")
+	cmd.Example = t.T("  # Init project\n  go-cli init\n  # Init github config\n go-cli init gh")
 
 	cmd.Flags().StringP("license", "", "MIT", t.T("license: APACHE2, BSD3, MIT"))
-	cmd.AddCommand(ghCmd(&cobra.Command{Use: "github", Aliases: []string{"g"}}))
+	cmd.AddCommand(ghCmd(&cobra.Command{Use: "github", Aliases: []string{"gh"}}))
+	cmd.AddCommand(geteeCmd(&cobra.Command{Use: "gitee", Aliases: []string{"ge"}}))
 	cmd.Run = run
 
 	return cmd

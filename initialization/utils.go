@@ -3,14 +3,47 @@ package initialization
 import (
 	"embed"
 	"io"
+	"io/fs"
 	"os"
 	"path/filepath"
 	"strings"
 
 	"github.com/samber/lo"
+	"github.com/spf13/cobra"
 	"github.com/xuender/go-cli/tpl"
+	"github.com/xuender/go-cli/utils"
 	"github.com/xuender/kit/logs"
+	"github.com/xuender/kit/oss"
+	"github.com/youthlin/t"
 )
+
+func getRun(path string, files embed.FS) func(*cobra.Command, []string) {
+	return func(cmd *cobra.Command, args []string) {
+		dir := "."
+		if len(args) > 0 {
+			dir = args[0]
+		}
+
+		logs.D.Println(t.T("init dir: %s", dir))
+
+		env := tpl.NewEnvByDir(dir)
+
+		lo.Must0(utils.Walk(files, path, func(path string, entry fs.DirEntry) error {
+			file, data := readFile(env, files, dir, filepath.Join(path, entry.Name()))
+			if oss.Exist(file) {
+				return nil
+			}
+
+			logs.I.Println(t.T("init file %s", file))
+
+			parent := filepath.Dir(file)
+
+			_ = os.MkdirAll(parent, oss.DefaultDirFileMod)
+
+			return os.WriteFile(file, data, oss.DefaultFileMode)
+		}))
+	}
+}
 
 func readFile(env *tpl.Env, static embed.FS, target, path string) (string, []byte) {
 	logs.D.Println("target:", target, "path:", path)

@@ -24,10 +24,18 @@ go-cli init [path]
 
 ### github
 
-Initialize the github project and create a default configuration file.
+Initialize the github configuration files.
 
 ```shell
-git-cli init g [path]
+git-cli init github [path]
+```
+
+### gitee
+
+Initialize the gitee configuration files.
+
+```shell
+git-cli init gitee [path]
 ```
 
 ## generate
