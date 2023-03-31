@@ -40,7 +40,7 @@ func run(cmd *cobra.Command, args []string) {
 	code := lo.Must1(cmd.Flags().GetString("license"))
 	env := tpl.NewEnvByDir(".")
 	env.License = strings.ToUpper(code)
-	parent := filepath.Join(lo.Must1(os.UserHomeDir()), ".config", "go-cli", "init")
+	parent := filepath.Join(lo.Must1(os.UserHomeDir()), ".config", "go-cli")
 
 	if len(args) > 0 {
 		for _, arg := range args {

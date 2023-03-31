@@ -19,7 +19,7 @@ var _static embed.FS
 var _dir tpl.Dir
 
 func NewCmd(cmd *cobra.Command) *cobra.Command {
-	if dir := filepath.Join(lo.Must1(os.UserHomeDir()), ".config", "go-cli", "gen"); oss.Exist(dir) {
+	if dir := filepath.Join(lo.Must1(os.UserHomeDir()), ".config", "go-cli"); oss.Exist(filepath.Join(dir, "gen")) {
 		_dir = tpl.NewDirEntry(dir)
 	} else {
 		_dir = _static
