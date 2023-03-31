@@ -17,7 +17,7 @@ import (
 func cmdCmd(cmd *cobra.Command) *cobra.Command {
 	cmd.Flags().StringP(_type, "t", "", t.T("Select type cobra or flag"))
 	cmd.Short = t.T("Generate cmd")
-	cmd.Long = t.T("Generate cmd\n  Support for cobra and flag.")
+	cmd.Long = t.T("Generate command support cobra and flag.")
 	// nolint: lll
 	cmd.Example = t.T("  # Create cmd\n  go-cli g c cmd\n  # Create cobra\n  go-cli g c cmd -t cobra")
 	cmd.Run = func(cmd *cobra.Command, args []string) {

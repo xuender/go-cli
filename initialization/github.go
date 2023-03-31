@@ -20,7 +20,7 @@ var _github embed.FS
 
 func ghCmd(cmd *cobra.Command) *cobra.Command {
 	cmd.Short = t.T("Init github project")
-	cmd.Long = t.T("Init github project\n\nCreate:\n  .github/workflows/go.yml")
+	cmd.Long = t.T("Initialize the github project and create default configuration files.")
 	cmd.Run = func(cmd *cobra.Command, args []string) {
 		dir := "."
 		if len(args) > 0 {

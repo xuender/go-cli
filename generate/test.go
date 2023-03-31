@@ -16,7 +16,7 @@ import (
 
 func testCmd(cmd *cobra.Command) *cobra.Command {
 	cmd.Short = t.T("Generate test")
-	cmd.Long = t.T("Generate test\nGenerating unit tests for exposed functions in a file or directory.")
+	cmd.Long = t.T("Generating unit tests for exposed functions in file or directory.")
 	cmd.Example = t.T("  # Create test\n  go-cli g t pkg/source.go\n  # Create path\n  go-cli g t pkg")
 	cmd.Run = func(cmd *cobra.Command, args []string) {
 		if len(args) == 0 {

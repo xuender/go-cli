@@ -30,7 +30,7 @@ const (
 func NewCmd(cmd *cobra.Command) *cobra.Command {
 	cmd.Short = t.T("Init Golang project")
 	// nolint: lll
-	cmd.Long = t.T("Init Golang project\n\nCreate files:\n  .editorconfig\n  .gitignore\n  .golangci.toml\n  go.mod\n  LICENSE\n  Makefile\n  README.md")
+	cmd.Long = t.T("Initialize the Golang project and create default configuration files.")
 
 	cmd.Flags().StringP("license", "", "MIT", t.T("license: APACHE2, BSD3, MIT"))
 	cmd.AddCommand(ghCmd(&cobra.Command{Use: "github", Aliases: []string{"g"}}))

@@ -14,17 +14,17 @@ go install github.com/xuender/go-cli@latest
 
 ## init
 
-Init golang project.
+Initialize the Golang project and create a default configuration file.
 
 ```shell
 git clone url
 cd dir
-go-cli init
+go-cli init [path]
 ```
 
 ### github
 
-Init github project.
+Initialize the github project and create a default configuration file.
 
 ```shell
 git-cli init g [path]
@@ -32,7 +32,11 @@ git-cli init g [path]
 
 ## generate
 
+Generate source code including commands, tests, examples, structures, protobuf, etc.
+
 ### cmd
+
+Generate command support cobra and flag.
 
 ```shell
 go-cli g c cmdName
@@ -42,11 +46,15 @@ go-cli g c cmdName -t cobra
 
 ### struct
 
+Generate struct and new function.
+
 ```shell
 go-cli g s dir/Book
 ```
 
 ### test
+
+Generate unit tests for exposed functions in file or directory.
 
 ```shell
 go-cli g t dir/book.go
@@ -54,8 +62,18 @@ go-cli g t dir/book.go
 
 ### example
 
+Generate test examples for exposed functions in file or directory.
+
 ```shell
 go-cli g e dir/book.go
+```
+
+### proto
+
+Generate protobuf and comments.
+
+```shell
+go-cli g p pb/book
 ```
 
 ## License
