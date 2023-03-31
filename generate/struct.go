@@ -1,15 +1,9 @@
 package generate
 
 import (
-	"os"
-	"path/filepath"
-
 	"github.com/samber/lo"
 	"github.com/spf13/cobra"
 	"github.com/xuender/go-cli/tpl"
-	"github.com/xuender/go-cli/utils"
-	"github.com/xuender/kit/logs"
-	"github.com/xuender/kit/oss"
 	"github.com/youthlin/t"
 )
 
@@ -33,35 +27,9 @@ func structCmd(cmd *cobra.Command) *cobra.Command {
 				env.Path = output
 			}
 
-			createStruct(env)
+			createGo(env, "struct")
 		}
 	}
 
 	return cmd
-}
-
-func createStruct(env *tpl.Env) {
-	logs.D.Println(t.T("create struct: %s", env.Name))
-
-	var file *os.File
-	defer file.Close()
-
-	if oss.Exist(env.Path) {
-		pkg, names := utils.PackageAndStructs(env.Path)
-		env.Package = pkg
-
-		if lo.Contains(names, env.Name) {
-			logs.W.Println(t.T("exist: %s", env.Name))
-
-			return
-		}
-
-		file = utils.AppendFile(env.Path)
-	} else {
-		file = utils.CreateFile(env.Path)
-
-		lo.Must1(file.Write(env.Bytes(_dir, filepath.Join(_staticPath, "package.tpl"))))
-	}
-
-	lo.Must1(file.Write(env.Bytes(_dir, filepath.Join(_staticPath, "struct.tpl"))))
 }

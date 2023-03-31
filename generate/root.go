@@ -24,10 +24,11 @@ func NewCmd(cmd *cobra.Command) *cobra.Command {
 	}
 
 	cmd.Short = t.T("Generate source code")
-	cmd.Long = t.T("Generate source code including commands, tests, examples, structures, protobuf, etc.")
+	cmd.Long = t.T("Generate source code.\n\nIncluding commands, tests, examples, struct, interface, protobuf, etc.")
 
 	cmd.PersistentFlags().StringP(_output, "o", "", t.T("Output file"))
 	cmd.AddCommand(structCmd(&cobra.Command{Use: "struct", Aliases: []string{"s"}}))
+	cmd.AddCommand(interfaceCmd(&cobra.Command{Use: "interface", Aliases: []string{"i"}}))
 	cmd.AddCommand(testCmd(&cobra.Command{Use: "test", Aliases: []string{"t"}}))
 	cmd.AddCommand(exampleCmd(&cobra.Command{Use: "example", Aliases: []string{"e"}}))
 	cmd.AddCommand(protoCmd(&cobra.Command{Use: "proto", Aliases: []string{"p"}}))

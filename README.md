@@ -78,7 +78,15 @@ go-cli g c cmdName -t cobra
 Generate struct and new function.
 
 ```shell
-go-cli g s dir/Book
+go-cli g s pkg/Book
+```
+
+### interface
+
+Generate interface and comments.
+
+```shell
+go-cli g i pkg/Book
 ```
 
 ### test
@@ -86,7 +94,7 @@ go-cli g s dir/Book
 Generate unit tests for exposed functions in file or directory.
 
 ```shell
-go-cli g t dir/book.go
+go-cli g t pkg/book.go
 ```
 
 ### example
@@ -94,7 +102,7 @@ go-cli g t dir/book.go
 Generate test examples for exposed functions in file or directory.
 
 ```shell
-go-cli g e dir/book.go
+go-cli g e pkg/book.go
 ```
 
 ### proto
@@ -111,7 +119,7 @@ go-cli g p pb/BookType -t enum
 Initialize template.
 
 ```shell
-go-cli g s dir/Book --write
+go-cli g s pkg/Book --write
 ```
 
 Edit `~/.config/go-cli/gen/*.tpl`.
