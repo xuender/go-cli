@@ -11,7 +11,7 @@ lint-fix:
 	golangci-lint run --timeout 60s --max-same-issues 50 --fix ./...
 
 test:
-	go test -race -v ./... -gcflags=all=-l
+	go test -race -v ./... -gcflags=all=-l -cover
 
 watch-test:
 	reflex -t 50ms -s -- sh -c 'gotest -v ./...'

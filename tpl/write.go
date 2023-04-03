@@ -7,16 +7,11 @@ import (
 	"path/filepath"
 
 	"github.com/samber/lo"
-	"github.com/spf13/cobra"
 	"github.com/xuender/kit/logs"
 	"github.com/xuender/kit/oss"
 )
 
-func WriteTemplate(cmd *cobra.Command, files embed.FS) {
-	if write, err := cmd.Flags().GetBool("write"); err != nil || !write {
-		return
-	}
-
+func WriteTemplate(files embed.FS) {
 	lo.Must0(Walk(files, ".", func(path string, entry fs.DirEntry) error {
 		logs.D.Println("template", path, entry.Name())
 

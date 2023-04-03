@@ -38,21 +38,6 @@ Initialize the gitee configuration files.
 git-cli init gitee
 ```
 
-### Custom init template
-
-Initialize template.
-
-```shell
-go-cli init --write
-```
-
-Edit template.
-
-```shell
-cp -r ~/.config/go-cli/init ~/.config/go-cli/newName
-# edit ~/.config/go-cli/newName
-```
-
 Use template.
 
 ```shell
@@ -114,15 +99,24 @@ go-cli g p pb/Book
 go-cli g p pb/BookType -t enum
 ```
 
-### Custom generate template
+## template
 
 Initialize template.
 
 ```shell
-go-cli g s pkg/Book --write
+go-cli template 
 ```
 
-Edit `~/.config/go-cli/gen/*.tpl`.
+Edit `~/.config/go-cli/*/*.tpl`
+
+### New Initialization Template
+
+```shell
+mkdir ~/.config/go-cli/newName
+vi ~/.config/go-cli/newName/xxx.tpl
+# initialize by newName
+go-cli init newName
+```
 
 ## License
 

@@ -16,7 +16,7 @@ import (
 )
 
 //go:embed init
-var _static embed.FS
+var InitStatic embed.FS
 
 //go:embed license
 var _licenses embed.FS
@@ -35,8 +35,6 @@ func NewCmd(cmd *cobra.Command) *cobra.Command {
 }
 
 func run(cmd *cobra.Command, args []string) {
-	tpl.WriteTemplate(cmd, _static)
-
 	code := lo.Must1(cmd.Flags().GetString("license"))
 	env := tpl.NewEnvByDir(".")
 	env.License = strings.ToUpper(code)
@@ -60,7 +58,7 @@ func run(cmd *cobra.Command, args []string) {
 	if dir := filepath.Join(tpl.ConfigPath, "init"); oss.Exist(dir) {
 		initFiles(tpl.NewDirEntry(tpl.ConfigPath), "init", env)
 	} else {
-		initFiles(_static, "init", env)
+		initFiles(InitStatic, "init", env)
 	}
 
 	license := filepath.Join(".", "LICENSE")

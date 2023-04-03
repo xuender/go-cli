@@ -11,7 +11,7 @@ import (
 )
 
 //go:embed gen
-var _static embed.FS
+var GenStatic embed.FS
 
 // nolint: gochecknoglobals
 var _dir tpl.Dir
@@ -20,7 +20,7 @@ func NewCmd(cmd *cobra.Command) *cobra.Command {
 	if oss.Exist(filepath.Join(tpl.ConfigPath, "gen")) {
 		_dir = tpl.NewDirEntry(tpl.ConfigPath)
 	} else {
-		_dir = _static
+		_dir = GenStatic
 	}
 
 	cmd.Short = t.T("Generate source code")
@@ -33,9 +33,6 @@ func NewCmd(cmd *cobra.Command) *cobra.Command {
 	cmd.AddCommand(exampleCmd(&cobra.Command{Use: "example", Aliases: []string{"e"}}))
 	cmd.AddCommand(protoCmd(&cobra.Command{Use: "proto", Aliases: []string{"p"}}))
 	cmd.AddCommand(cmdCmd(&cobra.Command{Use: "cmd", Aliases: []string{"c"}}))
-	cmd.PersistentPostRun = func(cmd *cobra.Command, args []string) {
-		tpl.WriteTemplate(cmd, _static)
-	}
 
 	return cmd
 }

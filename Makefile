@@ -6,7 +6,7 @@ tools:
 	go install github.com/cespare/reflex@latest
 
 test:
-	go test -race -v ./... -gcflags=all=-l
+	go test -race -v ./... -gcflags=all=-l -cover
 
 watch-test:
 	reflex -t 50ms -s -- sh -c 'gotest -v ./...'
