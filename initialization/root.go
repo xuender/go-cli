@@ -1,6 +1,7 @@
 package initialization
 
 import (
+	"bytes"
 	"embed"
 	"io/fs"
 	"os"
@@ -85,6 +86,10 @@ func initFiles(dir tpl.Dir, path string, env *tpl.Env) {
 
 		logs.I.Println(t.T("init file %s", file))
 		_ = os.MkdirAll(parent, oss.DefaultDirFileMod)
+
+		if bytes.HasPrefix(data, []byte("#!")) {
+			return os.WriteFile(file, data, oss.DefaultDirFileMod)
+		}
 
 		return os.WriteFile(file, data, oss.DefaultFileMode)
 	}))
