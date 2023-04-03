@@ -6,11 +6,11 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: 1.1.11\n"
+"Project-Id-Version: 1.2.11\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-03-30 16:46+0800\n"
+"POT-Creation-Date: 2023-04-03 10:42+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: xuender <xuender@gmail.com>"
+"Last-Translator: xuender <xuender@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
@@ -33,7 +33,7 @@ msgid "select language: en, zh"
 msgstr ""
 
 #: cmd/root.go:22
-msgid "debug mode, display debug log"
+msgid "Debug mode, display debug log"
 msgstr ""
 
 #: cmd/root.go:25
@@ -45,153 +45,221 @@ msgstr ""
 msgid "set language: %s"
 msgstr ""
 
-#: generate/cmd.go:21
-msgid "cobra or flag"
+#: cmd/template.go:13
+msgid "Create templates"
+msgstr ""
+
+#: cmd/template.go:14
+#, c-format
+msgid "Create templates to %s"
+msgstr ""
+
+#: cmd/template.go:16 cmd/template.go:18 cmd/template.go:20 cmd/template.go:22
+#, c-format
+msgid "create %s templates."
+msgstr ""
+
+#: generate/cmd.go:18
+msgid "Select type cobra or flag"
+msgstr ""
+
+#: generate/cmd.go:19
+msgid "Generate cmd"
+msgstr ""
+
+#: generate/cmd.go:20
+msgid "Generate command support cobra and flag."
 msgstr ""
 
 #: generate/cmd.go:22
-msgid "generate cmd"
-msgstr ""
-
-#: generate/cmd.go:23
 msgid ""
-"generate cmd\n"
-"  support for cobra and flag."
-msgstr ""
-
-#: generate/cmd.go:25
-msgid ""
-"  # create cmd\n"
+"  # Create cmd\n"
 "  go-cli g c cmd\n"
-"  # create cobra\n"
+"  # Create cobra\n"
 "  go-cli g c cmd -t cobra"
 msgstr ""
 
-#: generate/cmd.go:69 generate/struct.go:53
+#: generate/cmd.go:66 generate/interface.go:54
 #, c-format
 msgid "exist: %s"
 msgstr ""
 
-#: generate/cmd.go:74
+#: generate/cmd.go:71
 #, c-format
 msgid "create cmd: %s"
 msgstr ""
 
-#: generate/example.go:11 generate/example.go:12
-msgid "generate example"
+#: generate/example.go:16
+msgid "Generate example"
 msgstr ""
 
-#: generate/example.go:13
+#: generate/example.go:17
+msgid "Generate test examples for exposed functions in file or directory."
+msgstr ""
+
+#: generate/example.go:18
 msgid ""
-"  # create example\n"
+"  # Create example\n"
 "  go-cli g e pkg/source.go"
 msgstr ""
 
-#: generate/proto.go:18
-msgid "message or enum"
+#: generate/interface.go:17
+msgid "Generate interface"
 msgstr ""
 
-#: generate/proto.go:19 generate/proto.go:20
-msgid "generate protobuf"
+#: generate/interface.go:18
+msgid "Generate interface and comments."
 msgstr ""
 
-#: generate/proto.go:22
+#: generate/interface.go:19
 msgid ""
-"  # create message\n"
+"  # Create interface\n"
+"  go-cli g i Book"
+msgstr ""
+
+#: generate/interface.go:44
+#, c-format
+msgid "create %s: %s"
+msgstr ""
+
+#: generate/proto.go:19
+msgid "Select type message or enum"
+msgstr ""
+
+#: generate/proto.go:20
+msgid "Generate protobuf"
+msgstr ""
+
+#: generate/proto.go:21
+msgid "Generate protobuf and comments."
+msgstr ""
+
+#: generate/proto.go:23
+msgid ""
+"  # Create message\n"
 "  go-cli g p pb/Book\n"
-"  # create enum\n"
+"  # Create enum\n"
 "  go-cli g p BookType -t enum -o pb/book.proto"
 msgstr ""
 
-#: generate/proto.go:47
+#: generate/proto.go:48
 #, c-format
 msgid "create Proto: %s"
 msgstr ""
 
-#: generate/root.go:14
-msgid "generate struct, test, example"
+#: generate/root.go:26
+msgid "Generate source code"
 msgstr ""
 
-#: generate/root.go:15
+#: generate/root.go:27
 msgid ""
-"generate:\n"
-"  example(e)\n"
-"  struct(s)\n"
-"  test(t}"
+"Generate source code.\n"
+"\n"
+"Including commands, tests, examples, struct, interface, protobuf, etc."
 msgstr ""
 
-#: generate/root.go:17
-msgid "output file"
+#: generate/root.go:29
+msgid "Output file"
 msgstr ""
 
-#: generate/struct.go:16 generate/struct.go:17
-msgid "generate struct"
+#: generate/struct.go:11
+msgid "Generate struct"
 msgstr ""
 
-#: generate/struct.go:18
+#: generate/struct.go:12
+msgid "Generate struct and new function."
+msgstr ""
+
+#: generate/struct.go:13
 msgid ""
-"  # create struct\n"
+"  # Create struct\n"
 "  go-cli g s Book"
 msgstr ""
 
-#: generate/struct.go:43
-#, c-format
-msgid "create struct: %s"
-msgstr ""
-
-#: generate/test.go:16 generate/test.go:17
-msgid "generate test"
-msgstr ""
-
 #: generate/test.go:18
-msgid ""
-"  # create test\n"
-"  go-cli g t pkg/source.go"
+msgid "Generate test"
 msgstr ""
 
-#: generate/test.go:43
+#: generate/test.go:19
+msgid "Generating unit tests for exposed functions in file or directory."
+msgstr ""
+
+#: generate/test.go:20
+msgid ""
+"  # Create test\n"
+"  go-cli g t pkg/source.go\n"
+"  # Create path\n"
+"  go-cli g t pkg"
+msgstr ""
+
+#: generate/test.go:61
 #, c-format
 msgid "create test: %s"
 msgstr ""
 
-#: generate/test.go:46
+#: generate/test.go:64
 #, c-format
 msgid "not found: %s"
 msgstr ""
 
-#: generate/test.go:76
+#: generate/test.go:98
 #, c-format
 msgid "create: %s %s"
 msgstr ""
 
-#: initialization/root.go:30
-msgid "init Golang project"
+#: initialization/gitee.go:14
+msgid "Init gitee config"
 msgstr ""
 
-#: initialization/root.go:32
+#: initialization/gitee.go:15
+msgid "Initialize the gitee configuration files."
+msgstr ""
+
+#: initialization/github.go:14
+msgid "Init github config"
+msgstr ""
+
+#: initialization/github.go:15
+msgid "Initialize the github configuration files."
+msgstr ""
+
+#: initialization/root.go:25
+msgid "Init Golang project"
+msgstr ""
+
+#: initialization/root.go:26
+msgid "Initialize the Golang project and create default configuration files."
+msgstr ""
+
+#: initialization/root.go:27
 msgid ""
-"init Golang project\n"
-"\n"
-"files:\n"
-"  .editorconfig\n"
-"  .gitignore\n"
-"  .golangci.toml\n"
-"  go.mod\n"
-"  LICENSE\n"
-"  Makefile\n"
-"  README.md"
+"  # Init project\n"
+"  go-cli init\n"
+"  # Init github config\n"
+" go-cli init github"
 msgstr ""
 
-#: initialization/root.go:34
-msgid "license: apache2, bsd3, mit"
+#: initialization/root.go:29
+msgid "license: APACHE2, BSD3, MIT"
+msgstr ""
+
+#: initialization/root.go:44
+#, c-format
+msgid "init: %s"
 msgstr ""
 
 #: initialization/root.go:47
 #, c-format
-msgid "init dir: %s"
+msgid "dir is not exist: %s"
 msgstr ""
 
-#: initialization/root.go:58 initialization/root.go:74
+#: initialization/root.go:74 initialization/root.go:86
+#: initialization/utils.go:36
 #, c-format
 msgid "init file %s"
+msgstr ""
+
+#: initialization/utils.go:26
+#, c-format
+msgid "init dir: %s"
 msgstr ""

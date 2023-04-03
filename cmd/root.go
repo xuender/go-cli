@@ -15,7 +15,7 @@ func Execute() {
 		Use:     "go-cli",
 		Short:   t.T("CLI tool for Golang"),
 		Long:    t.T("CLI tool for Golang\n\n  Generate structures, tests, examples, initialize projects, etc."),
-		Version: "1.1.10",
+		Version: "1.2.11",
 	}
 
 	rootCmd.PersistentFlags().StringP("language", "l", t.Global().Locale(), t.T("select language: en, zh"))

@@ -31,3 +31,6 @@ msg:
 
 msginit:
 	msginit -l zh_CN --no-translator -i doc/message.pot -o doc/zh_CN.po
+
+msgfmt:
+	msgfmt doc/zh_CN.po -o locales/zh_CN.mo
