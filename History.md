@@ -1,4 +1,34 @@
 
+1.1.11 / 2023-04-23
+==================
+
+* fix: create example repeat
+* feat: shell exec
+* doc: use mo file
+* feat: cmd template
+* feat: git pre-commit
+* doc: example
+* feat: generate interface
+* feat: custom template
+* fix: template not found
+* feat: custom template
+* feat: init gitee
+* doc: remove lll
+* fix: init error
+* doc: install
+* doc: help
+* doc: i18n
+* feat: init github project
+* test: env
+* fix: bsd3 License
+* doc: LICENSE
+* chore: golangci-lint 1.51
+* test: utils
+* feat: test, example read dir
+* doc: cmd
+* feat: add generate cmd
+* doc: readme
+
 1.1.10 / 2023-03-30
 ==================
 
