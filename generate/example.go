@@ -52,5 +52,5 @@ func createExamples(path, output string) {
 		env.Test = output
 	}
 
-	createTest(env, "_example_test.go", "example.tpl", "example_func.tpl")
+	createTest(env, "_example_test.go", "example.tpl", "example_func.tpl", "Example")
 }

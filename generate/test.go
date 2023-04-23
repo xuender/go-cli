@@ -54,10 +54,10 @@ func createTests(path, output string) {
 		env.Test = output
 	}
 
-	createTest(env, "_test.go", "test.tpl", "test_func.tpl")
+	createTest(env, "_test.go", "test.tpl", "test_func.tpl", "Test")
 }
 
-func createTest(env *tpl.Env, ext, headFile, funcFile string) {
+func createTest(env *tpl.Env, ext, headFile, funcFile, prefix string) {
 	logs.D.Println(t.T("create test: %s", env.Name))
 
 	if !oss.Exist(env.Path) {
@@ -91,7 +91,7 @@ func createTest(env *tpl.Env, ext, headFile, funcFile string) {
 	}
 
 	for _, name := range funcs {
-		if lo.Contains(tests, "Test"+name) {
+		if lo.Contains(tests, prefix+name) {
 			continue
 		}
 
