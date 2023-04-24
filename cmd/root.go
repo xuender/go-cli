@@ -6,6 +6,7 @@ import (
 	"github.com/spf13/cobra"
 	"github.com/xuender/go-cli/generate"
 	"github.com/xuender/go-cli/initialization"
+	"github.com/xuender/go-cli/structs"
 	"github.com/xuender/kit/logs"
 	"github.com/youthlin/t"
 )
@@ -35,6 +36,7 @@ func Execute() {
 	}
 	rootCmd.AddCommand(initialization.NewCmd(&cobra.Command{Use: "init", Aliases: []string{"i", "initialization"}}))
 	rootCmd.AddCommand(generate.NewCmd(&cobra.Command{Use: "generate", Aliases: []string{"g", "creaet"}}))
+	rootCmd.AddCommand(structs.NewCmd(&cobra.Command{Use: "struct", Aliases: []string{"s"}}))
 	rootCmd.AddCommand(TemplateCmd(&cobra.Command{Use: "template", Aliases: []string{"t"}}))
 
 	if rootCmd.Execute() != nil {

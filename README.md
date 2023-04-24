@@ -99,6 +99,54 @@ go-cli g p pb/Book
 go-cli g p pb/BookType -t enum
 ```
 
+## struct
+
+Struct related.
+
+### new
+
+Create a new struct function by other struct.
+
+```shell
+go-cli s n book/book.go pb/book.pb.go
+```
+
+```go
+// NewBookByPbBook creates a new Book of pb.Book.
+func NewBookByPbBook(elem *pb.Book) *Book {
+  return &Book{
+    ID:    elem.ID,
+    Title: elem.Title,
+  }
+}
+```
+
+## convert
+
+Convert struct to other structs.
+
+```shell
+go-cli s c book/book.go pb/book.pb.go
+```
+
+```go
+// FromPbBook from pb.Book.
+func (p *Book) FromPbBook(elem *pb.Book) *Book {
+  p.ID = elem.ID
+  p.Title = elem.Title
+
+  return p
+}
+
+// ToPbBook to pb.Book.
+func (p *Book) ToPbBook() *pb.Book {
+  return &pb.Book{
+    ID:    p.ID,
+    Title: p.Title,
+  }
+}
+```
+
 ## template
 
 Initialize template.
