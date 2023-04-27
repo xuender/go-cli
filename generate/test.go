@@ -75,6 +75,8 @@ func createTest(env *tpl.Env, ext, headFile, funcFile, funcPrefix string) {
 		return
 	}
 
+	logs.D.Println(funcs)
+
 	tests := []string{}
 
 	env.Package = pkg

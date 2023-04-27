@@ -78,7 +78,10 @@ func PackageAndFuncs(files ...string) (string, []string) {
 
 func getX(expr ast.Expr) string {
 	ret := ""
+
 	switch elem := expr.(type) {
+	case *ast.IndexListExpr:
+		return getX(elem.X)
 	case *ast.Ident:
 		ret = elem.Name
 	case *ast.IndexExpr:
