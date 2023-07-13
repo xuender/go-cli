@@ -1,4 +1,15 @@
 
+1.1.12 / 2023-07-13
+==================
+
+* doc: i18n
+* refactor: run to exec
+* fix: 子进程同时关闭
+* featg: 目录监视
+* feat: obtain the canonical structure function
+* feat: struct new & convert
+* refactor: creteTest prefix to funcPrefix
+
 1.1.11 / 2023-04-23
 ==================
 
