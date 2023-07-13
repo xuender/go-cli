@@ -1,27 +1,27 @@
 # go-cli
-# Copyright (C) 2023 THE 1.2.11'S COPYRIGHT HOLDER
+# Copyright (C) 2023 THE 1.1.12'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the github.com/xuender/go-cli package.
 # xuender <xuender@gmail.com>, 2023.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: 1.2.11\n"
+"Project-Id-Version: 1.1.12\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-03 10:42+0800\n"
-"PO-Revision-Date: 2023-04-03 11:27+0800\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"POT-Creation-Date: 2023-07-13 15:06+0800\n"
+"PO-Revision-Date: 2023-07-13 15:16+0800\n"
+"Last-Translator: ender <xuender@139.com>\n"
+"Language-Team: ender <xuender@139.com>\n"
 "Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 3.0.1\n"
 
-#: cmd/root.go:16
+#: cmd/root.go:18
 msgid "CLI tool for Golang"
 msgstr "Go 语言命令行工具"
 
-#: cmd/root.go:17
+#: cmd/root.go:19
 msgid ""
 "CLI tool for Golang\n"
 "\n"
@@ -31,19 +31,19 @@ msgstr ""
 "\n"
 "  生成结构、测试、例子，初始化项目等。"
 
-#: cmd/root.go:21
+#: cmd/root.go:23
 msgid "select language: en, zh"
 msgstr "选择语言: 英语(en_US), 中文(zh_CN)"
 
-#: cmd/root.go:22
+#: cmd/root.go:24
 msgid "Debug mode, display debug log"
 msgstr "调试模式，显示调试日志"
 
-#: cmd/root.go:25
+#: cmd/root.go:27
 msgid "set debug: %v"
 msgstr "设置调试模式: %v"
 
-#: cmd/root.go:32
+#: cmd/root.go:34
 #, c-format
 msgid "set language: %s"
 msgstr "设置语言: %s"
@@ -226,7 +226,7 @@ msgstr "创建测试: %s"
 msgid "not found: %s"
 msgstr "未找到: %s"
 
-#: generate/test.go:98
+#: generate/test.go:100
 #, c-format
 msgid "create: %s %s"
 msgstr "创建: %s %s"
@@ -247,15 +247,15 @@ msgstr "初始化  github.com 配置"
 msgid "Initialize the github configuration files."
 msgstr "初始化 github.com 配置文件。"
 
-#: initialization/root.go:25
+#: initialization/root.go:26
 msgid "Init Golang project"
 msgstr "初始化Go语言项目"
 
-#: initialization/root.go:26
+#: initialization/root.go:27
 msgid "Initialize the Golang project and create default configuration files."
 msgstr "初始化go语言项目并创建默认配置文件。"
 
-#: initialization/root.go:27
+#: initialization/root.go:28
 msgid ""
 "  # Init project\n"
 "  go-cli init\n"
@@ -267,21 +267,21 @@ msgstr ""
 "  # 初始化 github 配置\n"
 "  go-cli init github"
 
-#: initialization/root.go:29
+#: initialization/root.go:30
 msgid "license: APACHE2, BSD3, MIT"
 msgstr "许可协议：APACHE2、BSD3、MIT"
 
-#: initialization/root.go:44
+#: initialization/root.go:45
 #, c-format
 msgid "init: %s"
 msgstr "初始化: %s"
 
-#: initialization/root.go:47
+#: initialization/root.go:48
 #, c-format
 msgid "dir is not exist: %s"
 msgstr "目录不存在: %s"
 
-#: initialization/root.go:74 initialization/root.go:86
+#: initialization/root.go:75 initialization/root.go:87
 #: initialization/utils.go:36
 #, c-format
 msgid "init file %s"
@@ -291,3 +291,67 @@ msgstr "初始化文件 %s"
 #, c-format
 msgid "init dir: %s"
 msgstr "初始化目录: %s"
+
+#: structs/convert.go:19
+#, fuzzy
+#| msgid "Generate struct"
+msgid "Convert struct"
+msgstr "生成结构"
+
+#: structs/convert.go:20
+msgid "Convert struct to other structs."
+msgstr "将结构转换为其他结构。"
+
+#: structs/convert.go:58 structs/new.go:55
+msgid "no duplicate name field"
+msgstr "无重复字段"
+
+#: structs/convert.go:85 structs/convert.go:105 structs/new.go:73
+#, c-format
+msgid "create function %s"
+msgstr "创建函数: %s"
+
+#: structs/new.go:18
+#, fuzzy
+#| msgid "Generate struct"
+msgid "New struct"
+msgstr "生成结构"
+
+#: structs/new.go:19
+msgid "Create a new struct function by other struct."
+msgstr "通过其他结构创建一个新的结构。"
+
+#: structs/new.go:86
+#, c-format
+msgid "Golang source file %s struct num is not one."
+msgstr "Golang源程序 %s 结构号不是一。"
+
+#: structs/root.go:9
+msgid "Struct related"
+msgstr "结构相关"
+
+#: structs/root.go:10
+msgid "Struct related commands."
+msgstr "与结构相关的命令。"
+
+#: watch/root.go:14
+msgid "Watch and Run"
+msgstr "监听并运行"
+
+#: watch/root.go:15
+msgid ""
+"Watch to the directory and run a command. If the directory is modified, "
+"restart the command."
+msgstr "监听目录并运行命令。如果目录已修改，请重新启动该命令。"
+
+#: watch/root.go:16
+msgid ""
+"  # Watch dir\n"
+"  go-cli watch [command]"
+msgstr ""
+"  # 监听目录并运行\n"
+"  go-cli watch [命令]"
+
+#: watch/root.go:18
+msgid "watch path, default is current directory"
+msgstr "监视路径，默认为当前目录"

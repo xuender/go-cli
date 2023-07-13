@@ -20,6 +20,7 @@ func Execute() {
 		Version: "1.2.11",
 	}
 
+	rootCmd.CompletionOptions.DisableDefaultCmd = true
 	rootCmd.PersistentFlags().StringP("language", "l", t.Global().Locale(), t.T("select language: en, zh"))
 	rootCmd.PersistentFlags().BoolP("debug", "d", false, t.T("Debug mode, display debug log"))
 	rootCmd.PersistentPreRun = func(cmd *cobra.Command, args []string) {
