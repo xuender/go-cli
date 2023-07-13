@@ -38,7 +38,7 @@ func (p *Service) Add(path string) {
 
 func (p *Service) Run(cmd string, args []string) {
 	go p.watch()
-	go p.run(cmd, args)
+	go p.exec(cmd, args)
 
 	osc := make(chan os.Signal, 1)
 
@@ -50,10 +50,10 @@ func (p *Service) Run(cmd string, args []string) {
 	logs.D.Println("监听到退出信号:", num)
 }
 
-func (p *Service) run(name string, args []string) {
+func (p *Service) exec(command string, args []string) {
 	for {
 		ctx, can := context.WithCancel(context.Background())
-		cmd := exec.CommandContext(ctx, name, args...)
+		cmd := exec.CommandContext(ctx, command, args...)
 		cmd.Stdin = os.Stdin
 		cmd.Stdout = os.Stdout
 		cmd.Stderr = os.Stderr
