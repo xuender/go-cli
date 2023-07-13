@@ -34,3 +34,6 @@ msginit:
 
 msgfmt:
 	msgfmt doc/zh_CN.po -o locales/zh_CN.mo
+
+watchtest:
+	go run main.go w ./a.sh

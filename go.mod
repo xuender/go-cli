@@ -5,6 +5,7 @@ go 1.18
 // replace github.com/xuender/kit => /home/ender/work/23/kit
 
 require (
+	github.com/fsnotify/fsnotify v1.6.0
 	github.com/samber/lo v1.38.1
 	github.com/spf13/cobra v1.6.1
 	github.com/stretchr/testify v1.8.2
