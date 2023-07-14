@@ -8,6 +8,7 @@ import (
 	"os/exec"
 	"os/signal"
 	"path/filepath"
+	"sync"
 	"syscall"
 	"time"
 
@@ -20,10 +21,14 @@ type Service struct {
 	watcher *fsnotify.Watcher
 	cancel  context.CancelFunc
 	pid     int
+	lock    *sync.Cond
 }
 
 func NewService() *Service {
-	return &Service{lo.Must1(fsnotify.NewWatcher()), nil, 0}
+	return &Service{
+		watcher: lo.Must1(fsnotify.NewWatcher()),
+		lock:    sync.NewCond(&sync.Mutex{}),
+	}
 }
 
 func (p *Service) Add(path string) {
@@ -65,13 +70,26 @@ func (p *Service) exec(command string, args []string) {
 
 		if err := cmd.Wait(); err != nil && (err.Error() == "signal: killed" || errors.Is(err, context.Canceled)) {
 			lo.Must0(syscall.Kill(-p.pid, syscall.SIGKILL))
-			time.Sleep(time.Second)
-		} else {
+		} else if err != nil {
 			logs.Log(err)
-
-			return
+			p.lock.L.Lock()
+			p.lock.Wait()
+			p.lock.L.Unlock()
+		} else {
+			p.pid = 0
 		}
+
+		time.Sleep(time.Second)
 	}
+}
+
+func (p *Service) unlock() {
+	if p.cancel != nil {
+		p.cancel()
+		p.cancel = nil
+	}
+
+	p.lock.Signal()
 }
 
 func (p *Service) watch() {
@@ -85,21 +103,15 @@ func (p *Service) watch() {
 			logs.D.Println("event:", event)
 
 			if event.Has(fsnotify.Write) {
-				if p.cancel != nil {
-					p.cancel()
-					p.cancel = nil
-				}
+				p.unlock()
 			}
 		case err, ok := <-p.watcher.Errors:
 			if !ok {
 				return
 			}
 
-			if p.cancel != nil {
-				logs.E.Println("error:", err)
-				p.cancel()
-				p.cancel = nil
-			}
+			logs.E.Println("error:", err)
+			p.unlock()
 		}
 	}
 }
