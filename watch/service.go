@@ -6,7 +6,6 @@ import (
 	"io/fs"
 	"os"
 	"os/exec"
-	"os/signal"
 	"path/filepath"
 	"sync"
 	"syscall"
@@ -15,6 +14,8 @@ import (
 	"github.com/fsnotify/fsnotify"
 	"github.com/samber/lo"
 	"github.com/xuender/kit/logs"
+	"github.com/xuender/kit/oss"
+	"golang.org/x/sync/errgroup"
 )
 
 type Service struct {
@@ -42,62 +43,70 @@ func (p *Service) Add(path string) {
 }
 
 func (p *Service) Run(cmd string, args []string) {
-	go p.watch()
-	go p.exec(cmd, args)
+	ctx, cancel := context.WithCancel(context.Background())
+	group := errgroup.Group{}
 
-	osc := make(chan os.Signal, 1)
+	group.Go(func() error {
+		return p.watch(ctx)
+	})
+	group.Go(func() error {
+		return p.exec(ctx, cmd, args)
+	})
+	group.Go(oss.CancelFunc(cancel))
 
-	signal.Notify(osc, syscall.SIGTERM, syscall.SIGINT)
-
-	num := <-osc
-
-	p.Close()
-	logs.D.Println("监听到退出信号:", num)
+	lo.Must0(group.Wait())
 }
 
-func (p *Service) exec(command string, args []string) {
+func (p *Service) exec(parent context.Context, command string, args []string) error {
 	for {
-		ctx, can := context.WithCancel(context.Background())
-		cmd := exec.CommandContext(ctx, command, args...)
-		cmd.Stdin = os.Stdin
-		cmd.Stdout = os.Stdout
-		cmd.Stderr = os.Stderr
-		cmd.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
-		p.cancel = can
+		select {
+		case <-parent.Done():
+			return nil
+		default:
+			ctx, can := context.WithCancel(parent)
+			cmd := exec.CommandContext(ctx, command, args...)
+			cmd.Stdin = os.Stdin
+			cmd.Stdout = os.Stdout
+			cmd.Stderr = os.Stderr
+			cmd.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
+			p.cancel = can
 
-		lo.Must0(cmd.Start())
-		p.pid = cmd.Process.Pid
+			lo.Must0(cmd.Start())
+			p.pid = cmd.Process.Pid
 
-		if err := cmd.Wait(); err != nil && (err.Error() == "signal: killed" || errors.Is(err, context.Canceled)) {
-			lo.Must0(syscall.Kill(-p.pid, syscall.SIGKILL))
-		} else if err != nil {
-			logs.Log(err)
-			p.lock.L.Lock()
-			p.lock.Wait()
-			p.lock.L.Unlock()
-		} else {
-			p.pid = 0
+			if err := cmd.Wait(); err != nil && (err.Error() == "signal: killed" || errors.Is(err, context.Canceled)) {
+				lo.Must0(syscall.Kill(-p.pid, syscall.SIGKILL))
+			} else if err != nil {
+				logs.Log(err)
+				p.lock.L.Lock()
+				p.lock.Wait()
+				p.lock.L.Unlock()
+			} else {
+				p.pid = 0
+			}
+
+			time.Sleep(time.Second)
 		}
-
-		time.Sleep(time.Second)
 	}
 }
 
 func (p *Service) unlock() {
-	if p.cancel != nil {
+	if p.cancel == nil {
+		p.lock.Signal()
+	} else {
 		p.cancel()
 		p.cancel = nil
 	}
-
-	p.lock.Signal()
 }
 
-func (p *Service) watch() {
+func (p *Service) watch(ctx context.Context) error {
 	for {
 		select {
+		case <-ctx.Done():
+			return nil
 		case event, ok := <-p.watcher.Events:
 			if !ok {
-				return
+				return nil
 			}
 
 			logs.D.Println("event:", event)
@@ -107,7 +116,7 @@ func (p *Service) watch() {
 			}
 		case err, ok := <-p.watcher.Errors:
 			if !ok {
-				return
+				return err
 			}
 
 			logs.E.Println("error:", err)

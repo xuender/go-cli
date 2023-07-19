@@ -9,9 +9,10 @@ require (
 	github.com/samber/lo v1.38.1
 	github.com/spf13/cobra v1.6.1
 	github.com/stretchr/testify v1.8.2
-	github.com/xuender/kit v1.0.10
+	github.com/xuender/kit v1.0.21
 	github.com/youthlin/t v0.0.6
 	golang.org/x/exp v0.0.0-20230321023759-10a507213a29
+	golang.org/x/sync v0.3.0
 	golang.org/x/text v0.8.0
 )
 
