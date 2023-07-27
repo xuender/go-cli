@@ -7,10 +7,10 @@ import "github.com/xuender/kit/oss"
 // nolint: gochecknoinits
 func init() {
 	if oss.Version == "" {
-		oss.Version = "v1.1.13-1-gb9448df"
+		oss.Version = "v1.1.14"
 	}
 
 	if oss.BuildTime == "" || oss.BuildTime[0] == '0' {
-		oss.BuildTime = "2023-07-27 17:05:08"
+		oss.BuildTime = "2023-07-27 17:08:08"
 	}
 }
