@@ -33,6 +33,7 @@ func NewCmd(cmd *cobra.Command) *cobra.Command {
 	cmd.AddCommand(exampleCmd(&cobra.Command{Use: "example", Aliases: []string{"e"}}))
 	cmd.AddCommand(protoCmd(&cobra.Command{Use: "proto", Aliases: []string{"p"}}))
 	cmd.AddCommand(cmdCmd(&cobra.Command{Use: "cmd", Aliases: []string{"c"}}))
+	cmd.AddCommand(versionCmd(&cobra.Command{Use: "version", Aliases: []string{"v", "ver"}}))
 
 	return cmd
 }

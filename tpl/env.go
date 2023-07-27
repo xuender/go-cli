@@ -16,13 +16,15 @@ import (
 )
 
 type Env struct {
-	Year    string
-	User    string
-	Package string
-	Name    string
-	Path    string
-	Test    string
-	License string
+	Year      string
+	User      string
+	Package   string
+	Name      string
+	Path      string
+	Test      string
+	License   string
+	BuildTime string
+	Version   string
 }
 
 func NewEnv() *Env {
