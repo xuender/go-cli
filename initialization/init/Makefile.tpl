@@ -1,6 +1,6 @@
 PACKAGE = {{ .Package }}
 VERSION = $(shell git describe --tags)
-BUILD_TIME = $(shell date +%FT%T)
+BUILD_TIME = $(shell date +%F' '%T)
 
 default: lint test
 
@@ -28,6 +28,6 @@ proto:
 
 build:
 	go build \
-	# -ldflags "-X 'github.com/xuender/kit/oss.Version=${VERSION}' \
-  # -X 'github.com/xuender/kit/oss.BuildTime=${BUILD_TIME}'" \
+	-ldflags "-X 'github.com/xuender/kit/oss.Version=${VERSION}' \
+  -X 'github.com/xuender/kit/oss.BuildTime=${BUILD_TIME}'" \
   -o dist/{{ .Name }} main.go
