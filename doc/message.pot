@@ -25,7 +25,7 @@ msgstr ""
 msgid ""
 "CLI tool for Golang\n"
 "\n"
-"  Generate structures, tests, examples, initialize projects, etc."
+"  Generate structures, tests, examples, initialize projects, etc.\n\n\t\t%s"
 msgstr ""
 
 #: cmd/root.go:23

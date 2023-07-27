@@ -25,11 +25,11 @@ msgstr "Go 语言命令行工具"
 msgid ""
 "CLI tool for Golang\n"
 "\n"
-"  Generate structures, tests, examples, initialize projects, etc."
+"  Generate structures, tests, examples, initialize projects, etc.\n\n\t\t%s"
 msgstr ""
 "Go 语言命令行工具\n"
 "\n"
-"  生成结构、测试、例子，初始化项目等。"
+"  生成结构、测试、例子，初始化项目等。\n\n\t\t%s"
 
 #: cmd/root.go:23
 msgid "select language: en, zh"

@@ -9,15 +9,17 @@ import (
 	"github.com/xuender/go-cli/structs"
 	"github.com/xuender/go-cli/watch"
 	"github.com/xuender/kit/logs"
+	"github.com/xuender/kit/oss"
 	"github.com/youthlin/t"
 )
 
 func Execute() {
 	rootCmd := &cobra.Command{
-		Use:     "go-cli",
-		Short:   t.T("CLI tool for Golang"),
-		Long:    t.T("CLI tool for Golang\n\n  Generate structures, tests, examples, initialize projects, etc."),
-		Version: "1.2.11",
+		Use:   "go-cli",
+		Short: t.T("CLI tool for Golang"),
+		Long: t.T("CLI tool for Golang\n\n  Generate structures, tests, examples, initialize projects, etc.\n\n\t\t%s",
+			oss.BuildTime),
+		Version: oss.Version,
 	}
 
 	rootCmd.CompletionOptions.DisableDefaultCmd = true
