@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        golangci_lint: [v1.51]
+        golangci_lint: [v1.53]
     steps:
       - uses: actions/checkout@v3
       - name: Set up Go
@@ -17,7 +17,7 @@ jobs:
         with:
           go-version: 1.19
       - name: golangci-lint
-        uses: golangci/golangci-lint-action@v3.1.0
+        uses: golangci/golangci-lint-action@v3.6.0
         with:
           version: ${{ matrix.golangci_lint }}
           args: --timeout=2m
