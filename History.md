@@ -1,4 +1,13 @@
 
+1.1.15 / 2023-08-03
+===================
+
+* feat: changelog
+* feat: version
+* feat: make test add race
+* feat: golangci
+* chore: github
+
 1.1.14 / 2023-07-27
 ==================
 
