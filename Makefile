@@ -1,7 +1,7 @@
 VERSION = $(shell git describe --tags)
 BUILD_TIME = $(shell date +%F' '%T)
 
-default: test lint
+default: lint test
 
 tools:
 	go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest

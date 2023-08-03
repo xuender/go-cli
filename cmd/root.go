@@ -7,6 +7,7 @@ import (
 	"github.com/xuender/go-cli/generate"
 	"github.com/xuender/go-cli/initialization"
 	"github.com/xuender/go-cli/structs"
+	"github.com/xuender/go-cli/version"
 	"github.com/xuender/go-cli/watch"
 	"github.com/xuender/kit/logs"
 	"github.com/xuender/kit/oss"
@@ -43,6 +44,7 @@ func Execute() {
 	rootCmd.AddCommand(structs.NewCmd(&cobra.Command{Use: "struct", Aliases: []string{"s"}}))
 	rootCmd.AddCommand(watch.NewCmd(&cobra.Command{Use: "watch", Aliases: []string{"w"}}))
 	rootCmd.AddCommand(TemplateCmd(&cobra.Command{Use: "template", Aliases: []string{"t"}}))
+	rootCmd.AddCommand(version.NewCmd(&cobra.Command{Use: "version", Aliases: []string{"v", "ver"}}))
 
 	if rootCmd.Execute() != nil {
 		os.Exit(1)
