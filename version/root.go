@@ -50,20 +50,20 @@ func run(cmd *cobra.Command, _ []string) {
 
 	ver = "v" + ver
 
-	logs.D.Println("update version", ver)
+	logs.I.Println("update version", ver)
 	msg := "chore: " + ver
 
 	lo.Must0(exec.Command("git", "commit", "-am", msg).Run())
-	logs.D.Println("git commit")
+	logs.I.Println("git commit -am", msg)
 
 	lo.Must0(exec.Command("git", "tag", ver).Run())
-	logs.D.Println("git tag")
+	logs.I.Println("git tag", ver)
 
 	lo.Must0(exec.Command("git", "push").Run())
-	logs.D.Println("git push")
+	logs.I.Println("git push")
 
 	lo.Must0(exec.Command("git", "push", "--tag").Run())
-	logs.D.Println("git push --tag")
+	logs.I.Println("git push --tag")
 }
 
 // nolint: gochecknoglobals
