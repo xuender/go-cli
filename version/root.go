@@ -29,28 +29,23 @@ func NewCmd(cmd *cobra.Command) *cobra.Command {
 
 func run(cmd *cobra.Command, _ []string) {
 	ver, _ := cmd.Flags().GetString("ver")
-	change := []string{"changelog"}
 
 	name := getHistory()
-	if name != "" {
-		change = append(change, name)
-	} else {
+	if name == "" {
 		name = "History.md"
 	}
 
-	lo.Must0(exec.Command("git", change...).Run())
-	logs.I.Println("git", change[0])
-
-	data := lo.Must1(os.ReadFile(name))
-
 	if ver == "" {
+		data := lo.Must1(os.ReadFile(name))
 		ver = GetVer(data)
 		logs.D.Println("read", name, ver)
 	}
 
 	ver = IncVer(ver)
-	data = SetVer(data, ver)
+	command := exec.Command("git", "changelog", "-t", ver, "-x")
+	data := lo.Must1(command.Output())
 
+	logs.I.Println("git", "changelog", "-t", ver, "-x")
 	lo.Must0(os.WriteFile(name, data, oss.DefaultFileMode))
 
 	ver = "v" + ver
