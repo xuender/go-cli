@@ -4,6 +4,7 @@ import (
 	"os"
 
 	"github.com/spf13/cobra"
+	"github.com/xuender/go-cli/font"
 	"github.com/xuender/go-cli/generate"
 	"github.com/xuender/go-cli/initialization"
 	"github.com/xuender/go-cli/structs"
@@ -45,6 +46,7 @@ func Execute() {
 	rootCmd.AddCommand(watch.NewCmd(&cobra.Command{Use: "watch", Aliases: []string{"w"}}))
 	rootCmd.AddCommand(TemplateCmd(&cobra.Command{Use: "template", Aliases: []string{"t"}}))
 	rootCmd.AddCommand(version.NewCmd(&cobra.Command{Use: "version", Aliases: []string{"v", "ver"}}))
+	rootCmd.AddCommand(font.NewCmd(&cobra.Command{Use: "font", Aliases: []string{"f"}}))
 
 	if rootCmd.Execute() != nil {
 		os.Exit(1)

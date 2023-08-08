@@ -9,7 +9,7 @@ require (
 	github.com/samber/lo v1.38.1
 	github.com/spf13/cobra v1.7.0
 	github.com/stretchr/testify v1.8.4
-	github.com/xuender/kit v1.0.30
+	github.com/xuender/kit v1.0.32
 	github.com/youthlin/t v0.0.7
 	golang.org/x/exp v0.0.0-20230801115018-d63ba01acd4b
 	golang.org/x/sync v0.3.0
@@ -23,6 +23,7 @@ require (
 	github.com/cockroachdb/logtags v0.0.0-20230118201751-21c54148d20b // indirect
 	github.com/cockroachdb/redact v1.1.5 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
+	github.com/dchest/siphash v1.2.3 // indirect
 	github.com/getsentry/sentry-go v0.23.0 // indirect
 	github.com/gogo/protobuf v1.3.2 // indirect
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect

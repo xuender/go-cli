@@ -1,6 +1,7 @@
 package utils
 
 import (
+	"io"
 	"os"
 	"path/filepath"
 
@@ -15,7 +16,7 @@ func AppendFile(filename string) *os.File {
 
 	file := lo.Must1(os.OpenFile(filename, os.O_WRONLY|os.O_APPEND, oss.DefaultFileMode))
 
-	lo.Must1(file.Seek(0, os.SEEK_END))
+	lo.Must1(file.Seek(0, io.SeekEnd))
 
 	return file
 }
