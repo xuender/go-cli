@@ -3,6 +3,7 @@ package font
 import (
 	"os"
 	"os/exec"
+	"strings"
 
 	"github.com/samber/lo"
 	"github.com/spf13/cobra"
@@ -47,6 +48,7 @@ func subsetCmd(cmd *cobra.Command) *cobra.Command {
 		}
 
 		if text != "" {
+			text = strings.ReplaceAll(text, "'", "")
 			logs.I.Printf("fonttools subset %s --text='%s' --output-file=%s", args[0], text, outputFile)
 
 			Exec("fonttools", "subset", args[0], "--text='"+text+"'", "--output-file="+outputFile)
