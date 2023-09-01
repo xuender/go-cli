@@ -5,17 +5,25 @@
 [![godoc][godoc-svg]][godoc-url]
 [![License][license-svg]][license-url]
 
-## Install
+## 🚀 Install
 
 ```shell
 go install {{ .Package }}@latest
 ```
 
-## License
+## 💡 Usage
+
+TODO
+
+## 👤 Contributors
+
+![Contributors][contributors-svg]
+
+## 📝 License
 
 © {{ .User }}, {{ .Year }}~time.Now
 
-[{{ .License }} LICENSE](https://{{ .Package }}/blob/master/LICENSE)
+[{{ .License }} LICENSE][license-url]
 
 [action-url]: https://{{ .Package }}/actions
 [action-svg]: https://{{ .Package }}/workflows/Go/badge.svg
@@ -28,3 +36,5 @@ go install {{ .Package }}@latest
 
 [license-url]: https://{{ .Package }}/blob/master/LICENSE
 [license-svg]: https://img.shields.io/badge/license-{{ .License }}-blue.svg
+
+[contributors-svg]: https://contrib.rocks/image?repo={{ .Package }}
