@@ -1,4 +1,16 @@
 
+1.1.17 / 2023-09-20
+===================
+
+* feat: lines of code
+* chore: make default
+* feat: lint-fix
+* feat: doc
+* fix: make watch-test
+* feat: badge
+* fix: 删除单引号
+* feat: add font, chinese & subset
+
 1.1.16 / 2023-08-03
 ===================
 
