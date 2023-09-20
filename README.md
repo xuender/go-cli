@@ -1,18 +1,22 @@
 # go-cli
 
-[![GoCI](https://github.com/xuender/go-cli/workflows/Go/badge.svg)](https://github.com/xuender/go-cli/actions)
-[![codecov](https://codecov.io/gh/xuender/go-cli/branch/main/graph/badge.svg?token=8CTpNIHxYT)](https://codecov.io/gh/xuender/go-cli)
-[![Go Report Card](https://goreportcard.com/badge/github.com/xuender/go-cli)](https://goreportcard.com/report/github.com/xuender/go-cli)
+[![Action][action-svg]][action-url]
+[![Report Card][goreport-svg]][goreport-url]
+[![godoc][godoc-svg]][godoc-url]
+[![Lines of code][lines-svg]][lines-url]
+[![License][license-svg]][license-url]
 
 CLI tool for Golang.
 
-## Install
+## 🚀 Install
 
 ```shell
 go install github.com/xuender/go-cli@latest
 ```
 
-## init
+## 💡 Usage
+
+### init
 
 Initialize the Golang project and create a default configuration file.
 
@@ -22,7 +26,7 @@ cd dir
 go-cli init
 ```
 
-### github
+#### github
 
 Initialize the github configuration files.
 
@@ -30,7 +34,7 @@ Initialize the github configuration files.
 git-cli init github
 ```
 
-### gitee
+#### gitee
 
 Initialize the gitee configuration files.
 
@@ -44,11 +48,11 @@ Use template.
 go-cli init newName
 ```
 
-## generate
+### generate
 
 Generate source code including commands, tests, examples, structures, protobuf, etc.
 
-### cmd
+#### cmd
 
 Generate command support cobra and flag.
 
@@ -58,7 +62,7 @@ go-cli g c cmdName -t flag
 go-cli g c cmdName -t cobra
 ```
 
-### struct
+#### struct
 
 Generate struct and new function.
 
@@ -66,7 +70,7 @@ Generate struct and new function.
 go-cli g s pkg/Book
 ```
 
-### interface
+#### interface
 
 Generate interface and comments.
 
@@ -74,7 +78,7 @@ Generate interface and comments.
 go-cli g i pkg/Book
 ```
 
-### test
+#### test
 
 Generate unit tests for exposed functions in file or directory.
 
@@ -82,7 +86,7 @@ Generate unit tests for exposed functions in file or directory.
 go-cli g t pkg/book.go
 ```
 
-### example
+#### example
 
 Generate test examples for exposed functions in file or directory.
 
@@ -90,7 +94,7 @@ Generate test examples for exposed functions in file or directory.
 go-cli g e pkg/book.go
 ```
 
-### proto
+#### proto
 
 Generate protobuf and comments.
 
@@ -99,11 +103,11 @@ go-cli g p pb/Book
 go-cli g p pb/BookType -t enum
 ```
 
-## struct
+### struct
 
 Struct related.
 
-### new
+#### new
 
 Create a new struct function by other struct.
 
@@ -121,7 +125,7 @@ func NewBookByPbBook(elem *pb.Book) *Book {
 }
 ```
 
-## convert
+### convert
 
 Convert struct to other structs.
 
@@ -147,7 +151,7 @@ func (p *Book) ToPbBook() *pb.Book {
 }
 ```
 
-## template
+### template
 
 Initialize template.
 
@@ -157,7 +161,7 @@ go-cli template
 
 Edit `~/.config/go-cli/*/*.tpl`
 
-### New Initialization Template
+#### New Initialization Template
 
 ```shell
 mkdir ~/.config/go-cli/newName
@@ -166,8 +170,28 @@ vi ~/.config/go-cli/newName/xxx.tpl
 go-cli init newName
 ```
 
-## License
+## 👤 Contributors
 
-© xuender, 2022~time.Now
+![Contributors][contributors-svg]
 
-[MIT License](https://github.com/xuender/go-cli/blob/master/LICENSE)
+## 📝 License
+
+© ender, 2023~time.Now
+
+[MIT LICENSE][license-url]
+
+[action-url]: https://github.com/xuender/go-cli/actions
+[action-svg]: https://github.com/xuender/go-cli/workflows/Go/badge.svg
+
+[goreport-url]: https://goreportcard.com/report/github.com/xuender/go-cli
+[goreport-svg]: https://goreportcard.com/badge/github.com/xuender/go-cli
+
+[godoc-url]: https://godoc.org/github.com/xuender/go-cli
+[godoc-svg]: https://godoc.org/github.com/xuender/go-cli?status.svg
+
+[license-url]: https://github.com/xuender/go-cli/blob/master/LICENSE
+[license-svg]: https://img.shields.io/badge/license-MIT-blue.svg
+
+[contributors-svg]: https://contrib.rocks/image?repo=gh/xuender/go-cli
+[lines-svg]: https://sloc.xyz/github/xuender/go-cli
+[lines-url]: https://github.com/boyter/scc
