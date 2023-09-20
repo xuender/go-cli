@@ -192,6 +192,6 @@ go-cli init newName
 [license-url]: https://github.com/xuender/go-cli/blob/master/LICENSE
 [license-svg]: https://img.shields.io/badge/license-MIT-blue.svg
 
-[contributors-svg]: https://contrib.rocks/image?repo=gh/xuender/go-cli
+[contributors-svg]: https://contrib.rocks/image?repo=xuender/go-cli
 [lines-svg]: https://sloc.xyz/github/xuender/go-cli
 [lines-url]: https://github.com/boyter/scc

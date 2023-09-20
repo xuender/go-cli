@@ -72,3 +72,12 @@ func TestShortName(t *testing.T) {
 	ass.Equal("gh", tpl.ShortName("github.com"))
 	ass.Equal("gh/xuender/go-cli", tpl.ShortName("github/xuender/go-cli"))
 }
+
+func TestNoWeb(t *testing.T) {
+	t.Parallel()
+
+	ass := assert.New(t)
+
+	ass.Equal("xuender/go-cli", tpl.NoWeb("github.com/xuender/go-cli"))
+	ass.Equal("github/xuender/go-cli", tpl.NoWeb("github/xuender/go-cli"))
+}

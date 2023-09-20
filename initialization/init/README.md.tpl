@@ -38,6 +38,7 @@ TODO
 [license-url]: https://{{ .Package }}/blob/master/LICENSE
 [license-svg]: https://img.shields.io/badge/license-{{ .License }}-blue.svg
 
-[contributors-svg]: https://contrib.rocks/image?repo={{ .Package | short }}
+[contributors-svg]: https://contrib.rocks/image?repo={{ .Package | noweb }}
+
 [lines-svg]: https://sloc.xyz/{{ .Package | url }}
 [lines-url]: https://github.com/boyter/scc

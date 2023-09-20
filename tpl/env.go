@@ -103,6 +103,20 @@ func Package2url(str string) string {
 	return str[:index] + str[index+inx:]
 }
 
+func NoWeb(str string) string {
+	inx := strings.Index(str, ".")
+	if inx < 0 {
+		return str
+	}
+
+	end := strings.Index(str[inx:], "/")
+	if end < 0 {
+		return str
+	}
+
+	return str[inx+end+1:]
+}
+
 func ShortName(str string) string {
 	for _, key := range []string{"github.com", "github"} {
 		if strings.HasPrefix(str, key) {
@@ -119,6 +133,7 @@ func (p *Env) Bytes(files fs.FS, path string) []byte {
 		"dir":   filepath.Dir,
 		"url":   Package2url,
 		"short": ShortName,
+		"noweb": NoWeb,
 	}
 	tmpl := lo.Must1(template.New("text").Funcs(funcs).ParseFS(files, path))
 
