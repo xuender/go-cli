@@ -89,9 +89,37 @@ func NewEnvByDir(arg string) *Env {
 	return env
 }
 
+func Package2url(str string) string {
+	index := strings.Index(str, ".")
+	if index < 0 {
+		return str
+	}
+
+	inx := strings.Index(str[index:], "/")
+	if inx < 0 {
+		return str[:index]
+	}
+
+	return str[:index] + str[index+inx:]
+}
+
+func ShortName(str string) string {
+	for _, key := range []string{"github.com", "github"} {
+		if strings.HasPrefix(str, key) {
+			return "gh" + str[len(key):]
+		}
+	}
+
+	return str
+}
+
 func (p *Env) Bytes(files fs.FS, path string) []byte {
 	buf := &bytes.Buffer{}
-	funcs := template.FuncMap{"dir": filepath.Dir}
+	funcs := template.FuncMap{
+		"dir":   filepath.Dir,
+		"url":   Package2url,
+		"short": ShortName,
+	}
 	tmpl := lo.Must1(template.New("text").Funcs(funcs).ParseFS(files, path))
 
 	lo.Must0(tmpl.ExecuteTemplate(buf, filepath.Base(path), p))

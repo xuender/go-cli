@@ -3,6 +3,7 @@
 [![Action][action-svg]][action-url]
 [![Report Card][goreport-svg]][goreport-url]
 [![godoc][godoc-svg]][godoc-url]
+[![Lines of code][lines-svg]][lines-url]
 [![License][license-svg]][license-url]
 
 ## 🚀 Install
@@ -37,4 +38,6 @@ TODO
 [license-url]: https://{{ .Package }}/blob/master/LICENSE
 [license-svg]: https://img.shields.io/badge/license-{{ .License }}-blue.svg
 
-[contributors-svg]: https://contrib.rocks/image?repo={{ .Package }}
+[contributors-svg]: https://contrib.rocks/image?repo={{ .Package | short }}
+[lines-svg]: https://sloc.xyz/{{ .Package | url }}
+[lines-url]: https://github.com/boyter/scc
