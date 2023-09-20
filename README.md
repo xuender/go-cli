@@ -2,8 +2,8 @@
 
 [![Action][action-svg]][action-url]
 [![Report Card][goreport-svg]][goreport-url]
-[![godoc][godoc-svg]][godoc-url]
 [![Lines of code][lines-svg]][lines-url]
+[![godoc][godoc-svg]][godoc-url]
 [![License][license-svg]][license-url]
 
 CLI tool for Golang.
