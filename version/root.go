@@ -51,7 +51,7 @@ func run(cmd *cobra.Command, _ []string) {
 	ver = "v" + ver
 
 	logs.I.Println("update version", ver)
-	msg := "chore: " + ver
+	msg := "release: " + ver
 
 	lo.Must0(exec.Command("git", "commit", "-am", msg).Run())
 	logs.I.Println("git commit -am", msg)
